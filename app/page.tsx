@@ -1,5 +1,3 @@
-import AuthButton from "../components/AuthButton";
-import {createClient} from "@/utils/supabase/server";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
