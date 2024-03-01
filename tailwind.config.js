@@ -7,6 +7,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        orange: "#FFD5BA",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         btn: {

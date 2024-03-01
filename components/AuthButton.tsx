@@ -14,7 +14,7 @@ export default async function AuthButton() {
 
     const supabase = createClient();
     await supabase.auth.signOut();
-    return redirect("/login");
+      return redirect("/auth/login");
   };
 
   return user ? (
@@ -27,11 +27,12 @@ export default async function AuthButton() {
         </form>
       </div>
   ) : (
-      <Link
-          href="/login"
-          className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
-      >
-        Login
-      </Link>
+      <div className={"flex items-center gap-4"}>
+          <Link href="/auth/login"
+                className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">Login</Link>
+          <Link href="/auth/register"
+                className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">Register</Link>
+      </div>
+
   );
 }
