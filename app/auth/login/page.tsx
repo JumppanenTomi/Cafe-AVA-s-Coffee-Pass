@@ -11,8 +11,12 @@ export default function Login({searchParams,}: { searchParams: { message: string
 		const supabase = createClient();
 
 		console.log("email", email, "formdata", formData)
-		const {data, error} = await supabase.auth.signInWithOtp({
+		const { data, error } = await supabase.auth.signInWithOtp({
 			email,
+			options: {
+				// set this to false if you do not want the user to be automatically signed up
+				shouldCreateUser: false,
+			  },
 		});
 
 		if (error) {
