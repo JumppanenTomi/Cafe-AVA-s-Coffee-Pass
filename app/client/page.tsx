@@ -3,6 +3,7 @@ import {redirect} from "next/navigation";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import Stamps from "@/components/Stamps";
 
 export default async function ProtectedPage() {
 	const supabase = createClient();
@@ -25,6 +26,7 @@ export default async function ProtectedPage() {
 			<p>
 				This is home page after login
 			</p>
+			<Stamps/>
 			<Footer/>
 		</div>
 	);
