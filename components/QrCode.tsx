@@ -1,19 +1,15 @@
-'use client'
 import QrCodeGen from "./QrCodeGen"
-import { useState, useEffect } from "react"
 import short from "short-uuid" // npm package to generate uuid
+import { addNewTempCode } from "@/app/client/server"
 
 const QrCode = () => {
-    const [uId, setUId] = useState('')
     const translator = short() // uuid generator
-
-    useEffect(() => {
-        setUId(translator.new())
-    }, [])
+    const code = translator.generate()
+    addNewTempCode(code)
 
     return (
         <div>
-            {uId && <QrCodeGen text={uId}></QrCodeGen>}
+            <QrCodeGen text={code}></QrCodeGen>
         </div>
     )
 }
