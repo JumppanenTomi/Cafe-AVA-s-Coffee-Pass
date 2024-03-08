@@ -9,7 +9,7 @@ const QrCode = () => {
 
     return (
         <div>
-            <QrCodeGen text={code}></QrCodeGen>
+            <QrCodeGen text={process.env.SITE_URL + '/admin/addStamp/' + code}></QrCodeGen>
         </div>
     )
 }
