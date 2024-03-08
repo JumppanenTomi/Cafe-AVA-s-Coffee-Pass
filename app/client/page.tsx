@@ -18,9 +18,9 @@ export default async function ProtectedPage() {
 	}
 
 	return (
-		<div className="flex-1 w-full flex flex-col gap-20 items-center">
+		<div className="flex-1 w-full flex flex-col items-center">
 			<Nav />
-			<div className="flex flex-col items-center gap-4">
+			<div className="flex flex-col items-center w-full">
 				<QrCode />
 				<Stamps/>
 				<div className={"flex gap-4"}>
