@@ -11,8 +11,14 @@ export default function Login({searchParams,}: { searchParams: { message: string
 		const supabase = createClient();
 
 		console.log("email", email, "formdata", formData)
-		const {data, error} = await supabase.auth.signInWithOtp({
+		const { data, error } = await supabase.auth.signInWithOtp({
 			email,
+			options: {
+				// set this to false if you do not want the user to be automatically signed up
+				shouldCreateUser: false,
+				// Add http://localhost:3000/auth/callback at the end of magiclink's redirect portion so that the route.ts can handle logging in the user.
+				emailRedirectTo: "http://localhost:3000/auth/callback"
+			  },
 		});
 
 		if (error) {
@@ -20,7 +26,7 @@ export default function Login({searchParams,}: { searchParams: { message: string
 			return redirect("/auth/login?message=Could not authenticate user");
 		}
 
-		return redirect("/client");
+		return redirect("/auth/login?message=Check email to continue sign in process");
 	};
 
 	return (
