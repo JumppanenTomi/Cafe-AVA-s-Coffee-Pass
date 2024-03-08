@@ -8,15 +8,15 @@ export default function Login({searchParams,}: { searchParams: { message: string
 		"use server";
 
 		const email = formData.get("email") as string;
-		const password = formData.get("password") as string;
 		const supabase = createClient();
 
-		const {error} = await supabase.auth.signInWithPassword({
+		console.log("email", email, "formdata", formData)
+		const {data, error} = await supabase.auth.signInWithOtp({
 			email,
-			password,
 		});
 
 		if (error) {
+			console.log("error:", error)
 			return redirect("/auth/login?message=Could not authenticate user");
 		}
 
@@ -55,16 +55,6 @@ export default function Login({searchParams,}: { searchParams: { message: string
 					className="rounded-md px-4 py-2 bg-inherit border mb-6"
 					name="email"
 					placeholder="you@example.com"
-					required
-				/>
-				<label className="text-md" htmlFor="password">
-					Password
-				</label>
-				<input
-					className="rounded-md px-4 py-2 bg-inherit border mb-6"
-					type="password"
-					name="password"
-					placeholder="••••••••"
 					required
 				/>
 				<SubmitButton
