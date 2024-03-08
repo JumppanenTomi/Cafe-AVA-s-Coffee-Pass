@@ -1,8 +1,9 @@
-import {createClient} from "@/utils/supabase/server";
-import {redirect} from "next/navigation";
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import QrCode from "@/components/QrCode";
 import Stamps from "@/components/Stamps";
 
 export default async function ProtectedPage() {
@@ -18,15 +19,15 @@ export default async function ProtectedPage() {
 
 	return (
 		<div className="flex-1 w-full flex flex-col gap-20 items-center">
-			<Nav/>
-			<div className={"flex gap-4"}>
-				<Link href="/client/settings" className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">Settings</Link>
-				<Link href="/client/vouchers" className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">Vouchers</Link>
+			<Nav />
+			<div className="flex flex-col items-center gap-4">
+				<QrCode />
+				<Stamps/>
+				<div className={"flex gap-4"}>
+					<Link href="/client/settings" className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">Settings</Link>
+					<Link href="/client/vouchers" className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">Vouchers</Link>
+				</div>
 			</div>
-			<p>
-				This is home page after login
-			</p>
-			<Stamps/>
 			<Footer/>
 		</div>
 	);
