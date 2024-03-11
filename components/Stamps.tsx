@@ -45,21 +45,21 @@ const Stamps = async () => {
     const stampsRequired = parseInt(process.env.STAMPS_REQUIRED || "0")
 
     return activeStampCount < stampsRequired ? (
-        <div className={`bg-white gap-2 p-5 grid grid-cols-5 rounded-b-md shadow row w-full place-items-center`}>
+        <div className={`white-container gap-2 grid grid-cols-5 row w-full place-items-center`} style={{borderTopLeftRadius: 0, borderTopRightRadius: 0}}>
             {Array.from({length: activeStampCount}).map((_, index) => (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -6 24 24" width="30" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -6 24 24" width="30" fill="#000">
                     <path d="M0 0h17a3 3 0 0 1 0 6h-1.252A8 8 0 0 1 0 4V0zm16 4h1a1 1 0 0 0 0-2h-1v2z"></path>
                 </svg>
             ))}
             {Array.from({length: (stampsRequired - activeStampCount)}).map((_, index) => (
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -6 24 24" width="30" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -6 24 24" width="30" fill="#000">
                     <path
                         d="M2 4a6 6 0 1 0 12 0V2H2v2zm14-4h1a3 3 0 0 1 0 6h-1.252A8 8 0 0 1 0 4V0h16zm0 4h1a1 1 0 0 0 0-2h-1v2z"></path>
                 </svg>
             ))}
         </div>
     ):(
-        <div className={'bg-white p-5 text-center rounded-b-md shadow row grid w-full'}>
+        <div className={'white-container text-center rounded-t-none row grid w-full'}>
             <h3 className={'text-xl'}>Congratulations!</h3>
             <p>You've filled your digital coffee pass. Enjoy a free cup of coffee on us. Simply show this message at the counter on your next visit to claim your well-deserved reward.</p>
             <br/>
