@@ -60,3 +60,7 @@
 .form-error{
 	@apply mt-4 p-4 bg-red-500 text-white
 }
+
+.white-container{
+	@apply bg-white p-5 rounded-md shadow-2xl
+}
