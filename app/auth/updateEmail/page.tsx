@@ -1,7 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
 import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
 import Link from "next/link";
 import { Form } from "@/components/Inputs/Form";
@@ -47,7 +46,6 @@ export default function UpdateEmail({ searchParams, }: { searchParams: { message
 				</div>
 			</Form>
 			<Link href="/client/settings" className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">Back</Link>
-			<Footer />
 		</div>
 	);
 }

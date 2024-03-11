@@ -1,8 +1,8 @@
 import {createClient} from "@/utils/supabase/server";
 import {redirect} from "next/navigation";
 import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
 import Link from "next/link";
+import AuthButton from "@/components/AuthButton";
 
 export default async function SettingsPage() {
 	const supabase = createClient();
@@ -23,7 +23,7 @@ export default async function SettingsPage() {
 				user
 			</p>
 			<Link href="/auth/updateEmail" className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">Update Email</Link>
-			<Footer/>
+			<AuthButton/>
 		</div>
 	);
 }

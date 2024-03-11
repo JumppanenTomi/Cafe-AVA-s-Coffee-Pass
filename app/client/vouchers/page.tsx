@@ -1,7 +1,6 @@
 import {createClient} from "@/utils/supabase/server";
 import {redirect} from "next/navigation";
 import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
 
 export default async function VouchersPage() {
 	const supabase = createClient();
@@ -20,7 +19,6 @@ export default async function VouchersPage() {
 			<p>
 				This is page that lists all available vouchers
 			</p>
-			<Footer/>
 		</div>
 	);
 }
