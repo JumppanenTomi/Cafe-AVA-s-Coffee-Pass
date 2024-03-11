@@ -39,6 +39,11 @@ export default function UpdateEmail({ searchParams, }: { searchParams: { message
 					>
 						Confirm
 					</FormSubmitButton>
+					{searchParams?.message && (
+						<p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+							{searchParams.message}
+						</p>
+					)}
 				</div>
 			</Form>
 			<Link href="/client/settings" className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">Back</Link>
