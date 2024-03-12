@@ -1,7 +1,6 @@
 import {createClient} from "@/utils/supabase/server";
 import {redirect} from "next/navigation";
 import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
 
 export default async function SingleVoucherPage() {
 	const supabase = createClient();
@@ -20,7 +19,6 @@ export default async function SingleVoucherPage() {
 			<p>
 				This is page that shows voucher qr code
 			</p>
-			<Footer/>
 		</div>
 	);
 }
