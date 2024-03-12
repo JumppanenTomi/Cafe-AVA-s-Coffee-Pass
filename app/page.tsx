@@ -1,10 +1,36 @@
 import Nav from "@/components/Nav";
+import Image from "next/image";
+import logo from "@/public/logo.png"
+import AuthButton from "@/components/AuthButton";
+import {createClient} from "@/utils/supabase/server";
+import {redirect} from "next/navigation";
 
 export default async function Index() {
+	const supabase = createClient();
+
+	const {
+		data: {user},
+	} = await supabase.auth.getUser();
+
+	if (user) {
+		return redirect("/client");
+	}
+
 	return (
-		<div className="flex-1 w-full flex flex-col gap-20 items-center">
-			<Nav/>
-			<h1>This is landing page</h1>
+		<div className="flex-1 w-full flex flex-col items-center">
+			<div className="flex flex-col items-center justify-center gap-5 p-5 w-full flex-grow bg-[url('/coffee.jpg')] bg-cover bg-top">
+					<Image src={logo} alt={"ava logo"} width={100}/>
+					<h1 className={'font-bold text-3xl'}>Welcome!</h1>
+					<p className={'text-center font-medium max-w-screen-sm'}>Welcome to our Digital Coffee Pass! Enjoy a seamless coffee shopping experience with added perks
+						at your
+						fingertips. Explore our rich aromatic blends, order, pay and collect rewards, all with a few
+						taps.
+						Perfect for coffee lovers or newcomers alike. Start your digital coffee journey with us
+						today!</p>
+			</div>
+			<div className="flex flex-col items-center justify-center gap-5 py-16 w-full max-w-screen-sm p-5">
+					<AuthButton/>
+			</div>
 		</div>
 	);
 }
