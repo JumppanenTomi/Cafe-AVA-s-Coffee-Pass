@@ -1,7 +1,6 @@
-export default async function Admin() {
+export default function Admin() {
 
 	return (
-		<div>
-		</div>
-	);
+		<div></div>
+	)
 }
