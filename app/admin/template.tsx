@@ -29,7 +29,7 @@ export default function AdminTemplate({ children }: { children: React.ReactNode 
               </Link>
             </li>
             <li>
-              <Link href="#" className="flex items-center py-2 text-black dark:text-white hover:border-t-2 hover:border-b-2 hover:border-black dark:hover:border-white group">
+              <Link href="/admin/stamps" className="flex items-center py-2 text-black dark:text-white hover:border-t-2 hover:border-b-2 hover:border-black dark:hover:border-white group">
                 <span className="flex-1 ms-3 whitespace-nowrap uppercase">Stamps</span>
               </Link>
             </li>
