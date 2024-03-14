@@ -1,7 +1,6 @@
 "use client";
 import { useEffect } from 'react';
 import { type User } from '@supabase/supabase-js'
-import Nav from "@/components/Nav";
 import { useState } from 'react';
 import { fetchUsers } from './server';
 
@@ -15,11 +14,13 @@ export default function Table() {
   useEffect(() => {
     const updateUsers = async () => {
       const updatedUsers = await fetchUsers(page);
+      console.log(updatedUsers);
       setUsers(updatedUsers);
     };
 
     updateUsers();
   }, [page]);
+
 
   return (
     <div className="flex-1 w-full flex flex-col gap-8 py-4">
