@@ -1,18 +1,37 @@
 "use client";
+import { useEffect } from 'react';
 import { type User } from '@supabase/supabase-js'
 import Nav from "@/components/Nav";
+import { useState } from 'react';
+import { fetchUsers } from './server';
 
-export default function Table({ users }: { users: User[] }) {
-  console.log(users)
+export const revalidate = 3600
+
+export default function Table() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [page, setPage] = useState(1);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  useEffect(() => {
+    const updateUsers = async () => {
+      const updatedUsers = await fetchUsers(page);
+      setUsers(updatedUsers);
+    };
+
+    updateUsers();
+  }, [page]);
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      <Nav />
+    <div className="flex-1 w-full flex flex-col gap-8 py-4">
+      <h3 className="text-3xl dark:text-white">Users</h3>
+
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div
-          className="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
+          className="p-4 flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
           <div>
-            <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction"
+            <button id="dropdownActionButton"
+              onClick={() => setShowDropdown(!showDropdown)}
+              data-dropdown-toggle="dropdownAction"
               className="inline-flex items-center text-gray-500 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-3 py-1.5 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
               type="button">
               <span className="sr-only">Action button</span>
@@ -24,7 +43,7 @@ export default function Table({ users }: { users: User[] }) {
               </svg>
             </button>
 
-            <div id="dropdownAction"
+            <div id="dropdownAction" style={{ display: showDropdown ? 'block' : 'none' }}
               className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
               <ul className="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">
                 <li>
