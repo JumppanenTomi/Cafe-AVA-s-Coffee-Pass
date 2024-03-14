@@ -4,6 +4,7 @@ interface NumberInputProps {
 	inputLabel?: string;
 	inputPlaceholder?: string;
 	isRequired?: boolean;
+	defaultValue?: number;
 	min?: number;
 	max?: number;
 }
@@ -14,6 +15,7 @@ export default function NumberInput({
 										inputLabel = "Number",
 										inputPlaceholder = "1234",
 										isRequired = true,
+										defaultValue = 1,
 										min,
 										max,
 									}: NumberInputProps) {
@@ -30,6 +32,7 @@ export default function NumberInput({
 				name={inputName}
 				placeholder={inputPlaceholder}
 				required={isRequired}
+				defaultValue={defaultValue}
 				min={min}
 				max={max}
 			/>
