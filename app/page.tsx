@@ -10,14 +10,18 @@ export default async function Index() {
 	const session = await supabase.auth.getSession()
 	const access_token = session.data.session?.access_token
 	const jwt = jwtDecode(access_token as string)
-	const user_role = jwt.user_role
+	const user_role = jwt.user_role // owner, barista, client or null
 
-	if (user_role === 'client') {
+	console.log(user_role);
+
+	// TODO: simplify logic
+	if (user_role === 'client' || user_role === null) {
 		return redirect('/client')
 	}
 	if (user_role === 'owner' || user_role === 'barista') {
 		return redirect('/admin')
 	}
+
 
 	return (
 		<div className="flex-1 w-full flex flex-col items-center">
