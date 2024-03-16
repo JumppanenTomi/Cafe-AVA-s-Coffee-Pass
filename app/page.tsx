@@ -9,7 +9,7 @@ export default async function Index() {
 	const supabase = createClient();
 	const session = await supabase.auth.getSession()
 	const access_token = session.data.session?.access_token
-	const jwt = jwtDecode(access_token)
+	const jwt = jwtDecode(access_token as string)
 	const user_role = jwt.user_role
 
 	if (user_role === 'client') {
