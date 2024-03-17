@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import logo from "@/public/logo.png"
-import {faTicket, faUser} from "@fortawesome/free-solid-svg-icons";
+import {faUser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
@@ -13,9 +13,6 @@ const Nav = () => {
 				<Image src={logo} alt={"Cafe AVA- Logo"} width={50}/>
 			</Link>
 			<div className={'w-full flex justify-end items-center gap-4'}>
-				<Link href={"/client/vouchers"}>
-					<FontAwesomeIcon icon={faTicket} size={"xl"}/>
-				</Link>
 				<Link href={"/client/settings"}>
 					<FontAwesomeIcon icon={faUser} size={"xl"}/>
 				</Link>
