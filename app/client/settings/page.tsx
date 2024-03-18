@@ -1,7 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import Nav from "@/components/Nav";
-import Link from "next/link";
 import AuthButton from "@/components/AuthButton";
 import ToggleButton from "@/components/Inputs/ToggleButton";
 import LinkButton from "@/components/Inputs/LinkButton";
@@ -20,7 +18,7 @@ export default async function SettingsPage() {
 
 	return (
 		<div className="flex flex-col items-start md:items-center md:justify-center">
-			<div className="w-full flex flex-col gap-3">
+			<div className="flex flex-col gap-3">
 				<div>
 					<LinkButton link="/auth/updateEmail" buttonText="Update Email address" />
 					<p className="text-sm text-gray-500">Currently logged in as {user.email}</p>
