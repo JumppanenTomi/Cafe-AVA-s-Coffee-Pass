@@ -34,11 +34,11 @@
 }
 
 .btn-primary {
-  @apply bg-black rounded-md px-4 py-2 text-orange mb-2;
+  @apply border-2 border-black bg-black rounded-md px-4 py-2 text-orange mb-2 text-center hover:opacity-70;
 }
 
 .btn-secondary {
-  @apply border-2 border-black rounded-md px-4 py-2 text-black font-bold mb-2;
+  @apply border-2 border-black rounded-md px-4 py-2 text-black text-center font-bold mb-2 hover:opacity-70;
 }
 
 .input-label > label {
@@ -50,7 +50,7 @@
 }
 
 .input{
-	@apply rounded-md px-4 py-2 bg-inherit border-black border mb-6 shadow-md focus:border-2
+	@apply rounded-md px-4 py-2 bg-inherit border-black border mb-6 shadow-md bg-white focus:border-2
 }
 
 .form{
@@ -58,7 +58,11 @@
 }
 
 .form-error{
-	@apply mt-4 p-4 bg-red-500 text-white
+	@apply mt-4 p-4 bg-red-500 text-white rounded-md
+}
+
+.form-success{
+	@apply mt-4 p-4 bg-green-500 text-white rounded-md
 }
 
 .white-container{
