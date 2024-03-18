@@ -9,13 +9,10 @@ export default function SettingsNav() {
         <h1 className="font-bold text-2xl md:text-center sm:text-start">Settings</h1>
       </div>
       <div className={'w-full flex justify-end items-center gap-4'}>
-        <Link href={"/client/vouchers"}>
-          <FontAwesomeIcon icon={faTicket} size={"xl"} />
-        </Link>
-        <Link href={"/client/settings"}>
-          <FontAwesomeIcon icon={faUser} size={"xl"} />
-        </Link>
-      </div>
+				<Link href={"/client/settings"}>
+					<FontAwesomeIcon icon={faUser} size={"xl"} />
+				</Link>
+			</div>
     </div>
   )
 }
