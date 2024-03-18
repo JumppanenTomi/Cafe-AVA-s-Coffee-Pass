@@ -1,10 +1,10 @@
-import Nav from "@/components/Nav";
+import SettingsNav from "@/components/SettingsNav"
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full">
-      <Nav />
-      <div className="w-auto px-5">{children}</div>
+    <div className="w-full px-5">
+      <SettingsNav />
+      <div className="w-auto">{children}</div>
     </div>
   );
 }
