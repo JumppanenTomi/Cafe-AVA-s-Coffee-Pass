@@ -1,14 +1,15 @@
-import {createClient} from "@/utils/supabase/server";
-import {redirect} from "next/navigation";
-import Nav from "@/components/Nav";
-import Link from "next/link";
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 import AuthButton from "@/components/AuthButton";
+import ToggleButton from "@/components/Inputs/ToggleButton";
+import LinkButton from "@/components/Inputs/LinkButton";
+import GetDataButton from "@/components/GetDataButton";
 
 export default async function SettingsPage() {
 	const supabase = createClient();
 
 	const {
-		data: {user},
+		data: { user },
 	} = await supabase.auth.getUser();
 
 	if (!user) {
@@ -16,14 +17,23 @@ export default async function SettingsPage() {
 	}
 
 	return (
-		<div className="flex-1 w-full flex flex-col gap-20 items-center">
-			<Nav/>
-			<p>
-				This is a protected page that you can only see as an authenticated
-				user
-			</p>
-			<Link href="/auth/updateEmail" className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">Update Email</Link>
-			<AuthButton/>
+		<div className="flex flex-col items-start md:items-center md:justify-center">
+			<div className="flex flex-col gap-3">
+				<div>
+					<LinkButton link="/auth/updateEmail" buttonText="Update Email address" />
+					<p className="text-sm text-gray-500">Currently logged in as {user.email}</p>
+				</div>
+				<div className="flex flex-row">
+					<p className="font-bold pr-2">Receive Emails</p>
+					<ToggleButton />
+				</div>
+				<div className="w-full">
+					<GetDataButton />
+				</div>
+				<div>
+					<AuthButton />
+				</div>
+			</div>
 		</div>
 	);
 }

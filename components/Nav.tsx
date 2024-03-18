@@ -6,7 +6,11 @@ import {faUser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
-const Nav = () => {
+interface NavProps {
+	title?: string,
+}
+
+const Nav = ({title}: NavProps) => {
 	return (
 		<nav className="w-full flex justify-between items-center h-16 p-5 bg-background">
 			<Link href={"/client"}>
