@@ -1,9 +1,7 @@
 "use client";
-import { useEffect } from 'react';
-import { type User } from '@supabase/supabase-js'
-import Nav from "@/components/Nav";
+import {ChangeEvent, useEffect} from 'react';
 import { useState } from 'react';
-import { Data, fetchStamps } from './server';
+import { fetchStamps } from './server';
 
 export const revalidate = 3600
 
@@ -40,7 +38,7 @@ type Order = 'asc' | 'desc';
 
 export default function Stamps() {
   const [order, setOrder] = useState<Order>('asc');
-  const [orderBy, setOrderBy] = useState<keyof Data>('stamp_log_id');
+  const [orderBy, setOrderBy] = useState<string>('stamp_log_id');
   const [selected, setSelected] = useState<readonly number[]>([]);
   const [stamps, setStamps] = useState<any[]>([]);
   const [page, setPage] = useState(1);
@@ -59,7 +57,7 @@ export default function Stamps() {
 
 
   const handleRequestSort = (
-    property: keyof Data
+    property: string
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -85,7 +83,7 @@ export default function Stamps() {
     }
   }
 
-  const handleClick = (event: React.MouseEvent<unknown>, id: number) => {
+  const handleClick = (event: ChangeEvent<HTMLInputElement>, id: number) => {
     const selectedIndex = selected.indexOf(id);
     let newSelected: readonly number[] = [];
 
