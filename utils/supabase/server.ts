@@ -4,9 +4,13 @@ import { cookies } from "next/headers";
 
 export const createClient = (hasService: Boolean = false) => {
   const cookieStore = cookies();
+  const { NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, NEXT_PRIVATE_SERVICE_ROLE_KEY } = process.env;
 
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!, hasService ? process.env.NEXT_PRIVATE_SERVICE_ROLE_KEY! : process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    NEXT_PUBLIC_SUPABASE_URL!,
+    hasService
+      ? NEXT_PRIVATE_SERVICE_ROLE_KEY!
+      : NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
         get(name: string) {
