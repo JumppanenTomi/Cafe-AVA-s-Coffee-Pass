@@ -127,7 +127,7 @@ export default function Table() {
                   {user.role}
                 </td>
                 <td className="px-6 py-4">
-                  {new Date(user.last_sign_in_at).toLocaleString()}
+                  {user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString() : "User haven't signed in ever"}
                 </td>
                 <td className="px-6 py-4">
                   <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit user</a>
