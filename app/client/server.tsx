@@ -2,15 +2,16 @@
 
 import { createClient } from "@/utils/supabase/server";
 
-const supabase = createClient();
-
 const getUserId = async () => {
+    const supabase = createClient();
+
     const user = await supabase.auth.getUser()
     const userId = user.data.user?.id
     return userId
 }
 
 export const addNewTempCode = async (code: string) => {
+    const supabase = createClient();
     const userId = await getUserId()
 
     const { data: codeData, error: codeError } = await supabase

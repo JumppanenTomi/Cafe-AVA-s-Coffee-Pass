@@ -1,8 +1,7 @@
 import { type CookieOptions, createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-import {cache} from "react";
 
-export const createClient = cache( (hasService: Boolean = false) => {
+export const createClient = (hasService: Boolean = false) => {
   const cookieStore = cookies();
   const { NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, NEXT_PRIVATE_SERVICE_ROLE_KEY } = process.env;
 
@@ -37,4 +36,4 @@ export const createClient = cache( (hasService: Boolean = false) => {
       },
     },
   );
-});
+};

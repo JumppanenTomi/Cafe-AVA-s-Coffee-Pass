@@ -8,14 +8,13 @@ import { Suspense } from "react";
 import Link from "next/link";
 import formatDateToFinnish from "@/components/formatDateToFinnish";
 
-const supabase = createClient();
-
 const getFormattedDate = (date: Date): string => {
 	return `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`;
 };
 
 const fetchAllVouchers = async () => {
 	'use server'
+	const supabase = createClient();
 	const currentDate = getFormattedDate(new Date());
 	const { data: vouchers, error } = await supabase
 		.from("vouchers")
@@ -27,6 +26,7 @@ const fetchAllVouchers = async () => {
 
 const fetchVoucherUsePerUser = async (voucherId: number) => {
 	'use server'
+	const supabase = createClient();
 	const user = await supabase.auth.getUser()
 	const { count, error } = await supabase
 		.from("voucher_logs")
@@ -60,6 +60,7 @@ const VoucherListItem = async ({ voucher }: { voucher: any }) => {
 };
 
 export default async function VouchersPage() {
+	const supabase = createClient();
 	const { data: { user } } = await supabase.auth.getUser();
 	if (!user) {
 		return redirect("/auth/login");
