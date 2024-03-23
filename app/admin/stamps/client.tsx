@@ -43,7 +43,7 @@ export default function StampsClient({
     setSelected([]);
   };
 
-  const handleSelectClick = (event: React.MouseEvent<unknown>, id: number) => {
+  const handleSelectClick = (event: React.ChangeEvent<unknown>, id: number) => {
     const selectedIndex = selected.indexOf(id);
     let newSelected: number[] = [];
 
