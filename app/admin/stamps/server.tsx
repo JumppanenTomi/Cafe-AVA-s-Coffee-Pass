@@ -29,7 +29,7 @@ export const fetchStampsCount = async (query: string) => {
     .select('*', { count: 'exact', head: true });
 
   if (error) throw error;
-  return count;
+  return count ?? 0;
 }
 
 export const deactivateStamps = async(ids: number[]) => {
