@@ -4,16 +4,17 @@ import { usePathname, useSearchParams } from 'next/navigation';
 const START_PAGE = 1;
 const PAGE_NUMBERS_TO_SHOW = 5;
 const PAGE_SIZE = 25;
+const PAGE_PLACE_HOLDER = -1
 
 const generatePageNumbers = (currentPage: number, totalPages: number): (number | string)[] => {
   if (totalPages < PAGE_NUMBERS_TO_SHOW + 3) return Array.from({ length: totalPages }, (_, i) => i + 1);
 
   if (currentPage <= PAGE_NUMBERS_TO_SHOW - 1) {
-    return Array.from({ length: PAGE_NUMBERS_TO_SHOW }, (_, i) => i + 1).concat(["...", totalPages]);
+    return Array.from({ length: PAGE_NUMBERS_TO_SHOW }, (_, i) => i + 1).concat([PAGE_PLACE_HOLDER, totalPages]);
   } else if (currentPage > totalPages - PAGE_NUMBERS_TO_SHOW + 1) {
-    return [START_PAGE, "..."].concat(Array.from({ length: PAGE_NUMBERS_TO_SHOW }, (_, i) => totalPages - PAGE_NUMBERS_TO_SHOW + i + 1));
+    return [START_PAGE, PAGE_PLACE_HOLDER].concat(Array.from({ length: PAGE_NUMBERS_TO_SHOW }, (_, i) => totalPages - PAGE_NUMBERS_TO_SHOW + i + 1));
   } else {
-    return [START_PAGE, "...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages];
+    return [START_PAGE, PAGE_PLACE_HOLDER, currentPage - 1, currentPage, currentPage + 1, PAGE_PLACE_HOLDER, totalPages];
   }
 };
 
@@ -47,7 +48,7 @@ export default function Pagination({ count }: { count: number }) {
           </a>
         </li>
         {pageNumbers.map((pageNumber, index) => {
-          if (pageNumber === "...") {
+          if (pageNumber === PAGE_PLACE_HOLDER) {
             return (
               <li key={index}>
                 <span className="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">...</span>
