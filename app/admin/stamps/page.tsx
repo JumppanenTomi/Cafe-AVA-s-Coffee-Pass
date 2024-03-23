@@ -18,5 +18,5 @@ export default async function StampsPage({
     fetchStampsCount(query),
   ]);
 
-  return <StampsClient stamps={stamps} count={count} />;
+  return <StampsClient stamps={stamps} count={count} query={query} sort={sort} currentPage={currentPage} />;
 }

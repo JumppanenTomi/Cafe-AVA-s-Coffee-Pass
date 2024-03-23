@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { deactivateStamps } from "./server";
 
-export default function StampsActions({selected}) {
+export default function StampsActions({ selected }: { selected: number[] }) {
   const [showDropdown, setShowDropdown] = useState(false);
   const toggleDropdown = () => setShowDropdown(!showDropdown);
 

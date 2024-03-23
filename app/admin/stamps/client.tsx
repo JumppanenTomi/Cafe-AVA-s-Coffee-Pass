@@ -6,13 +6,13 @@ import TableHead from '@/components/Table/TableHead';
 import TableBody from '@/components/Table/TableBody';
 import TablePagination from '@/components/Table/TablePagination';
 
-interface HeadCell {
+export interface HeadCell {
   id: string;
   label: string;
   type: string;
 }
 
-interface Stamp {
+export interface Stamp {
   stamp_log_id: number;
   timestamp: string;
   user_id: string;
