@@ -1,23 +1,25 @@
 import Image from "next/image";
 import logo from "@/public/logo.png"
 import AuthButton from "@/components/AuthButton";
-import {createClient} from "@/utils/supabase/server";
-import {redirect} from "next/navigation";
-import {jwtDecode} from 'jwt-decode'
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
+import { jwtDecode } from 'jwt-decode'
+import { log } from "console";
 
 export default async function Index() {
 	const supabase = createClient();
 	const session = await supabase.auth.getSession()
 	const access_token = session.data.session?.access_token
 	if (access_token) {
-		const jwt = jwtDecode(access_token as string)
+		const jwt: any = jwtDecode(access_token as string)
 		const user_role = jwt.user_role // owner, barista, client or null
+		console.log(jwt.sub);
 
 		console.log(user_role);
 
 		// TODO: simplify logic
 		if (user_role === 'client' || user_role === null) {
-		return redirect('/client')
+			return redirect('/client')
 		}
 		if (user_role === 'owner' || user_role === 'barista') {
 			return redirect('/admin')

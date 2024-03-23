@@ -7,7 +7,7 @@ import { Form } from "@/components/Inputs/Form";
 import EmailInput from "@/components/Inputs/EmailInput";
 
 let errors = "";
-export default function UpdateEmail({ searchParams, }: { searchParams: { message: string }; }) {
+export default function UpdateEmail({searchParams}: { searchParams: { isError: string, message: string }; }) {
 	const changeEmail = async (formData: FormData) => {
 		"use server";
 
@@ -23,14 +23,14 @@ export default function UpdateEmail({ searchParams, }: { searchParams: { message
 			console.log("error", error)
 			errors = `${error}`
 		} else {
-			return redirect("/auth/updateEmail?message=Check email for confirmation");
+			return redirect("/auth/updateEmail?message=Check email for confirmation&isError=false");
 		}
 	};
 
 	return (
 		<div className="flex-1 w-full flex flex-col items-center">
 			<Nav />
-			<Form error={errors}>
+			<Form error={errors} isError={searchParams.isError === "true"}>
 				<div className="flex-1 flex flex-col items-center h-auto">
 					<EmailInput />
 					<FormSubmitButton
