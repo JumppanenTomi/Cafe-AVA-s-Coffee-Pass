@@ -1,8 +1,13 @@
 "use client";
 import { usePathname, useSearchParams } from 'next/navigation';
 
+export interface HeadCell {
+  id: string;
+  label: string;
+  type: string;
+}
 
-export default function TableHead({ headCells, handleSelectAllClick }) {
+export default function TableHead({ headCells, handleSelectAllClick }: {headCells: readonly HeadCell[], handleSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void}) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const sort = searchParams.get('sort') || '';
