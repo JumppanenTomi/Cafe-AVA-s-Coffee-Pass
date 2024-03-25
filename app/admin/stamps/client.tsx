@@ -66,7 +66,7 @@ export default function StampsClient({
 
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-8 py-4">
+    <div className="flex-1 w-full flex flex-col gap-8">
       <h3 className="text-3xl dark:text-white">Stamps</h3>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div
