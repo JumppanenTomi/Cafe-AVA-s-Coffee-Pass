@@ -1,10 +1,11 @@
-import { createClient } from "@/utils/supabase/server";
+import {createClient} from "@/utils/supabase/server";
 import Nav from "@/components/Nav";
-import { faClock, faInfinity } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Suspense } from "react";
+import {faClock, faInfinity} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Suspense} from "react";
 import Link from "next/link";
 import formatDateToFinnish from "@/components/formatDateToFinnish";
+import BackButton from "@/components/BackButton";
 
 const getFormattedDate = (date: Date): string => {
 	return `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`;
@@ -61,12 +62,11 @@ export default async function VouchersPage() {
 	const vouchers = await fetchAllVouchers();
 	return (
 		<Suspense>
-			<div className="flex-1 w-full flex flex-col gap-5 p-5 items-center">
-				<Nav />
+			<Nav/>
 				{vouchers?.map(voucher => (
 					<VoucherListItem voucher={voucher} />
 				))}
-			</div>
+			<BackButton/>
 		</Suspense>
 	);
 };
