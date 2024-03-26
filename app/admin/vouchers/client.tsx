@@ -32,7 +32,7 @@ export default function VouchersClient({
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = vouchers.map((n) => n.voucher_id);
+      const newSelected = vouchers.map((n) => n.voucher_log_id);
       setSelected(newSelected);
       return;
     }
