@@ -17,6 +17,7 @@
     "framer-motion": "^11.0.12",
     "geist": "^1.2.1",
     "jwt-decode": "^4.0.0",
+    "lodash": "^4.17.21",
     "next": "latest",
     "postcss": "8.4.33",
     "qrcode": "^1.5.3",

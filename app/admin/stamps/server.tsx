@@ -15,7 +15,7 @@ export const fetchStamps = async (query: string, sort: string, currentPage: numb
   const { data, error } = await supabase
     .from('stamp_logs')
     .select()
-    .range(currentPage - 1, currentPage + 49)
+    .range((currentPage - 1) * 25, currentPage * 25 - 1)
     .order(sortField, { ascending: isAscending });
 
   if (error) throw error;
@@ -41,3 +41,13 @@ export const deactivateStamps = async(ids: number[]) => {
 
   if (error) throw error;
 }
+
+export const deleteStamps = async (ids: number[]) => {
+  const supabase = createClient(true);
+  const { error } = await supabase
+    .from("stamp_logs")
+    .delete()
+    .in("stamp_log_id", ids);
+
+  if (error) throw error;
+};
