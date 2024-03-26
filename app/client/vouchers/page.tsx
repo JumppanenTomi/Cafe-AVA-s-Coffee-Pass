@@ -1,6 +1,4 @@
-'use server'
 import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
 import Nav from "@/components/Nav";
 import { faClock, faInfinity } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -60,11 +58,6 @@ const VoucherListItem = async ({ voucher }: { voucher: any }) => {
 };
 
 export default async function VouchersPage() {
-	const supabase = createClient();
-	const { data: { user } } = await supabase.auth.getUser();
-	if (!user) {
-		return redirect("/auth/login");
-	}
 	const vouchers = await fetchAllVouchers();
 	return (
 		<Suspense>

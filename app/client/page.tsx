@@ -1,7 +1,5 @@
-import {createClient} from "@/utils/supabase/server";
-import {redirect} from "next/navigation";
 import Nav from "@/components/Nav";
-import QrCode from "@/components/QrCode";
+import StampCode from "@/components/QrCodes/stampCode";
 import Stamps from "@/components/Stamps";
 import {Statistics} from "@/components/Statistics";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -36,16 +34,6 @@ const HomeLinkItem: React.FC<NavigationLinkProps> = ({ href, icon, label, isExte
 };
 
 export default async function ProtectedPage() {
-	const supabase = createClient();
-
-	const {
-		data: {user},
-	} = await supabase.auth.getUser();
-
-	if (!user) {
-		return redirect("/auth/login");
-	}
-
 	return (
 		<div className="flex-1 w-full flex flex-col items-center">
 			<Nav />
@@ -57,7 +45,7 @@ export default async function ProtectedPage() {
 				</div>
 				<div className={'flex flex-col items-center justify-center'}>
 					<div className={'white-container z-50'}>
-						<QrCode/>
+						<StampCode/>
 					</div>
 					<div className={'w-11/12'}>
 						<Stamps/>
