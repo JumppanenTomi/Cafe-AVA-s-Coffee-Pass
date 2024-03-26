@@ -2,9 +2,9 @@
 
 import { createClient } from "@/utils/supabase/server";
 
-const supabase = createClient()
-
 export async function collectedData() {
+  const supabase = createClient()
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -19,5 +19,12 @@ export async function collectedData() {
   .select("timestamp")
   .eq("user_id", user?.id)
 
-  console.log("email:", user?.email, "userID:", user?.id, "stamp logs:", stampLogs, "voucher logs:", voucherLogs)
+  console.log("email:", user?.email, "userID:", user?.id, "stamp logs:", stampLogs, "voucher logs:", voucherLogs.data)
+
+  return {
+    email: user?.email,
+    userId: user?.id,
+    stampLogs: stampLogs.data ? stampLogs.data[0] : "empty",
+    voucherLogs: voucherLogs.data ? voucherLogs.data[0] : "empty"
+  };
 }

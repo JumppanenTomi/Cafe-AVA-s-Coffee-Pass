@@ -9,7 +9,7 @@ export default function GetDataButton() {
   return (
     <div>
       <button className="font-bold" onClick={() => setShowModal(true)}>
-        Ask for collected data
+        Download collected data
       </button>
       <GetDataModal isVisible={showModal} onClose={() => setShowModal(false)}/>
     </div>
