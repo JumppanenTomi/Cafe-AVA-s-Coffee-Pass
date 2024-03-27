@@ -22,7 +22,7 @@ export default function NumberInput({
   helperText = "",
 }: NumberInputProps) {
   return (
-    <>
+    <div>
       {showLabel && (
         <label className="input-label" htmlFor={inputName}>
           {inputLabel} {isRequired && <label>*</label>}
@@ -39,6 +39,6 @@ export default function NumberInput({
         max={max}
       />
       {helperText && <p className="input-helper-text">{helperText}</p>}
-    </>
+    </div>
   );
 }

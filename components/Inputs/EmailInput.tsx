@@ -16,7 +16,7 @@ export default function EmailInput({
   helperText = "",
 }: EmailInputProps) {
   return (
-    <>
+    <div>
       {showLabel && (
         <label className="input-label" htmlFor={inputName}>
           {inputLabel} {isRequired && <label>*</label>}
@@ -32,6 +32,6 @@ export default function EmailInput({
         required={isRequired}
       />
       {helperText && <p className="input-helper-text">{helperText}</p>}
-    </>
+    </div>
   );
 }

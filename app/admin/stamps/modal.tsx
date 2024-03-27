@@ -1,6 +1,9 @@
 "use client";
 
+import NumberInput from "@/components/Inputs/NumberInput";
 import { createStamps } from "./server";
+import { Form } from "@/components/Inputs/Form";
+import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
 
 export default function CreateModal({ show, toggleShow, users }) {
   const handleSubmit = async (formData: FormData) => {
@@ -10,8 +13,7 @@ export default function CreateModal({ show, toggleShow, users }) {
     } else {
       window.location.reload();
     }
-
-  }
+  };
 
   return (
     <div
@@ -45,60 +47,42 @@ export default function CreateModal({ show, toggleShow, users }) {
               <span className="sr-only">Close modal</span>
             </button>
           </div>
-          <form action={handleSubmit}>
-            <div className="grid gap-4 mb-4">
-              <div>
-                <label
-                  htmlFor="user_id"
-                  className="block mb-2 text-sm font-medium text-gray-900"
-                >
-                  User
-                </label>
-                <input
-                  list="user_id"
-                  name="user_id"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
-                />
 
-                <datalist id="user_id">
-                  {users.map((user, index) => (
-                    <option key={index} value={user.id}>
-                      {user.email}
-                    </option>
-                  ))}
-                </datalist>
-              </div>
+          <Form>
+            <div>
+              <label
+                htmlFor="user_id"
+                className="block mb-2 text-sm font-medium text-gray-900"
+              >
+                User
+              </label>
+              <input
+                list="user_id"
+                name="user_id"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required
+              />
 
-              <div>
-                <label
-                  htmlFor="amount"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Amount
-                </label>
-                <input
-                  type="number"
-                  id="amount"
-                  name="amount"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  defaultValue={1}
-                />
-                <p
-                  id="amount-explanation"
-                  className="mt-2 text-sm text-gray-500 dark:text-gray-400"
-                >
-                  The number of stamps created for this user.
-                </p>
-              </div>
+              <datalist id="user_id">
+                {users.map((user, index) => (
+                  <option key={index} value={user.id}>
+                    {user.email}
+                  </option>
+                ))}
+              </datalist>
             </div>
-            <button
-              type="submit"
-              className="btn-primary"
-            >
+
+            <NumberInput
+              inputName="amount"
+              inputLabel="Amount"
+              inputPlaceholder="Number of stamps"
+              min={1}
+              helperText="The number of stamps created for this user."
+            />
+            <FormSubmitButton formAction={handleSubmit} pendingText="Adding...">
               Save
-            </button>
-          </form>
+            </FormSubmitButton>
+          </Form>
         </div>
       </div>
     </div>
