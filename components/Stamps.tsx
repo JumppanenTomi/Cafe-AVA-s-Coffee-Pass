@@ -59,8 +59,8 @@ const Stamps = async () => {
             ))}
         </div>
     ):(
-        <div className={'white-container text-center rounded-t-none row grid w-full'}>
-            <h3 className={'text-xl'}>Congratulations!</h3>
+        <div className={'white-container text-center row grid w-full'} style={{borderTopLeftRadius: 0, borderTopRightRadius: 0}}>
+            <h3>Congratulations!</h3>
             <p>You've filled your digital coffee pass. Enjoy a free cup of coffee on us. Simply show this message at the counter on your next visit to claim your well-deserved reward.</p>
             <br/>
             <p>Thank you for being a loyal customer, and keep brewing happiness with us!</p>
