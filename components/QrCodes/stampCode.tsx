@@ -3,6 +3,8 @@ import short from "short-uuid" // npm package to generate uuid
 import {addNewTempCode} from "@/app/client/server"
 import {createClient} from "@/utils/supabase/server";
 
+//TODO: Still working on this
+
 const checkCodes = async (userId: string) => {
     const supabase = createClient()
     let {data: temp_codes, error} = await supabase
@@ -27,7 +29,7 @@ async function setOldRowsToUsed() {
         if (error) {
             console.log('Error updating', error);
         } else {
-            console.log('Updated ', data.length, ' rows');
+            //console.log('Updated ', data.length, ' rows');
         }
     } catch (error) {
         console.log('Exception thrown: ', error);
