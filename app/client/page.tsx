@@ -35,7 +35,7 @@ const HomeLinkItem: React.FC<NavigationLinkProps> = ({ href, icon, label, isExte
 
 export default async function ProtectedPage() {
 	return (
-		<div className="flex-1 w-full flex flex-col items-center">
+		<>
 			<Nav />
 			<div className="flex flex-col items-center justify-center gap-5 flex-grow">
 				<Statistics/>
@@ -47,11 +47,11 @@ export default async function ProtectedPage() {
 					<div className={'white-container z-50'}>
 						<StampCode/>
 					</div>
-					<div className={'w-11/12'}>
+					<div className={'w-[300px]'}>
 						<Stamps/>
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
 	);
 }
