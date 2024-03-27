@@ -46,6 +46,10 @@
 	@apply border-2 border-black rounded-md px-4 py-2 text-black text-center font-bold mb-2 hover:opacity-70;
 }
 
+.input-label {
+	@apply block mb-2 font-medium text-black
+}
+
 .input-label>label {
 	@apply text-red-500
 }
@@ -55,7 +59,11 @@
 }
 
 .input {
-	@apply rounded-md px-4 py-2 bg-inherit border-black border mb-6 shadow-md bg-white focus:border-2
+	@apply rounded-md px-4 py-2 bg-inherit border-black border shadow-md bg-white text-black focus:border-2 block w-full
+}
+
+.input-helper-text {
+	@apply mt-2 text-sm text-gray-500
 }
 
 .form {

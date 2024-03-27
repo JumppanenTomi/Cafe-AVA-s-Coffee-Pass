@@ -7,45 +7,57 @@ import { Form } from "@/components/Inputs/Form";
 import EmailInput from "@/components/Inputs/EmailInput";
 
 let errors = "";
-export default function UpdateEmail({searchParams}: { searchParams: { isError: string, message: string }; }) {
-	const changeEmail = async (formData: FormData) => {
-		"use server";
+export default function UpdateEmail({
+  searchParams,
+}: {
+  searchParams: { isError: string; message: string };
+}) {
+  const changeEmail = async (formData: FormData) => {
+    "use server";
 
-		const supabase = createClient();
-		const newEmail = formData.get("email") as string;
-		console.log("new Email", newEmail)
+    const supabase = createClient();
+    const newEmail = formData.get("email") as string;
+    console.log("new Email", newEmail);
 
-		const { data, error } = await supabase.auth.updateUser({
-			email: newEmail
-		})
+    const { data, error } = await supabase.auth.updateUser({
+      email: newEmail,
+    });
 
-		if (error) {
-			console.log("error", error)
-			errors = `${error}`
-		} else {
-			return redirect("/auth/updateEmail?message=Check email for confirmation&isError=false");
-		}
-	};
+    if (error) {
+      console.log("error", error);
+      errors = `${error}`;
+    } else {
+      return redirect(
+        "/auth/updateEmail?message=Check email for confirmation&isError=false"
+      );
+    }
+  };
 
-	return (
-		<div className="flex-1 w-full flex flex-col items-center">
-			<Nav />
-			<Form error={errors} isError={searchParams.isError === "true"}>
-				<div className="flex-1 flex flex-col items-center h-auto">
-					<EmailInput />
-					<FormSubmitButton
-						formAction={changeEmail}
-					>
-						Confirm
-					</FormSubmitButton>
-					{searchParams?.message && (
-						<p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
-							{searchParams.message}
-						</p>
-					)}
-				</div>
-			</Form>
-			<Link href="/client/settings" className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover">Back</Link>
-		</div>
-	);
+  return (
+    <div className="flex-1 w-full flex flex-col items-center">
+      <Nav />
+      <div className="container mx-auto px-4">
+        <Form error={errors} isError={searchParams.isError === "true"}>
+          <div className="flex-1 flex flex-col items-center h-auto">
+            <EmailInput />
+            <div className="flex items-center w-full gap-4 mt-5"></div>
+            <FormSubmitButton formAction={changeEmail}>
+              Confirm
+            </FormSubmitButton>
+            {searchParams?.message && (
+              <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+                {searchParams.message}
+              </p>
+            )}
+          </div>
+        </Form>
+      </div>
+      <Link
+        href="/client/settings"
+        className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+      >
+        Back
+      </Link>
+    </div>
+  );
 }
