@@ -38,18 +38,13 @@ export default function UpdateEmail({
       <Nav />
       <div className="container mx-auto px-4">
         <Form error={errors} isError={searchParams.isError === "true"}>
-          <div className="flex-1 flex flex-col items-center h-auto">
-            <EmailInput />
-            <div className="flex items-center w-full gap-4 mt-5"></div>
-            <FormSubmitButton formAction={changeEmail}>
-              Confirm
-            </FormSubmitButton>
-            {searchParams?.message && (
-              <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
-                {searchParams.message}
-              </p>
-            )}
-          </div>
+          <EmailInput />
+          <FormSubmitButton formAction={changeEmail}>Confirm</FormSubmitButton>
+          {searchParams?.message && (
+            <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+              {searchParams.message}
+            </p>
+          )}
         </Form>
       </div>
       <Link
