@@ -47,7 +47,7 @@ export default async function ProtectedPage() {
 					<div className={'white-container z-50'}>
 						<StampCode/>
 					</div>
-					<div className={'w-[300px]'}>
+					<div className={'w-11/12 flex justify-center'}>
 						<Stamps/>
 					</div>
 				</div>
