@@ -1,6 +1,7 @@
 import Nav from "@/components/Nav";
 import QrCodeGen from "@/components/QrCodes/QrCodeGen";
 import short from "short-uuid";
+import BackButton from "@/components/BackButton";
 
 export default async function SingleVoucherPage() {
 	const code = short().generate()
@@ -16,6 +17,7 @@ export default async function SingleVoucherPage() {
 				<div className="circle1" />
 				<div className="circle2" />
 			</div>
+			<BackButton customUrl={"/client/vouchers"}/>
 		</div >
 	);
 }
