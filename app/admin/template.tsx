@@ -77,7 +77,7 @@ export default function AdminTemplate({
             </li>
             <li>
               <Link
-                href="#"
+                href="/admin/vouchers"
                 className="flex items-center py-2 text-black dark:text-white hover:border-t-2 hover:border-b-2 hover:border-black dark:hover:border-white group"
               >
                 <span className="flex-1 ms-3 whitespace-nowrap uppercase">

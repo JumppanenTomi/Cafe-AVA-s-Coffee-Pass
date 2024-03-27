@@ -10,7 +10,7 @@ export default async function StampsPage({
     page?: string;
   };
 }) {
-  const { query = '', sort = 'stamp_log_id', page } = searchParams;
+  const { query = '', sort = '-stamp_log_id', page } = searchParams;
   const currentPage = Number(page) || 1;
 
   const [stamps, count] = await Promise.all([

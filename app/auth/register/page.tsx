@@ -43,7 +43,7 @@ export default function Register({searchParams}: { searchParams: { isError: stri
 					link will be sent directly to your inbox. Using this link, you can securely access website.</p>
 				<Form isError={searchParams.isError == "true"} error={searchParams.message}>
 					<EmailInput/>
-					<div className={"flex items-center w-full gap-4"}>
+					<div className={"flex items-center w-full gap-4 mt-5"}>
 						<Link href={"/"} className={'btn-secondary w-full'}>Back</Link>
 						<FormSubmitButton
 							formAction={signUp}

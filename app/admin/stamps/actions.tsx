@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { deactivateStamps } from "./server";
+import { deactivateStamps, deleteStamps } from "./server";
 
 export default function StampsActions({ selected }: { selected: number[] }) {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -12,6 +12,18 @@ export default function StampsActions({ selected }: { selected: number[] }) {
         await deactivateStamps(selected);
       } catch (error) {
         console.error('Error deactivating stamps', error);
+      } finally {
+        window.location.reload();
+      }
+    }
+  }
+
+  const handleDelete = async () => {
+    if (window.confirm('Are you sure you want to delete the selected stamps?')) {
+      try {
+        await deleteStamps(selected);
+      } catch (error) {
+        console.error('Error deleting stamps', error);
       } finally {
         window.location.reload();
       }
@@ -44,7 +56,7 @@ export default function StampsActions({ selected }: { selected: number[] }) {
           </li>
         </ul>
         <div className="py-1">
-          <a href="#"
+          <a onClick={handleDelete}
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
         </div>
       </div>
