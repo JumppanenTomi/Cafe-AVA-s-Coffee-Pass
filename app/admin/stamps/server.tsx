@@ -2,7 +2,7 @@
 import { createClient } from "@/utils/supabase/server";
 
 export interface Data {
-  stamp_log_id: string;
+  stamp_log_id?: string;
   timestamp: string;
   user_id: string;
 }
@@ -51,3 +51,19 @@ export const deleteStamps = async (ids: number[]) => {
 
   if (error) throw error;
 };
+
+export const createStamps = async (formData: FormData) => {
+  const supabase = createClient(true);
+  const rawFormData = {
+    user_id: formData.get('user_id'),
+  };
+
+  const times = parseInt(formData.get('amount') as string) || 1;
+  const { data, error } = await supabase
+    .from("stamp_logs")
+    .insert(Array(times).fill(rawFormData))
+    .select();
+
+  if (error) throw error;
+  return data;
+}
