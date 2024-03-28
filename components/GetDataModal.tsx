@@ -1,14 +1,7 @@
-import { PDFDownloadLink, Document, Page } from '@react-pdf/renderer';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import { collectedData } from '@/app/actions';
-import { useEffect, useState } from 'react';
-
-const MyDoc = ({data}: {data: object}) => (
-  <Document>
-    <Page>
-      // My document data
-    </Page>
-  </Document>
-);
+import { useEffect, useState } from 'react'
+import MyDoc from "@/components/CollectedDataDoc"
 
 interface GetDataModalProps {
   isVisible: boolean,
@@ -16,14 +9,14 @@ interface GetDataModalProps {
 }
 
 export default function GetDataModal({ isVisible, onClose }: GetDataModalProps) {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({ email: "", userId: "", stampLogs: [{ timestamp: "" }], voucherLogs: [{ timestamp: "" }] });
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await collectedData();
       setData(response);
     };
-    
+
     fetchData();
   }, [])
   console.log("testing :DD", data)
@@ -46,14 +39,14 @@ export default function GetDataModal({ isVisible, onClose }: GetDataModalProps) 
               </div>
             </div>
             <div className="bg-orange px-4 py-3 sm:flex sm:flex-col md:flex-row-reverse sm:px-6">
-              <div className="inline-flex w-full justify-center btn-secondary px-3 py-2 hover:bg-gray-50 sm:mt-0 sm:w-auto" onClick={() => onClose()}>
-                <PDFDownloadLink document={<MyDoc data={data} />} fileName="somename.pdf">
+              <div className="inline-flex w-full justify-center btn-secondary px-3 py-2 hover:bg-gray-50 sm:mt-0 sm:w-auto">
+                <PDFDownloadLink document={<MyDoc email={data.email} userId={data.userId} stampLogs={data.stampLogs} voucherLogs={data.voucherLogs} />} fileName="somename.pdf">
                   {({ blob, url, loading, error }) =>
                     loading ? 'Loading document...' : 'Download'
                   }
                 </PDFDownloadLink>
               </div>
-              <button type="button" className="inline-flex w-full justify-center btn-secondary px-3 py-2 hover:bg-gray-50 sm:mt-0 sm:w-auto" onClick={() => onClose()}>Close</button>
+              <button type="button" className="inline-flex w-full justify-center btn-secondary px-3 py-2 md:mr-2 hover:bg-gray-50 sm:mt-0 sm:w-auto" onClick={() => onClose()}>Close</button>
             </div>
           </div>
         </div>
