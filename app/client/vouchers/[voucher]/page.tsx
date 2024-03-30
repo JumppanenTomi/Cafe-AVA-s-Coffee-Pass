@@ -1,19 +1,10 @@
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
 import Nav from "@/components/Nav";
-import QrCodeGen from "@/components/QrCodeGen";
+import QrCodeGen from "@/components/QrCodes/QrCodeGen";
 import short from "short-uuid";
+import BackButton from "@/components/BackButton";
 
 export default async function SingleVoucherPage() {
-	const supabase = createClient();
 	const code = short().generate()
-	const {
-		data: { user },
-	} = await supabase.auth.getUser();
-
-	if (!user) {
-		return redirect("/auth/login");
-	}
 
 	return (
 		<div className="flex-1 w-full flex flex-col items-center">
@@ -26,6 +17,7 @@ export default async function SingleVoucherPage() {
 				<div className="circle1" />
 				<div className="circle2" />
 			</div>
+			<BackButton customUrl={"/client/vouchers"}/>
 		</div >
 	);
 }
