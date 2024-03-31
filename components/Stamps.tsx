@@ -7,6 +7,17 @@ const Stamps = () => {
     const supabase = createClient();
     const stampsRequired = parseInt(process.env.STAMPS_REQUIRED || "10") //hardcoded 10 for now
     const [activeStampCount, setActiveStampCount] = useState(0);
+    const [userId, setUserId] = useState('')
+
+
+    useEffect(() => {
+        const getUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            console.log(typeof (user?.id));
+            setUserId(user?.id || '')
+        }
+        getUser()
+    }, [])
 
     useEffect(() => {
         const fetchUserStampsCount = async () => {
@@ -19,13 +30,16 @@ const Stamps = () => {
         };
 
         fetchUserStampsCount();
-    }, []);
+    }, [activeStampCount]);
+
 
     // update activeStampCount when database changes
     useEffect(() => {
         const handleChange = async () => {
             const stampCount = await getCurrentUserActiveStampCount();
             setActiveStampCount(stampCount || 0);
+            console.log('boom');
+
         };
 
         const subscription = supabase
@@ -36,15 +50,20 @@ const Stamps = () => {
                     event: '*',
                     schema: 'public',
                     table: 'stamp_logs',
+                    filter: `user_id=eq.${userId}`
                 },
-                handleChange
+                (payload) => {
+                    console.log(payload);
+
+                    handleChange()
+                }
             )
             .subscribe();
 
         return () => {
             subscription.unsubscribe();
         };
-    }, []);
+    }, [userId]);
 
     return activeStampCount < stampsRequired ? (
         <div className={`white-container gap-2 grid grid-cols-5 row w-full place-items-center`} style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
