@@ -19,7 +19,7 @@ export default function GetDataModal({ isVisible, onClose }: GetDataModalProps) 
 
     fetchData();
   }, [])
-  console.log("testing :DD", data)
+
   if (!isVisible) return null;
   return (
     <div>
@@ -40,9 +40,10 @@ export default function GetDataModal({ isVisible, onClose }: GetDataModalProps) 
             </div>
             <div className="bg-orange px-4 py-3 sm:flex sm:flex-col md:flex-row-reverse sm:px-6">
               <div className="inline-flex w-full justify-center btn-secondary px-3 py-2 hover:bg-gray-50 sm:mt-0 sm:w-auto">
+                {/* onClose function cannot be added to PDFDownloadLink components onClick, because if it is there the modal will close but the download will get cancelled */}
                 <PDFDownloadLink document={<MyDoc email={data.email} userId={data.userId} stampLogs={data.stampLogs} voucherLogs={data.voucherLogs} />} fileName="somename.pdf">
                   {({ blob, url, loading, error }) =>
-                    loading ? 'Loading document...' : 'Download'
+                    loading ? 'Loading document' : 'Download'
                   }
                 </PDFDownloadLink>
               </div>

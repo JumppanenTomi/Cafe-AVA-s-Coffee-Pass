@@ -13,7 +13,6 @@ interface MyDocProps {
   voucherLogs: { timestamp: string }[]
 }
 
-// Work in progress. Still need to loop through all the timestamps and add them to the document.
 const MyDoc = ({ email, userId, stampLogs, voucherLogs }: MyDocProps) => (
   <Document>
     <Page>
@@ -29,11 +28,15 @@ const MyDoc = ({ email, userId, stampLogs, voucherLogs }: MyDocProps) => (
         </View>
         <View style={tw("h-full w-full flex flex-col border-b-2 p-4 flex-wrap")}>
           <Text>Stamp timestamps</Text>
-          <Text>{stampLogs[0].timestamp}</Text>
+          {stampLogs.map((stampLog) => (
+            <Text>{stampLog.timestamp}</Text>
+          ))}
         </View>
         <View style={tw("h-full w-full flex flex-col p-4 flex-wrap")}>
           <Text>Voucher timestamps</Text>
-          <Text>{voucherLogs[0].timestamp}</Text>
+          {voucherLogs.map((voucherLogs) => (
+            <Text>{voucherLogs.timestamp}</Text>
+          ))}
         </View>
       </View>
     </Page>
