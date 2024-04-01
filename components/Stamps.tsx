@@ -13,7 +13,6 @@ const Stamps = () => {
     useEffect(() => {
         const getUser = async () => {
             const { data: { user } } = await supabase.auth.getUser();
-            console.log(typeof (user?.id));
             setUserId(user?.id || '')
         }
         getUser()
@@ -38,7 +37,6 @@ const Stamps = () => {
         const handleChange = async () => {
             const stampCount = await getCurrentUserActiveStampCount();
             setActiveStampCount(stampCount || 0);
-            console.log('boom');
 
         };
 
