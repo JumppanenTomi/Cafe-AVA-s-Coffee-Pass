@@ -18,6 +18,10 @@
 	}
 }
 
+
+
+
+
 .animate-in {
 	animation: animateIn 0.3s ease 0.15s both;
 }
@@ -27,6 +31,7 @@
 		opacity: 0;
 		transform: translateY(10px);
 	}
+
 	to {
 		opacity: 1;
 		transform: translateY(0);
@@ -34,14 +39,18 @@
 }
 
 .btn-primary {
-  @apply border-2 border-black bg-black rounded-md px-4 py-2 text-orange mb-2 text-center hover:opacity-70;
+	@apply border-2 border-black bg-black rounded-md px-4 py-2 text-orange mb-2 text-center hover:opacity-70;
 }
 
 .btn-secondary {
-  @apply border-2 border-black rounded-md px-4 py-2 text-black text-center font-bold mb-2 hover:opacity-70;
+	@apply border-2 border-black rounded-md px-4 py-2 text-black text-center font-bold mb-2 hover:opacity-70;
 }
 
-.input-label > label {
+.input-label {
+	@apply block mb-2 font-medium text-black
+}
+
+.input-label>label {
 	@apply text-red-500
 }
 
@@ -49,42 +58,67 @@
 	resize: none;
 }
 
-.input{
-	@apply rounded-md px-4 py-2 bg-inherit border-black border mb-6 shadow-md bg-white focus:border-2
+.input {
+	@apply rounded-md px-4 py-2 bg-inherit border-black border shadow-md bg-white text-black focus:border-2 block w-full
 }
 
-.form{
+.input-helper-text {
+	@apply mt-2 text-sm text-gray-500
+}
+
+.form {
 	@apply flex-1 flex flex-col w-full justify-center gap-2 text-foreground
 }
 
-.form-error{
+.form-error {
 	@apply mt-4 p-4 bg-red-500 text-white rounded-md
 }
 
-.form-success{
+.form-success {
 	@apply mt-4 p-4 bg-green-500 text-white rounded-md
 }
 
-.white-container{
+.white-container {
+
 	@apply bg-white p-5 rounded-md shadow-2xl
 }
 
-.white-container-no-p{
+.white-container-no-p {
 	@apply bg-white rounded-md shadow-2xl
 }
 
-h1, h2{
+h1, h2 {
 	@apply font-bold
 }
 
-h1{
+h1 {
 	@apply text-3xl
 }
 
-h2{
+h2 {
 	@apply text-2xl
 }
 
-h3{
+h3 {
 	@apply text-xl
+}
+
+.voucher {
+	@apply bg-orange relative p-5 rounded-md relative
+}
+
+.voucher-part {
+	@apply bg-white relative p-5 rounded-b-lg shadow-2xl border-t-2 text-center
+}
+
+.circle1, .circle2 {
+	@apply bg-orange absolute w-5 h-5 rounded-full;
+}
+
+.circle1 {
+	@apply left-3 top-60
+}
+
+.circle2 {
+	@apply right-3 top-60
 }

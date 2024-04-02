@@ -1,14 +1,47 @@
-export function Statistics(){
-	//TODO: Add logic to count stats
+import {createClient} from "@/utils/supabase/server";
+
+const getAllStaps = async () => {
+	'use server'
+	const supabase = createClient()
+	const user = await supabase.auth.getUser()
+	const userId = user.data.user?.id
+	const {count, error} = await supabase
+		.from("stamp_logs")
+		.select('*', {head: true, count: 'exact'})
+		.eq("user_id", userId)
+
+	if (error) console.log(error)
+	return count
+}
+
+const getAllUsedStaps = async () => {
+	'use server'
+	const supabase = createClient()
+	const user = await supabase.auth.getUser()
+	const userId = user.data.user?.id
+	const {count, error} = await supabase
+		.from("stamp_logs")
+		.select('*', {head: true, count: 'exact'})
+		.eq("user_id", userId)
+		.eq('is_used', true)
+
+	if (error) console.log(error)
+	return count
+}
+
+export async function Statistics() {
+	const stampsTotal = await getAllStaps()
+	const usedStamps = await getAllUsedStaps()
+
 	return (
 		<div className={'white-container w-full flex flex-wrap justify-between text-center'}>
 			<div>
-				<h4><b>Total Visits</b></h4>
-				<h4>--</h4>
+				<h4><b>Used Stamps</b></h4>
+				<h4>{usedStamps}</h4>
 			</div>
 			<div>
 				<h4><b>Total Stamps</b></h4>
-				<h4>--</h4>
+				<h4>{stampsTotal}</h4>
 			</div>
 		</div>
 	)

@@ -21,8 +21,8 @@ export default function Login({searchParams}: { searchParams: { isError: string,
 			options: {
 				// set this to false if you do not want the user to be automatically signed up
 				shouldCreateUser: false,
-				// Add http://localhost:3000/auth/callback at the end of magiclink's redirect portion so that the route.ts can handle logging in the user.
-				emailRedirectTo: "http://localhost:3000/auth/callback"
+				// Add domain at the end of magiclink's redirect portion so that the route.ts can handle logging in the user.
+				emailRedirectTo: `${process.env.NEXT_PUBLIC_VERCEL_URL}/auth/callback`
 			  },
 		});
 
@@ -45,7 +45,7 @@ export default function Login({searchParams}: { searchParams: { isError: string,
 				<p className={'text-center font-medium max-w-screen-sm'}>Once you have submitted your email, a sign-in link will be sent directly to your inbox. Using this link, you can securely access website.</p>
 				<Form isError={searchParams.isError == "true"} error={searchParams.message}>
 					<EmailInput/>
-					<div className={"flex items-center w-full gap-4"}>
+					<div className={"flex items-center w-full gap-4 mt-5"}>
 						<Link href={"/"} className={'btn-secondary w-full'}>Back</Link>
 						<FormSubmitButton
 							formAction={signIn}
