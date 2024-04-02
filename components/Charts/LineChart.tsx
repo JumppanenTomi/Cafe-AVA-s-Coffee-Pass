@@ -12,7 +12,6 @@ import {
 	Tooltip,
 } from 'chart.js';
 import {Line} from 'react-chartjs-2';
-import {countByMonth} from "@/utils/stats";
 
 ChartJS.register(
 	CategoryScale,
@@ -32,6 +31,22 @@ interface LineChartProps {
 	dataset: ChartDataElement[] | null;
 	name: string;
 	dateCol: string;
+}
+
+const countByMonth = <T extends Record<any, string>, K extends keyof T>(arr: {
+	[key: string]: any
+}[], key: string): number[] => {
+	const record: Record<number, number> = arr.reduce((acc, curr: any) => {
+		const date = new Date(curr[key]);
+		const month = date.getMonth(); // getMonth() returns a value from 0 (January) to 11 (December)
+		acc[month] = (acc[month] || 0) + 1;
+		return acc;
+	}, {} as Record<number, number>);
+	const result: number[] = [];
+	for (let i = 0; i < 12; i++) { // Loop for every month
+		result[i] = record[i] ?? 0; // Fill result with count of each month or 0 if there's no record
+	}
+	return result;
 }
 
 const FALLBACK_LABELS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', "September", "October", "November", "December"];
