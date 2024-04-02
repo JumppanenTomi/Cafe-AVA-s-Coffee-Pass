@@ -1,4 +1,4 @@
-import { PDFDownloadLink, Document, Page, View, Text } from '@react-pdf/renderer';
+import { Document, Page, View, Text } from '@react-pdf/renderer';
 import { createTw } from "react-pdf-tailwind";
 import tailwindConfig from "../tailwind.config"
 
@@ -26,13 +26,13 @@ const MyDoc = ({ email, userId, stampLogs, voucherLogs }: MyDocProps) => (
           <Text>User ID</Text>
           <Text>{userId}</Text>
         </View>
-        <View style={tw("h-full w-full flex flex-col border-b-2 p-4 flex-wrap")}>
+        <View style={tw("h-full w-full flex flex-col border-b-2 p-4")}>
           <Text>Stamp timestamps</Text>
           {stampLogs.map((stampLog) => (
             <Text>{stampLog.timestamp}</Text>
           ))}
         </View>
-        <View style={tw("h-full w-full flex flex-col p-4 flex-wrap")}>
+        <View style={tw("h-full w-full flex flex-col p-4")}>
           <Text>Voucher timestamps</Text>
           {voucherLogs.map((voucherLogs) => (
             <Text>{voucherLogs.timestamp}</Text>
