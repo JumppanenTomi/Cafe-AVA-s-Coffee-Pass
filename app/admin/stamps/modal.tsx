@@ -5,14 +5,18 @@ import { createStamps } from "./server";
 import { Form } from "@/components/Inputs/Form";
 import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
 
-export default function CreateModal({ show, toggleShow, users }) {
+export default function CreateModal({
+  show,
+  toggleShow,
+  users,
+}: {
+  show: boolean;
+  toggleShow: () => void;
+  users: any[];
+}) {
   const handleSubmit = async (formData: FormData) => {
-    const response = await createStamps(formData);
-    if (response.error) {
-      console.log(response.error);
-    } else {
-      window.location.reload();
-    }
+    await createStamps(formData);
+    window.location.reload();
   };
 
   return (
@@ -48,7 +52,7 @@ export default function CreateModal({ show, toggleShow, users }) {
             </button>
           </div>
 
-          <Form>
+          <Form isError={false} error="">
             <div>
               <label
                 htmlFor="user_id"
