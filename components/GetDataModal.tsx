@@ -1,9 +1,25 @@
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import { collectedData } from '@/app/actions';
+import { useEffect, useState } from 'react'
+import MyDoc from "@/components/CollectedDataDoc"
+
 interface GetDataModalProps {
   isVisible: boolean,
   onClose: () => void
 }
 
-export default function GetDataModal({isVisible, onClose}: GetDataModalProps) {
+export default function GetDataModal({ isVisible, onClose }: GetDataModalProps) {
+  const [data, setData] = useState({ email: "", userId: "", stampLogs: [{ timestamp: "", stamp_log_id: 0 }], voucherLogs: [{ timestamp: "", voucher_log_id: 0 }] });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await collectedData();
+      setData(response);
+    };
+
+    fetchData();
+  }, [])
+
   if (!isVisible) return null;
   return (
     <div>
@@ -14,17 +30,24 @@ export default function GetDataModal({isVisible, onClose}: GetDataModalProps) {
           <div className="relative transform overflow-hidden rounded-lg bg-orange text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
             <div className="bg-orange px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
               <div className="sm:flex sm:items-start">
-                <div className="mt-3 text-center sm:mx-4 sm:mt-0 sm:text-left">
-                  <h3 className="text-base font-semibold leading-6 text-gray-900" id="modal-title">Request all data</h3>
+                <div className="mt-3 sm:text-center md:text-start sm:mt-0">
+                  <h2 className="font-semibold leading-6 text-gray-900" id="modal-title">Download all collected user information</h2>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">The data will be sent to your registered email address.</p>
+                    <p className="text-sm text-gray-500">Press the Download button to donwload a document with all your user information that we've collected.</p>
                   </div>
                 </div>
               </div>
             </div>
             <div className="bg-orange px-4 py-3 sm:flex sm:flex-col md:flex-row-reverse sm:px-6">
-              <button type="button" className="inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-50 md:ml-3 sm:w-auto">Request data</button>
-              <button type="button" className="sm:mt-2 md:mt-0 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" onClick={() => onClose()}>Cancel</button>
+              <div className="inline-flex w-full justify-center btn-secondary px-3 py-2 hover:bg-gray-50 sm:mt-0 sm:w-auto">
+                {/* onClose function cannot be added to PDFDownloadLink components onClick, because if it is there the modal will close but the download will get cancelled */}
+                <PDFDownloadLink document={<MyDoc email={data.email} userId={data.userId} stampLogs={data.stampLogs} voucherLogs={data.voucherLogs} />} fileName="Cafe AVA Coffee Pass collected user information.pdf">
+                  {({ blob, url, loading, error }) =>
+                    loading ? 'Loading document' : 'Download'
+                  }
+                </PDFDownloadLink>
+              </div>
+              <button type="button" className="inline-flex w-full justify-center btn-secondary px-3 py-2 md:mr-2 hover:bg-gray-50 sm:mt-0 sm:w-auto" onClick={() => onClose()}>Close</button>
             </div>
           </div>
         </div>

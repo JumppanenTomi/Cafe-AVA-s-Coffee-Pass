@@ -5,7 +5,6 @@ import { useState } from "react"
 
 export default function ToggleButton() {
   const [toggle, setToggle] = useState<boolean>(false);
-  console.log("toggle on", toggle)
   return (
     <div className="flex items-center">
       <div
