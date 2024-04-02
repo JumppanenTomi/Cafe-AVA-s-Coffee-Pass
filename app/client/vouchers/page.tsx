@@ -63,9 +63,11 @@ export default async function VouchersPage() {
 	return (
 		<Suspense>
 			<Nav/>
-				{vouchers?.map(voucher => (
+				{(vouchers && vouchers?.length > 0) ? vouchers?.map(voucher => (
 					<VoucherListItem voucher={voucher} />
-				))}
+				)) : (
+					<h1>No active vouchers.</h1>
+				)}
 			<BackButton/>
 		</Suspense>
 	);
