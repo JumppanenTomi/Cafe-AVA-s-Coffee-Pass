@@ -1,3 +1,4 @@
+import { fetchUsers } from "../users/server";
 import StampsClient from "./client";
 import { fetchStamps, fetchStampsCount } from "./server";
 
@@ -18,5 +19,7 @@ export default async function StampsPage({
     fetchStampsCount(query),
   ]);
 
-  return <StampsClient stamps={stamps} count={count} query={query} sort={sort} currentPage={currentPage} />;
+  const users = await fetchUsers(1);
+
+  return <StampsClient stamps={stamps} count={count} users={users} query={query} sort={sort} currentPage={currentPage} />;
 }
