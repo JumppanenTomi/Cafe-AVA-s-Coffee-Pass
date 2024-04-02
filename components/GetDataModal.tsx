@@ -9,7 +9,7 @@ interface GetDataModalProps {
 }
 
 export default function GetDataModal({ isVisible, onClose }: GetDataModalProps) {
-  const [data, setData] = useState({ email: "", userId: "", stampLogs: [{ timestamp: "" }], voucherLogs: [{ timestamp: "" }] });
+  const [data, setData] = useState({ email: "", userId: "", stampLogs: [{ timestamp: "", stamp_log_id: 0 }], voucherLogs: [{ timestamp: "", voucher_log_id: 0 }] });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +41,7 @@ export default function GetDataModal({ isVisible, onClose }: GetDataModalProps) 
             <div className="bg-orange px-4 py-3 sm:flex sm:flex-col md:flex-row-reverse sm:px-6">
               <div className="inline-flex w-full justify-center btn-secondary px-3 py-2 hover:bg-gray-50 sm:mt-0 sm:w-auto">
                 {/* onClose function cannot be added to PDFDownloadLink components onClick, because if it is there the modal will close but the download will get cancelled */}
-                <PDFDownloadLink document={<MyDoc email={data.email} userId={data.userId} stampLogs={data.stampLogs} voucherLogs={data.voucherLogs} />} fileName="Cafe AVA coffee pass collected user information.pdf">
+                <PDFDownloadLink document={<MyDoc email={data.email} userId={data.userId} stampLogs={data.stampLogs} voucherLogs={data.voucherLogs} />} fileName="Cafe AVA Coffee Pass collected user information.pdf">
                   {({ blob, url, loading, error }) =>
                     loading ? 'Loading document' : 'Download'
                   }
