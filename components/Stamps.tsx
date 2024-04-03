@@ -1,43 +1,27 @@
 'use client'
-import { getCurrentUserActiveStampCount } from "@/app/client/actions";
-import { useState, useEffect } from "react";
-import { createClient } from "@/utils/supabase/client";
 
-const Stamps = () => {
-    const supabase = createClient();
-    const stampsRequired = parseInt(process.env.STAMPS_REQUIRED || "10") //hardcoded 10 for now
-    const [activeStampCount, setActiveStampCount] = useState(0);
-    const [userId, setUserId] = useState('')
+import { createClient } from "@/utils/supabase/client"
+import { useEffect, useState } from "react"
+interface StampsProps {
+    activeStampCount: number;
+    stampsRequired: number;
+    userId: string;
+    getCurrentUserActiveStampCount: () => Promise<number | undefined>;
+}
 
+const Stamps = ({ activeStampCount, stampsRequired, userId, getCurrentUserActiveStampCount }: StampsProps) => {
+    const [stampCount, setStampCount] = useState(activeStampCount)
+    const supabase = createClient()
 
     useEffect(() => {
-        const getUser = async () => {
-            const { data: { user } } = await supabase.auth.getUser();
-            setUserId(user?.id || '')
-        }
-        getUser()
+        setStampCount(activeStampCount)
     }, [])
-
-    useEffect(() => {
-        const fetchUserStampsCount = async () => {
-            try {
-                const stampCount = await getCurrentUserActiveStampCount();
-                setActiveStampCount(stampCount || 0);
-            } catch (error) {
-                console.error("Error fetching active stamp count:", error);
-            }
-        };
-
-        fetchUserStampsCount();
-    }, [activeStampCount]);
-
 
     // update activeStampCount when database changes
     useEffect(() => {
         const handleChange = async () => {
             const stampCount = await getCurrentUserActiveStampCount();
-            setActiveStampCount(stampCount || 0);
-
+            setStampCount(stampCount || 0);
         };
 
         const subscription = supabase
@@ -51,8 +35,6 @@ const Stamps = () => {
                     filter: `user_id=eq.${userId}`
                 },
                 (payload) => {
-                    console.log(payload);
-
                     handleChange()
                 }
             )
@@ -61,16 +43,18 @@ const Stamps = () => {
         return () => {
             subscription.unsubscribe();
         };
-    }, [userId]);
+    }, [getCurrentUserActiveStampCount, stampCount]);
 
-    return activeStampCount < stampsRequired ? (
+
+
+    return stampCount < stampsRequired ? (
         <div className={`white-container gap-2 grid grid-cols-5 row w-full place-items-center`} style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
-            {Array.from({ length: activeStampCount }).map((_, index) => (
+            {Array.from({ length: stampCount }).map((_, index) => (
                 <svg key={`activeStamp-${index}`} xmlns="http://www.w3.org/2000/svg" viewBox="-2 -6 24 24" width="30" fill="#000">
                     <path d="M0 0h17a3 3 0 0 1 0 6h-1.252A8 8 0 0 1 0 4V0zm16 4h1a1 1 0 0 0 0-2h-1v2z"></path>
                 </svg>
             ))}
-            {Array.from({ length: (stampsRequired - activeStampCount) }).map((_, index) => (
+            {Array.from({ length: (stampsRequired - stampCount) }).map((_, index) => (
                 <svg key={`activeStamp-${index}`} xmlns="http://www.w3.org/2000/svg" viewBox="-2 -6 24 24" width="30" fill="#000">
                     <path
                         d="M2 4a6 6 0 1 0 12 0V2H2v2zm14-4h1a3 3 0 0 1 0 6h-1.252A8 8 0 0 1 0 4V0h16zm0 4h1a1 1 0 0 0 0-2h-1v2z"></path>
@@ -87,4 +71,4 @@ const Stamps = () => {
     )
 }
 
-export default Stamps;
+export default Stamps
