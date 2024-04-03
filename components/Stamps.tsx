@@ -1,5 +1,4 @@
 'use client'
-
 import { createClient } from "@/utils/supabase/client"
 import { useEffect, useState } from "react"
 interface StampsProps {
@@ -44,8 +43,6 @@ const Stamps = ({ activeStampCount, stampsRequired, userId, getCurrentUserActive
             subscription.unsubscribe();
         };
     }, [getCurrentUserActiveStampCount, stampCount]);
-
-
 
     return stampCount < stampsRequired ? (
         <div className={`white-container gap-2 grid grid-cols-5 row w-full place-items-center`} style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}>
