@@ -35,10 +35,11 @@ const fetchVoucherUsePerUser = async (voucherId: number) => {
 
 export default async function VouchersPage() {
 	const vouchers = await fetchAllVouchers();
+
 	return (
 		<Suspense>
 			<Nav />
-			<VoucherList vouchers={vouchers} fetchVoucherUsePerUser={fetchVoucherUsePerUser} />
+			<VoucherList initialVouchers={vouchers} fetchVoucherUsePerUser={fetchVoucherUsePerUser} />
 			<BackButton />
 		</Suspense>
 	);
