@@ -18,6 +18,7 @@ const fetchAllVouchers = async () => {
 		.filter('start_date', 'lte', currentDate)
 		.filter('end_date', 'gte', currentDate);
 	return vouchers;
+
 };
 
 const fetchVoucherUsePerUser = async (voucherId: number) => {
@@ -34,12 +35,11 @@ const fetchVoucherUsePerUser = async (voucherId: number) => {
 
 
 export default async function VouchersPage() {
-	const vouchers = await fetchAllVouchers();
-
+	const initialVouchers = await fetchAllVouchers();
 	return (
 		<Suspense>
 			<Nav />
-			<VoucherList initialVouchers={vouchers} fetchVoucherUsePerUser={fetchVoucherUsePerUser} />
+			<VoucherList initialVouchers={initialVouchers} fetchVoucherUsePerUser={fetchVoucherUsePerUser} fetchAllVouchers={fetchAllVouchers} />
 			<BackButton />
 		</Suspense>
 	);

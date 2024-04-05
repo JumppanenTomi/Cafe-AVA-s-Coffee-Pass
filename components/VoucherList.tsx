@@ -6,18 +6,16 @@ import formatDateToFinnish from "./formatDateToFinnish";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 
-const supabase = createClient()
-
 const VoucherListItem = ({ voucher, fetchVoucherUsePerUser }:
     {
-        voucher: any, fetchVoucherUsePerUser:
-        (voucherId: number) => Promise<number | undefined>
+        voucher: any, fetchVoucherUsePerUser: (voucherId: number) => Promise<number | undefined>
     }) => {
 
     const [used, setUsed] = useState(0)
     const voucherId = voucher.voucher_id
     const uses = voucher.uses_per_user
     const active = uses !== null && used >= uses
+    const supabase = createClient()
 
     const setVariables = async () => {
         setUsed(await fetchVoucherUsePerUser(voucherId) || 0)
@@ -35,11 +33,10 @@ const VoucherListItem = ({ voucher, fetchVoucherUsePerUser }:
                 {
                     event: '*',
                     schema: 'public',
-                    table: 'vouchers',
+                    table: 'voucher_logs',
                     // filter: `user_id=eq.${userId}`
                 },
                 (payload) => {
-                    console.log(payload);
                     setVariables()
                 }
             )
@@ -49,14 +46,6 @@ const VoucherListItem = ({ voucher, fetchVoucherUsePerUser }:
             subscription.unsubscribe();
         };
     }, [])
-
-    // useEffect(() => {
-    //     console.log(voucher);
-    //     console.log(active);
-    //     console.log(used)
-    //     console.log(uses);
-    //     console.log(voucherId);
-    // })
 
     return (
         <Link href={`/client/vouchers/${voucherId}`} className={`w-full ${(active) && "opacity-50"}`}>
@@ -73,44 +62,48 @@ const VoucherListItem = ({ voucher, fetchVoucherUsePerUser }:
         </Link>
     );
 };
-const VoucherList = ({ initialVouchers, fetchVoucherUsePerUser }: {
-    initialVouchers: any, fetchVoucherUsePerUser:
-    (voucherId: number) => Promise<number | undefined>
+
+const VoucherList = ({ initialVouchers, fetchVoucherUsePerUser, fetchAllVouchers }: {
+    initialVouchers: any,
+    fetchVoucherUsePerUser: (voucherId: number) => Promise<number | undefined>,
+    fetchAllVouchers: () => Promise<[]>
 }) => {
     const [vouchers, setVouchers] = useState(initialVouchers)
+    const supabase = createClient()
+
 
     useEffect(() => {
-        //  setVouchers(initialVouchers)
-    }, [])
+        const handleChange = async () => {
+            try {
+                const updatedVouchers = await fetchAllVouchers();
+                setVouchers(updatedVouchers);
+            } catch (error) {
+                console.error('Error updating vouchers:', error); // Log if there's an error updating vouchers
+            }
+        };
 
-    useEffect(() => {
         const subscription = supabase
             .channel('table-db-changes')
-            .on(
-                'postgres_changes',
+            .on('postgres_changes',
                 {
                     event: '*',
                     schema: 'public',
                     table: 'vouchers',
-                    // filter: `user_id=eq.${userId}`
                 },
                 (payload) => {
-                    setVouchers([...vouchers, payload.new])
-                }
-            )
+                    handleChange(); // Call handleChange to update vouchers separately
+                })
             .subscribe();
 
         return () => {
             subscription.unsubscribe();
         };
-    })
-
-    console.log(vouchers);
+    }, [vouchers, setVouchers, supabase])
 
     return (
         <div>
             {vouchers && vouchers.length > 0 ? vouchers.map((voucher: any) => (
-                <VoucherListItem key={Math.floor(Math.random() * 1000)} voucher={voucher} fetchVoucherUsePerUser={fetchVoucherUsePerUser} />
+                <VoucherListItem key={voucher.voucher_id} voucher={voucher} fetchVoucherUsePerUser={fetchVoucherUsePerUser} />
             )) : (
                 <h1>No active vouchers.</h1>
             )}

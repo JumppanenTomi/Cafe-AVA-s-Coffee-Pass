@@ -12,10 +12,6 @@ const Stamps = ({ activeStampCount, stampsRequired, userId, getCurrentUserActive
     const [stampCount, setStampCount] = useState(activeStampCount)
     const supabase = createClient()
 
-    useEffect(() => {
-        setStampCount(activeStampCount)
-    }, [])
-
     // update activeStampCount when database changes
     useEffect(() => {
         const handleChange = async () => {
