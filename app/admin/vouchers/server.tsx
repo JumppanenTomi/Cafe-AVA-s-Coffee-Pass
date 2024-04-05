@@ -52,3 +52,32 @@ export const deleteVouchers = async (ids: number[]) => {
 
   if (error) throw error;
 };
+
+export const createVouchers = async (formData: FormData) => {
+  const supabase = createClient(true);
+  const rawFormData = {
+    user_id: formData.get('user_id'),
+    voucher_id: formData.get('voucher_id'),
+  };
+
+  const { data, error } = await supabase
+    .from("voucher_logs")
+    .insert([rawFormData])
+    .select();
+
+  if (error) throw error;
+  return data;
+}
+
+export const fetchVoucherTypes = async (query: string) => {
+  const supabase = createClient(true);
+
+  const { data, error } = await supabase
+    .from("vouchers")
+    .select()
+    .ilike('name', `%${query}%`)
+    .range(0, 10)
+
+  if (error) throw error;
+  return data;
+};
