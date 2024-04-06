@@ -69,7 +69,7 @@ export default function StampsClient({
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
 
   return (
-    <div className="container flex-1 w-full flex flex-col gap-8">
+    <div className="flex-1 w-full flex flex-col gap-8">
       <CreateModal
         show={showAddModal}
         toggleShow={() => setShowAddModal(!showAddModal)}

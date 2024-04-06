@@ -25,7 +25,7 @@ export default function Login({
         // set this to false if you do not want the user to be automatically signed up
         shouldCreateUser: false,
         // Add http://localhost:3000/auth/callback at the end of magiclink's redirect portion so that the route.ts can handle logging in the user.
-        emailRedirectTo: "http://localhost:3000/auth/callback",
+        emailRedirectTo: `${origin}/auth/callback`,
       },
     });
 
