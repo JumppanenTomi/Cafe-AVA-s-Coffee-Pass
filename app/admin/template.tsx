@@ -40,11 +40,11 @@ export default function AdminTemplate({
           !show && "-translate-x-full"
         }`}
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-orange">
+        <div className="h-full px-3 py-4 overflow-y-auto bg-orange flex flex-col">
           <Link href="/admin" className="flex items-center ps-2.5 mb-5">
             <Image src={logo} alt={"Cafe AVA- Logo"} width={50} />
           </Link>
-          <ul className="space-y-2 font-medium">
+          <ul className="space-y-2 font-medium flex-grow">
             <li>
               <Link
                 href="#"
@@ -86,6 +86,7 @@ export default function AdminTemplate({
               </Link>
             </li>
           </ul>
+          <Link href={'/client'} className={'btn-primary'}>Peek client app</Link>
         </div>
       </aside>
 
