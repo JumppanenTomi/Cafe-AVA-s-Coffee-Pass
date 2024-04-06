@@ -1,10 +1,10 @@
 "use client";
 
-import NumberInput from "@/components/Inputs/NumberInput";
 import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
-import { createStamps } from "./server";
+import { createVouchers, fetchVoucherTypes } from "./server";
 import { Form } from "@/components/Inputs/Form";
 import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import { useEffect, useState } from "react";
 
 export default function CreateModal({
   show,
@@ -16,9 +16,21 @@ export default function CreateModal({
   users: any[];
 }) {
   const handleSubmit = async (formData: FormData) => {
-    await createStamps(formData);
+    await createVouchers(formData);
     window.location.reload();
   };
+
+  const [text, setText] = useState("");
+  const [voucherTypes, setVoucherTypes] = useState<any[]>([]);
+
+  useEffect(() => {
+    const getVoucherTypes = async () => {
+      const data = await fetchVoucherTypes(text);
+      setVoucherTypes(data);
+    };
+
+    getVoucherTypes();
+  }, [text]);
 
   return (
     <div
@@ -30,7 +42,7 @@ export default function CreateModal({
       <div className="relative p-4 w-full max-w-2xl h-full md:h-auto">
         <div className="relative p-4 bg-white rounded-lg shadow sm:p-5">
           <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5">
-            <h3 className="text-lg font-semibold text-gray-900">Add Stamp</h3>
+            <h3 className="text-lg font-semibold text-gray-900">Add Voucher</h3>
             <button
               type="button"
               className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -63,13 +75,15 @@ export default function CreateModal({
                 label: user.email,
               }))}
             />
-
-            <NumberInput
-              inputName="amount"
-              inputLabel="Amount"
-              inputPlaceholder="Number of stamps"
-              min={1}
-              helperText="The number of stamps created for this user."
+            <AutoCompleteInput
+              inputName="voucher_id"
+              inputLabel="Voucher Type"
+              inputPlaceholder="Select a voucher type"
+              onInputChange={(value) => setText(value)}
+              options={voucherTypes.map((type) => ({
+                id: type.voucher_id,
+                label: type.name,
+              }))}
             />
             <FormSubmitButton formAction={handleSubmit} pendingText="Adding...">
               Save

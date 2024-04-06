@@ -1,3 +1,4 @@
+import { fetchUsers } from "../users/server";
 import VouchersClient from "./client";
 import { fetchVouchers, fetchVouchersCount } from "./server";
 
@@ -18,5 +19,7 @@ export default async function VouchersPage({
     fetchVouchersCount(query),
   ]);
 
-  return <VouchersClient vouchers={vouchers} count={count} query={query} sort={sort} currentPage={currentPage} />;
+  const users = await fetchUsers(1);
+
+  return <VouchersClient vouchers={vouchers} count={count} users={users} query={query} sort={sort} currentPage={currentPage} />;
 }
