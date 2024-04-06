@@ -9,6 +9,7 @@ const getFormattedDate = (date: Date): string => {
 };
 
 const fetchAllVouchers = async () => {
+
 	'use server'
 	const supabase = createClient();
 	const currentDate = getFormattedDate(new Date());
@@ -31,15 +32,19 @@ const fetchVoucherUsePerUser = async (voucherId: number) => {
 		.eq("user_id", user.data.user?.id)
 		.eq("voucher_id", voucherId);
 	return count ?? 0;
-};
+}
 
 
 export default async function VouchersPage() {
 	const initialVouchers = await fetchAllVouchers();
+	const supabase = createClient();
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
 	return (
 		<Suspense>
 			<Nav />
-			<VoucherList initialVouchers={initialVouchers} fetchVoucherUsePerUser={fetchVoucherUsePerUser} fetchAllVouchers={fetchAllVouchers} />
+			<VoucherList initialVouchers={initialVouchers} fetchVoucherUsePerUser={fetchVoucherUsePerUser} fetchAllVouchers={fetchAllVouchers} userId={user?.id} />
 			<BackButton />
 		</Suspense>
 	);

@@ -6,9 +6,9 @@ import formatDateToFinnish from "./formatDateToFinnish";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 
-const VoucherListItem = ({ voucher, fetchVoucherUsePerUser }:
+const VoucherListItem = ({ voucher, fetchVoucherUsePerUser, userId }:
     {
-        voucher: any, fetchVoucherUsePerUser: (voucherId: number) => Promise<number | undefined>
+        voucher: any, fetchVoucherUsePerUser: (voucherId: number) => Promise<number | undefined>, userId: string
     }) => {
 
     const [used, setUsed] = useState(0)
@@ -17,12 +17,12 @@ const VoucherListItem = ({ voucher, fetchVoucherUsePerUser }:
     const active = uses !== null && used >= uses
     const supabase = createClient()
 
-    const setVariables = async () => {
+    const setUsedVouchers = async () => {
         setUsed(await fetchVoucherUsePerUser(voucherId) || 0)
     }
 
     useEffect(() => {
-        setVariables()
+        setUsedVouchers()
     }, [])
 
     useEffect(() => {
@@ -34,18 +34,17 @@ const VoucherListItem = ({ voucher, fetchVoucherUsePerUser }:
                     event: '*',
                     schema: 'public',
                     table: 'voucher_logs',
-                    // filter: `user_id=eq.${userId}`
+                    filter: `user_id=eq.${userId}`
                 },
                 (payload) => {
-                    setVariables()
+                    setUsedVouchers()
                 }
             )
             .subscribe();
-
         return () => {
             subscription.unsubscribe();
         };
-    }, [])
+    }, [supabase, used, setUsedVouchers, voucherId])
 
     return (
         <Link href={`/client/vouchers/${voucherId}`} className={`w-full ${(active) && "opacity-50"}`}>
@@ -63,14 +62,14 @@ const VoucherListItem = ({ voucher, fetchVoucherUsePerUser }:
     );
 };
 
-const VoucherList = ({ initialVouchers, fetchVoucherUsePerUser, fetchAllVouchers }: {
+const VoucherList = ({ initialVouchers, fetchVoucherUsePerUser, fetchAllVouchers, userId }: {
     initialVouchers: any,
     fetchVoucherUsePerUser: (voucherId: number) => Promise<number | undefined>,
-    fetchAllVouchers: () => Promise<[]>
+    fetchAllVouchers: () => Promise<any[] | null>,
+    userId: string
 }) => {
     const [vouchers, setVouchers] = useState(initialVouchers)
     const supabase = createClient()
-
 
     useEffect(() => {
         const handleChange = async () => {
@@ -91,7 +90,7 @@ const VoucherList = ({ initialVouchers, fetchVoucherUsePerUser, fetchAllVouchers
                     table: 'vouchers',
                 },
                 (payload) => {
-                    handleChange(); // Call handleChange to update vouchers separately
+                    handleChange()
                 })
             .subscribe();
 
@@ -103,7 +102,7 @@ const VoucherList = ({ initialVouchers, fetchVoucherUsePerUser, fetchAllVouchers
     return (
         <div>
             {vouchers && vouchers.length > 0 ? vouchers.map((voucher: any) => (
-                <VoucherListItem key={voucher.voucher_id} voucher={voucher} fetchVoucherUsePerUser={fetchVoucherUsePerUser} />
+                <VoucherListItem key={voucher.voucher_id} voucher={voucher} fetchVoucherUsePerUser={fetchVoucherUsePerUser} userId={userId} />
             )) : (
                 <h1>No active vouchers.</h1>
             )}
