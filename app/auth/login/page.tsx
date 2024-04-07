@@ -1,8 +1,8 @@
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
-import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import {createClient} from "@/utils/supabase/server";
+import {redirect} from "next/navigation";
+import {FormSubmitButton} from "@/components/Inputs/FormSubmitButton";
 import EmailInput from "@/components/Inputs/EmailInput";
-import { Form } from "@/components/Inputs/Form";
+import {Form} from "@/components/Inputs/Form";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/logo.png";
@@ -68,6 +68,12 @@ export default function Login({
               Sign In
             </FormSubmitButton>
           </div>
+          {process.env.NEXT_PUBLIC_VERCEL_URL! === "http://localhost:3000" &&
+              <div className={'flex flex-col'}>
+                <Link href={"http://127.0.0.1:54324/"} className={'btn-primary'}>Open dev mailbox</Link>
+                <label>*only visible when in local environment</label>
+              </div>
+          }
         </Form>
       </div>
     </div>
