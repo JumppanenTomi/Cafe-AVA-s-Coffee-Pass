@@ -1,7 +1,3 @@
-Certainly! Below is an improved version of your README:
-
----
-
 # Setting Up Supabase Locally
 
 ## 1. Install Docker
@@ -30,7 +26,25 @@ scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
 scoop install supabase
 ```
 
-## 4. Start Supabase Stack
+## 4. Login to Supabase CLI and Link Project with Remote
+
+To begin, sign in to Supabase CLI using the following command and follow the instructions prompted:
+
+```bash
+supabase login
+```
+
+Once logged in, you need to link your local project with the remote project. Execute the command below to initiate the linking process:
+
+```bash
+supabase link
+```
+
+This command will display a list of projects associated with your account. Use the arrow keys to select the correct project and press Enter. You will then be prompted to enter or copy-paste your database password.
+
+By linking your local project with the remote one, you establish a connection that allows you to push and pull changes between your local environment and the remote Supabase project.
+
+## 5. Start Supabase Stack
 
 Navigate to your project folder and start the Supabase stack using the following command:
 
@@ -55,7 +69,7 @@ service_role key: XXXXX
 
 Copy the `anon` and `service_role` key values and paste them into your `.env.local` file.
 
-## 5. Pull Latest Database Changes
+## 6. Pull Latest Database Changes
 
 To ensure that you are working with the latest version of the database (also in future if there are any changes in
 remote you should do this), use the following bash command:
@@ -76,7 +90,7 @@ supabase migration up
 Executing this command in your bash terminal will instruct the Supabase stack to apply the newest migration file to your
 database, ensuring that your local database is up-to-date with the latest changes.
 
-## 6. Start Developing
+## 7. Start Developing
 
 With the Supabase stack running locally, you're ready to start developing. Begin your app with the following prompt:
 
@@ -86,7 +100,7 @@ npm run dev
 
 Now, you can navigate to [http://localhost:3000](http://localhost:3000) to view your application. Please note that the local Supabase stack doesn't require normal SMTP configuration. Therefore, all emails, including authentication emails, can be found ONLY on the Inbucket site at [http://127.0.0.1:54324](http://127.0.0.1:54324).
 
-## 7. Deploy Local Database Changes to Remote
+## 8. Deploy Local Database Changes to Remote
 
 As per the Supabase CLI documentation, you can deploy changes made on your local Supabase stack to the remote database using the following bash command:
 
