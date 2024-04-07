@@ -44,7 +44,7 @@ export default async function VouchersPage() {
 	return (
 		<Suspense>
 			<Nav />
-			<VoucherList initialVouchers={initialVouchers} fetchVoucherUsePerUser={fetchVoucherUsePerUser} fetchAllVouchers={fetchAllVouchers} userId={user?.id} />
+			<VoucherList initialVouchers={initialVouchers} fetchVoucherUsePerUser={fetchVoucherUsePerUser} fetchAllVouchers={fetchAllVouchers} userId={user?.id || ''} />
 			<BackButton />
 		</Suspense>
 	);
