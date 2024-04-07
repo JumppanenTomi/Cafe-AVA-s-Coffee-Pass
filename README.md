@@ -1,2 +1,69 @@
-Copy entries of `.env.local.example` (don't remove file from VCS) and paste them to new file called `.env.local` and
-update values to correct ones.
+Certainly! Below is an improved version of your README:
+
+---
+
+# Setting Up Supabase Locally
+
+## 1. Install Docker
+
+To run Supabase services locally, Docker is required. If you don't have it already, you can download Docker from [here](https://www.docker.com/get-started/).
+
+## 2. Install Package Manager
+
+Before installing the Supabase CLI, you need to have either Brew (for MacOS and Linux) or Scoop (for Windows) installed. These are package managers that Supabase CLI uses for distribution.
+
+- For MacOS and Linux, use [Brew](https://brew.sh/).
+- For Windows, use [Scoop](https://scoop.sh/).
+
+## 3. Install Supabase CLI
+
+### Using Brew:
+
+```bash
+brew install supabase/tap/supabase
+```
+
+### Using Scoop:
+
+```bash
+scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
+scoop install supabase
+```
+
+## 4. Start Supabase Stack
+
+Navigate to your project folder and start the Supabase stack using the following command:
+
+```bash
+start supabase
+```
+
+The initial startup might take some time, but within a few minutes, you should see a prompt similar to this:
+
+```
+Started supabase local development setup.
+
+         API URL: http://127.0.0.1:54321
+     GraphQL URL: http://127.0.0.1:54321/graphql/v1
+          DB URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
+      Studio URL: http://127.0.0.1:54323
+    Inbucket URL: http://127.0.0.1:54324
+      JWT secret: XXXXX
+        anon key: XXXXX
+service_role key: XXXXX
+```
+
+Copy the `anon` and `service_role` key values and paste them into your `.env.local` file.
+
+## 5. Start Developing
+
+With the Supabase stack running locally, you're ready to start developing. Begin your app with the following prompt:
+
+```bash
+npm run dev
+```
+
+Now, you can navigate to [http://localhost:3000](http://localhost:3000) to view your application. Please note that the local Supabase stack doesn't require normal SMTP configuration. Therefore, all emails, including authentication emails, can be found ONLY on the Inbucket site at [http://127.0.0.1:54324](http://127.0.0.1:54324).
+
+---
+This manual was written using Supabase own instruction that can be found [here](https://supabase.com/docs/guides/cli/getting-started?platform=windowsp)
