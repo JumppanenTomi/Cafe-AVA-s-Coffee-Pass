@@ -43,7 +43,7 @@ export default async function ProtectedPage() {
 					<HomeLinkItem href='https://cafeava.fi/index.php/menu/' icon={faUtensils} label='Menu' isExternal={true} />
 				</div>
 				<div className={'flex flex-col items-center justify-center'}>
-					<div className={'white-container z-50'}>
+					<div className={'white-container z-40'}>
 						<StampCode />
 					</div>
 					<div className={'w-11/12 flex justify-center'}>
