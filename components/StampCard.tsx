@@ -1,8 +1,7 @@
-'use server'
 import { createClient } from "@/utils/supabase/server";
-import { SupabaseClient } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
-
+import { SupabaseClient } from "@supabase/supabase-js";
+import Stamps from "./Stamps";
 const LOGIN_ROUTE = '/auth/login';
 const STAMP_LOGS_TABLE = 'stamp_logs';
 
@@ -27,19 +26,24 @@ const fetchUserStamps = async (supabase: SupabaseClient<any, "public", any>, use
     return count;
 }
 
-export const getRequiredStamps = () => {
-    return parseInt(process.env.STAMPS_REQUIRED || "10")
-}
-
-export const getCurrentUserActiveStampCount = async () => {
+const getCurrentUserActiveStampCount = async () => {
     'use server'
     const supabase = createClient();
     const user = await validateUser(supabase);
-
     if (!user) {
         return;
     }
-
     const count = await fetchUserStamps(supabase, user.id);
     return count ? parseInt(String(count)) : undefined;
 }
+
+const StampCard = async () => {
+
+
+    return (
+        <>
+            <Stamps />
+        </>
+    )
+}
+export default StampCard;
