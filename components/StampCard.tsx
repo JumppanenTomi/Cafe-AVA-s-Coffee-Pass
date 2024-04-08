@@ -38,17 +38,11 @@ const getCurrentUserActiveStampCount = async () => {
 }
 
 const StampCard = async () => {
-    const activeStampCount = await getCurrentUserActiveStampCount() || 0;
-    const stampsRequired = parseInt(process.env.STAMPS_REQUIRED || "0")
-    const supabase = createClient();
 
-    const userId = (await validateUser(supabase)).id
+
     return (
         <>
-            <Stamps activeStampCount={activeStampCount}
-                stampsRequired={stampsRequired}
-                userId={userId}
-                getCurrentUserActiveStampCount={getCurrentUserActiveStampCount} />
+            <Stamps />
         </>
     )
 }
