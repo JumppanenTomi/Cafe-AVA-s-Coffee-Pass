@@ -6,46 +6,19 @@ import formatDateToFinnish from "./formatDateToFinnish";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 
-const VoucherListItem = ({ voucher, fetchVoucherUsePerUser, userId }:
+type VoucherUses = {
+    voucher_id: number;
+    uses: number;
+};
+
+const VoucherListItem = ({ voucher, used }:
     {
-        voucher: any, fetchVoucherUsePerUser: (voucherId: number) => Promise<number | undefined>, userId: string
+        voucher: any, used: number
     }) => {
 
-    const [used, setUsed] = useState(0)
     const voucherId = voucher.voucher_id
     const uses = voucher.uses_per_user
     const active = uses !== null && used >= uses
-    const supabase = createClient()
-
-    const setUsedVouchers = async () => {
-        setUsed(await fetchVoucherUsePerUser(voucherId) || 0)
-    }
-
-    useEffect(() => {
-        setUsedVouchers()
-    }, [])
-
-    useEffect(() => {
-        const subscription = supabase
-            .channel('table-db-changes')
-            .on(
-                'postgres_changes',
-                {
-                    event: '*',
-                    schema: 'public',
-                    table: 'voucher_logs',
-                    filter: `user_id=eq.${userId}`
-                },
-                (payload) => {
-                    setUsedVouchers()
-                }
-            )
-            .subscribe();
-        return () => {
-            subscription.unsubscribe();
-        };
-    }, [supabase, used, setUsedVouchers, voucherId])
-
     return (
         <Link href={`/client/vouchers/${voucherId}`} className={`w-full ${(active) && "opacity-50"}`}>
             <div className={'white-container-no-p w-full flex-wrap mb- mb-4'}>
@@ -70,6 +43,27 @@ const VoucherList = ({ initialVouchers, fetchVoucherUsePerUser, fetchAllVouchers
 }) => {
     const [vouchers, setVouchers] = useState(initialVouchers)
     const supabase = createClient()
+    const [used, setUsed] = useState<VoucherUses[]>([])
+
+    const fetchUses = async () => {
+        // Map over vouchers array and fetch uses for each voucher
+        const updatedUsed = await Promise.all(
+            vouchers.map(async (voucher: { voucher_id: number; }) => {
+                const usePerVoucher = await fetchVoucherUsePerUser(voucher.voucher_id);
+                // Return an object containing voucher_id and fetched uses
+                return { voucher_id: voucher.voucher_id, uses: usePerVoucher };
+            })
+        );
+        // Update the state with the new array containing voucher_id and fetched uses
+        setUsed(updatedUsed);
+    };
+    const getUsedforVoucher = (voucherId: number) => {
+        return used.find(entry => entry.voucher_id === voucherId)?.uses || 0
+    }
+
+    useEffect(() => {
+        fetchUses();
+    }, []);
 
     useEffect(() => {
         const handleChange = async () => {
@@ -92,6 +86,18 @@ const VoucherList = ({ initialVouchers, fetchVoucherUsePerUser, fetchAllVouchers
                 (payload) => {
                     handleChange()
                 })
+            .on(
+                'postgres_changes',
+                {
+                    event: '*',
+                    schema: 'public',
+                    table: 'voucher_logs',
+                    filter: `user_id=eq.${userId}`
+                },
+                (payload) => {
+                    fetchUses()
+                }
+            )
             .subscribe();
 
         return () => {
@@ -102,7 +108,7 @@ const VoucherList = ({ initialVouchers, fetchVoucherUsePerUser, fetchAllVouchers
     return (
         <div>
             {vouchers && vouchers.length > 0 ? vouchers.map((voucher: any) => (
-                <VoucherListItem key={voucher.voucher_id} voucher={voucher} fetchVoucherUsePerUser={fetchVoucherUsePerUser} userId={userId} />
+                <VoucherListItem key={voucher.voucher_id} voucher={voucher} used={getUsedforVoucher(voucher.voucher_id)} />
             )) : (
                 <h1>No active vouchers.</h1>
             )}
