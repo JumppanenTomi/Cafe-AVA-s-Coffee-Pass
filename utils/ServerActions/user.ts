@@ -1,3 +1,4 @@
+"use server";
 import { redirect } from "next/dist/client/components/navigation";
 import { createClient } from "../supabase/server";
 import { cache } from "react";
@@ -48,12 +49,13 @@ export const changeEmail = async (formData: FormData) => {
     if (error) {
       throw new Error(error.message);
     }
-
-    return redirect(
-      "/auth/updateEmail?message=Check email for confirmation&isError=false"
-    );
   } catch (error: any) {
     console.error(`Failed to update email: ${error.message}`);
-    return error;
+    return redirect(
+      "/auth/updateEmail?message=Failed to update email&isError=true"
+    );
   }
+  return redirect(
+    "/auth/updateEmail?message=Please first verify the link sent to your old email, then proceed to confirm the change by clicking on the link sent to your new email.&isError=false"
+  );
 };
