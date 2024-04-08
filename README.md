@@ -102,20 +102,21 @@ Now, you can navigate to [http://localhost:3000](http://localhost:3000) to view 
 
 ## 8. Deploy Local Database Changes to Remote
 
-As per the Supabase CLI documentation, you can deploy changes made on your local Supabase stack to the remote database using the following bash command:
+Once you've made changes to your local database, you can create a new migration file to capture these changes using the command below:
+
+```bash
+supabase db diff --use-migra name_of_file -f name_of_file
+```
+
+This command functions similarly to creating a new branch and committing changes in Git.
+
+After creating the migration file, you can push these changes to the remote database using the following command:
 
 ```bash
 supabase db push
 ```
 
-However, you're probably experiencing issues where changes are not taking effect on the remote database despite receiving the prompt:
-
-```
-Connecting to remote database...
-Remote database is up to date.
-```
-
-The reason for this could be that the feature might require Branching to be enabled, which is a paid feature. So for now lets make changes to remote and then pull them to local.
+However, we have set up a GitHub action file, the deployment process to the remote database is automated. This action file triggers the deployment process automatically after Git branch is merged into the main branch.
 
 ---
 This manual was written using Supabase own instruction that can be found [here](https://supabase.com/docs/guides/cli/getting-started?platform=windowsp)
