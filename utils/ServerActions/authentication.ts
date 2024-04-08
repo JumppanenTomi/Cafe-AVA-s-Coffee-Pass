@@ -62,25 +62,3 @@ export const signUp = async (formData: FormData) => {
     );
   }
 };
-
-export const changeEmail = async (formData: FormData) => {
-  const supabase = createClient();
-  const newEmail = formData.get("email") as string;
-
-  try {
-    const { data, error } = await supabase.auth.updateUser({
-      email: newEmail,
-    });
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    return redirect(
-      "/auth/updateEmail?message=Check email for confirmation&isError=false"
-    );
-  } catch (error: any) {
-    //TODO: Add logging
-    throw new Error(`Failed to update email: ${error.message}`);
-  }
-};
