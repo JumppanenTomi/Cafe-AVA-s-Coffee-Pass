@@ -1,8 +1,8 @@
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
-import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import {createClient} from "@/utils/supabase/server";
+import {redirect} from "next/navigation";
+import {FormSubmitButton} from "@/components/Inputs/FormSubmitButton";
 import EmailInput from "@/components/Inputs/EmailInput";
-import { Form } from "@/components/Inputs/Form";
+import {Form} from "@/components/Inputs/Form";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/logo.png";
@@ -25,9 +25,11 @@ export default function Login({
         // set this to false if you do not want the user to be automatically signed up
         shouldCreateUser: false,
         // Add http://localhost:3000/auth/callback at the end of magiclink's redirect portion so that the route.ts can handle logging in the user.
-        emailRedirectTo: `${origin}/auth/callback`,
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_VERCEL_URL!}/auth/callback`,
       },
     });
+
+    console.log(`${process.env.NEXT_PUBLIC_VERCEL_URL!}/auth/callback`)
 
     if (error) {
       console.log("error:", error);
@@ -66,6 +68,12 @@ export default function Login({
               Sign In
             </FormSubmitButton>
           </div>
+          {process.env.NEXT_PUBLIC_VERCEL_URL! === "http://localhost:3000" &&
+              <div className={'flex flex-col'}>
+                <Link href={"http://127.0.0.1:54324/"} className={'btn-primary'}>Open dev mailbox</Link>
+                <label>*only visible when in local environment</label>
+              </div>
+          }
         </Form>
       </div>
     </div>
