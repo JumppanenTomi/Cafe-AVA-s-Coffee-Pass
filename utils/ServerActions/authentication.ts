@@ -24,16 +24,15 @@ export const signIn = async (formData: FormData) => {
     if (error) {
       throw new Error(error.message);
     }
-
-    return redirect(
-      "/auth/login?isError=false&message=Check email to continue sign in process"
-    );
   } catch (error) {
     //TODO: Add logging
     return redirect(
       "/auth/login?isError=true&message=Could not authenticate user"
     );
   }
+  return redirect(
+    "/auth/login?isError=false&message=Check email to continue sign in process"
+  );
 };
 
 export const signUp = async (formData: FormData) => {
@@ -51,14 +50,13 @@ export const signUp = async (formData: FormData) => {
     if (error) {
       throw new Error(error.message);
     }
-
-    return redirect(
-      "/auth/register?isError=false&message=Check email to continue sign in process"
-    );
   } catch (error) {
     //TODO: Add logging
     return redirect(
       "/auth/register?isError=true&message=Could not authenticate user"
     );
   }
+  return redirect(
+    "/auth/register?isError=false&message=Check email to continue sign in process"
+  );
 };
