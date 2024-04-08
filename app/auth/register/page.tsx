@@ -1,48 +1,22 @@
 import Link from "next/link";
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
 import Image from "next/image";
 import logo from "@/public/logo.png";
 import { Form } from "@/components/Inputs/Form";
 import EmailInput from "@/components/Inputs/EmailInput";
 import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import { signUp } from "@/utils/ServerActions/authentication";
 
 export default function Register({
   searchParams,
 }: {
   searchParams: { isError: string; message: string };
 }) {
-  const signUp = async (formData: FormData) => {
-    "use server";
-
-    const email = formData.get("email") as string;
-    const supabase = createClient();
-
-    const { data, error } = await supabase.auth.signInWithOtp({
-      email,
-      options: {
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_VERCEL_URL!}/auth/callback`,
-      },
-    });
-
-    if (error) {
-      console.log("error", error);
-      return redirect(
-        "/auth/register?isError=true&message=Could not authenticate user"
-      );
-    }
-
-    return redirect(
-      "/auth/register?isError=false&message=Check email to continue sign in process"
-    );
-  };
-
   return (
-    <div className="flex-1 w-full flex flex-col items-center">
+    <div className="flex flex-col items-center flex-1 w-full">
       <div className="flex flex-col items-center justify-center gap-5 p-5 w-full flex-grow bg-[url('/coffee.jpg')] bg-cover bg-top">
         <Image src={logo} alt={"ava logo"} width={100} />
       </div>
-      <div className="flex flex-col items-center justify-center gap-5 py-16 w-full max-w-screen-sm p-5">
+      <div className="flex flex-col items-center justify-center w-full max-w-screen-sm gap-5 p-5 py-16">
         <h1 className={"font-bold text-3xl"}>Register</h1>
         <p className={"text-center font-medium max-w-screen-sm"}>
           Once you have submitted your email, a sign-in link will be sent
