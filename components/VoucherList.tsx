@@ -5,11 +5,7 @@ import Link from "next/link";
 import formatDateToFinnish from "./formatDateToFinnish";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
-
-type VoucherUses = {
-    voucher_id: number;
-    uses: number;
-};
+import VoucherUses from "@/types/VoucherUses";
 
 const VoucherListItem = ({ voucher, used }:
     {
