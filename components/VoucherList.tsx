@@ -2,10 +2,10 @@
 import { faClock, faInfinity } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import formatDateToFinnish from "./formatDateToFinnish";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import VoucherUses from "@/types/VoucherUses";
+import formatDateToFinnish from "@/utils/formatDateToFinnish";
 
 const VoucherListItem = ({ voucher, used }:
     {
