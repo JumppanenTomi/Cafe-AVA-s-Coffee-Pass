@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { headers } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import Image from "next/image";
@@ -16,14 +15,13 @@ export default function Register({
   const signUp = async (formData: FormData) => {
     "use server";
 
-    const origin = headers().get("origin");
     const email = formData.get("email") as string;
     const supabase = createClient();
 
     const { data, error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: `${origin}/auth/callback`,
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_VERCEL_URL!}/auth/callback`,
       },
     });
 
@@ -64,6 +62,12 @@ export default function Register({
               Sign Up
             </FormSubmitButton>
           </div>
+          {process.env.NEXT_PUBLIC_VERCEL_URL! === "http://localhost:3000" &&
+              <div className={'flex flex-col'}>
+                <Link href={"http://127.0.0.1:54324/"} className={'btn-primary'}>Open dev mailbox</Link>
+                <label>*only visible when in local environment</label>
+              </div>
+          }
         </Form>
       </div>
     </div>
