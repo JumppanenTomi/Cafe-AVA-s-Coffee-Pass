@@ -1,6 +1,6 @@
+import { addNewTempCode } from "@/utils/ServerActions/tempCode"
 import QrCodeGen from "./QrCodeGen"
 import short from "short-uuid"
-import { addNewTempCode } from "@/app/client/server"
 
 const StampCode = () => {
     const translator = short() // uuid generator
