@@ -1,6 +1,6 @@
+"use server"
 import { redirect } from 'next/dist/client/components/navigation';
 import { createClient } from "../supabase/server";
-"use server";;
 
 /**
  * Signs out the user.
