@@ -1,55 +1,18 @@
-import {Form} from "@/components/Inputs/Form";
+import { Form } from "@/components/Inputs/Form";
 import NumberInput from "@/components/Inputs/NumberInput";
-import {FormSubmitButton} from "@/components/Inputs/FormSubmitButton";
-import {createClient} from "@/utils/supabase/server";
-import {redirect} from "next/navigation";
+import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import { redirect } from "next/navigation";
 import Link from "next/link";
+import { fetchUserIdFromTempCode, markTempCodeAsUsed } from "@/utils/ServerActions/tempCode";
+import { addStampLog } from "@/utils/ServerActions/stamp";
 
 export default async function Page({params}: { params: { slug: string[] } }) {
-	const fetchUserId = async (code: string) => {
-		'use server'
-		const supabase = createClient();
-		const {data: tempCodes, error: tempCodeError} = await supabase
-			.from('temp_codes')
-			.select('user_id')
-			.eq('code', code)
-			.eq('used', false)
-			.limit(1);
-		if (tempCodeError) throw new Error(tempCodeError.toString());
-		if (tempCodes?.length == 0) return null;
-		if (tempCodes?.length > 0) return tempCodes[0].user_id;
-		else throw new Error("Unknown error");
-	};
-
-	const markTempCodeAsUsed = async (code: string) => {
-		'use server'
-		const supabase = createClient();
-		const {data: markData, error: markError} = await supabase
-			.from('temp_codes')
-			.update({used: true})
-			.eq('code', code)
-			.select();
-		if (markError) throw new Error(markError.toString());
-		return
-	};
-
-	const addStampLog = async (userId: string) => {
-		'use server'
-		const supabase = createClient();
-		const {data: stampData, error: stampError} = await supabase
-			.from('stamp_logs')
-			.insert([{user_id: userId}])
-			.select();
-		if (stampError) throw new Error(stampError.toString());
-		return
-	};
-
 	const processUserStamp = async (formData: FormData) => {
 		'use server'
 		const code = params.slug[0]
 		const times = parseInt(formData.get("number") as string)
 		try {
-			const userId = await fetchUserId(code);
+			const userId = await fetchUserIdFromTempCode(code);
 			for (let i = 0; i < times; i++) {
 				await addStampLog(userId);
 			}
@@ -61,11 +24,11 @@ export default async function Page({params}: { params: { slug: string[] } }) {
 		redirect("/admin/success");
 	};
 
-	const id = await fetchUserId(params.slug[0]);
+	const id = await fetchUserIdFromTempCode(params.slug[0]);
 	const message = params.slug[1] && params.slug[1].replaceAll("%20", " ");
 
 	return (
-		<div className="flex-1 w-full flex flex-col items-center justify-center gap-5 p-5">
+		<div className="flex flex-col items-center justify-center flex-1 w-full gap-5 p-5">
 			{(id) ? (
 				<>
 					<Form isError={true} error={message}>

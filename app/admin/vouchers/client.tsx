@@ -5,8 +5,8 @@ import Search from "@/components/Table/Search";
 import TableHead from "@/components/Table/TableHead";
 import TableBody from "@/components/Table/TableBody";
 import TablePagination from "@/components/Table/TablePagination";
-import { Voucher } from "./server";
 import CreateModal from "./modal";
+import { Voucher } from "@/types/Types";
 
 export interface HeadCell {
   id: string;
@@ -63,7 +63,7 @@ export default function VouchersClient({
   const isSelected = (id: number) => selected.indexOf(id) !== -1;
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-8">
+    <div className="flex flex-col flex-1 w-full gap-8">
       <CreateModal
         show={showAddModal}
         toggleShow={() => setShowAddModal(!showAddModal)}
@@ -77,7 +77,7 @@ export default function VouchersClient({
         onClick={() => setShowAddModal(false)}
       ></div>
 
-      <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between space-y-4 flex-column sm:flex-row sm:space-y-0">
         <h3 className="text-3xl dark:text-white">Vouchers</h3>
         <button className="btn-primary" onClick={() => setShowAddModal(true)}>
           Add voucher
@@ -85,7 +85,7 @@ export default function VouchersClient({
       </div>
 
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <div className="p-4 flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
+        <div className="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 bg-white flex-column md:flex-row md:space-y-0 dark:bg-gray-900">
           <StampsActions selected={selected} />
           <Search placeholder="Search for vouchers" />
         </div>
@@ -93,7 +93,7 @@ export default function VouchersClient({
           key={query + sort + currentPage}
           fallback={<div>Loading...</div>}
         >
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
             <TableHead
               headCells={headCells}
               handleSelectAllClick={handleSelectAllClick}

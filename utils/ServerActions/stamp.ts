@@ -5,8 +5,9 @@ import { getUserId } from "./user";
 export const fetchAllStamps = async () => {
   try {
     const supabase = createClient();
-    const user = await supabase.auth.getUser();
-    const userId = getUserId();
+    const userId = await getUserId();
+    if (!userId) throw new Error("User ID not found");
+
     const { count, error } = await supabase
       .from("stamp_logs")
       .select("*", { head: true, count: "exact" })
@@ -23,14 +24,13 @@ export const fetchAllStamps = async () => {
 export const fetchAllUsedStaps = async () => {
   try {
     const supabase = createClient();
-    const user = await supabase.auth.getUser();
-    const userId = getUserId();
+    const userId = await getUserId();
+    if (!userId) throw new Error("User ID not found");
     const { count, error } = await supabase
       .from("stamp_logs")
       .select("*", { head: true, count: "exact" })
       .eq("user_id", userId)
       .eq("is_used", true);
-
     if (error) throw error;
     return count;
   } catch (error: any) {
@@ -52,7 +52,18 @@ export const fetchUserActiveStamps = async (userId: string) => {
     return count;
   } catch (error: any) {
     console.error(`Failed to fetch user active stamps: ${error.message}`);
-    return error;
+    return 0;
+  }
+};
+
+export const fetchCurrentUserActiveStampCount = async () => {
+  try {
+    const userId = await getUserId();
+    if (!userId) throw new Error("User ID not found");
+    return fetchUserActiveStamps(userId);
+  } catch (error: any) {
+    console.error("Error fetching current user active stamp count: ", error);
+    return 0;
   }
 };
 

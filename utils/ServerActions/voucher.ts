@@ -94,7 +94,7 @@ export const fetchVouchersCount = async (query: string) => {
     return count ?? 0;
   } catch (error: any) {
     console.error(`Failed to fetch vouchers count: ${error.message}`);
-    return;
+    return 0;
   }
 };
 

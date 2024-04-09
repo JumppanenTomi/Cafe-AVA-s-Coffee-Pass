@@ -18,20 +18,20 @@ export default function EmailInput({
   return (
     <div>
       {showLabel && (
-        <label className="input-label" htmlFor={inputName}>
+        <label className='input-label' htmlFor={inputName}>
           {inputLabel} {isRequired && <label>*</label>}
         </label>
       )}
       <input
-        className="input"
-        type="email"
+        className='input'
+        type='email'
         name={inputName}
-        pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+        pattern='[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$'
         title='Must be in form of "example@example.com"'
         placeholder={inputPlaceholder}
         required={isRequired}
       />
-      {helperText && <p className="input-helper-text">{helperText}</p>}
+      {helperText && <p className='input-helper-text'>{helperText}</p>}
     </div>
   );
 }

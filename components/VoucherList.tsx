@@ -34,7 +34,7 @@ const VoucherListItem = ({ voucher, used }:
 const VoucherList = ({ initialVouchers, fetchVoucherUsePerUser, fetchAllVouchers, userId }: {
     initialVouchers: any,
     fetchVoucherUsePerUser: (voucherId: number) => Promise<number | undefined>,
-    fetchAllVouchers: () => Promise<any[] | null>,
+    fetchAllVouchers: () => Promise<any[] | undefined>,
     userId: string
 }) => {
     const [vouchers, setVouchers] = useState(initialVouchers)

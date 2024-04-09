@@ -1,8 +1,8 @@
 'use client'
-import { getCurrentUserActiveStampCount } from "@/app/client/actions";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import Popup from "@/components/popup";
+import { fetchCurrentUserActiveStampCount } from "@/utils/ServerActions/stamp";
 
 const Stamps = () => {
     const supabase = createClient();
@@ -23,7 +23,7 @@ const Stamps = () => {
     useEffect(() => {
         const fetchUserStampsCount = async () => {
             try {
-                const stampCount = await getCurrentUserActiveStampCount();
+                const stampCount = await fetchCurrentUserActiveStampCount();
                 setActiveStampCount(stampCount || 0);
             } catch (error) {
                 console.error("Error fetching active stamp count:", error);
@@ -37,7 +37,7 @@ const Stamps = () => {
     // update activeStampCount when database changes
     useEffect(() => {
         const handleChange = async () => {
-            const stampCount = await getCurrentUserActiveStampCount();
+            const stampCount = await fetchCurrentUserActiveStampCount();
             setActiveStampCount(stampCount || 0);
             setIsPopupVisible(true)
         };
