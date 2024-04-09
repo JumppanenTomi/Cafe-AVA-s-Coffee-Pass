@@ -55,7 +55,7 @@ export const authenticateWithGoodle = async () => {
           access_type: "offline",
           prompt: "consent",
         },
-        redirectTo: `https://coffee-pass-sfug-git-feature-bre-b9ecd9-jumppanentomis-projects.vercel.app/auth/callback`,
+        redirectTo: `${process.env.NEXT_PUBLIC_VERCEL_URL!}/auth/callback`,
       },
     });
     console.log(data)
