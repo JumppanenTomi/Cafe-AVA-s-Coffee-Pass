@@ -59,6 +59,7 @@ const VoucherList = ({ initialVouchers, fetchVoucherUsePerUser, fetchAllVouchers
         // Update the state with the new array containing voucher_id and fetched uses
         setUsed(updatedUsed);
     };
+
     const getUsedforVoucher = (voucherId: number) => {
         return used.find(entry => entry.voucher_id === voucherId)?.uses || 0
     }

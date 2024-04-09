@@ -12,11 +12,13 @@ const VoucherQR = ({ name, setShowQrCode, active, voucherId, used }:
     }) => {
     const [currentUsed, setCurrentUsed] = useState(used)
 
+    // Don't show if Inactive
     useEffect(() => {
-        console.log(active)
         active ? setShowQrCode(false) : setShowQrCode(true)
     }, [active])
-
+    // Close if stamp is given or taken.
+    // There is a bug that closes the voucher on initial update of 'used',
+    // I will fix it when I reorganise the database for vouchers
     useEffect(() => {
         if (used !== currentUsed) {
             setShowQrCode(false)
