@@ -4,7 +4,10 @@ import { Form } from "@/components/Inputs/Form";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/logo.png";
-import { signIn } from "@/utils/ServerActions/authentication";
+import {
+  authenticateWithGoodle,
+  signIn,
+} from "@/utils/ServerActions/authentication";
 
 export default function Login({
   searchParams,
@@ -23,6 +26,11 @@ export default function Login({
           directly to your inbox. Using this link, you can securely access
           website.
         </p>
+        <form>
+          <button formAction={authenticateWithGoodle}>
+            Sing in with Google
+          </button>
+        </form>
         <Form
           isError={searchParams.isError == "true"}
           error={searchParams.message}

@@ -1,4 +1,4 @@
-"use server";
+"use server";;
 import { redirect } from "next/navigation";
 import { createClient } from "../supabase/server";
 
@@ -42,6 +42,29 @@ export const signIn = async (formData: FormData) => {
   return redirect(
     "/auth/login?isError=false&message=Check email to continue sign in process"
   );
+};
+
+export const authenticateWithGoodle = async () => {
+  const supabase=createClient();
+  let url
+  try {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        queryParams: {
+          access_type: "offline",
+          prompt: "consent",
+        },
+      },
+    });
+    if (error) { throw new Error(error.message) }
+    data && (url = data.url)
+  } catch (error: any) {
+    console.error(error.message);
+    return redirect("/auth/login?isError=true&message=Could not authenticate user");
+  }
+  if (!url) { return redirect("/auth/login?isError=true&message=Could not authenticate user") }
+  return redirect(url)
 };
 
 /**
