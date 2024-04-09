@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import VoucherUses from "@/types/VoucherUses";
 import formatDateToFinnish from "@/utils/formatDateToFinnish";
+import VoucherQR from "./VoucherQR";
 
 const VoucherListItem = ({ voucher, used }:
     {
@@ -15,19 +16,29 @@ const VoucherListItem = ({ voucher, used }:
     const voucherId = voucher.voucher_id
     const uses = voucher.uses_per_user
     const active = uses !== null && used >= uses
+    const [showQrCode, setShowQrCode] = useState(false)
+    const showQr = () => {
+        console.log('boom');
+        setShowQrCode(true)
+    }
     return (
-        <Link href={`/client/vouchers/${voucherId}`} className={`w-full ${(active) && "opacity-50"}`}>
-            <div className={'white-container-no-p w-full flex-wrap mb- mb-4'}>
-                <div className={'bg-[url(/coffee.jpg)] bg-cover bg-top h-40 rounded-t-md'}></div>
-                <div className={'p-5 flex flex-wrap gap-5 justify-end'}>
-                    <h2 className={'w-full'}>{voucher.name}</h2>
-                    <p className={'w-full'}>{voucher.description}</p>
-                    <p>Voucher used {used}/
-                        {uses !== null ? uses : <FontAwesomeIcon icon={faInfinity} />} times</p>
-                    <p>{formatDateToFinnish(voucher.end_date)} <FontAwesomeIcon icon={faClock} /></p>
+        <>
+            {showQrCode && <VoucherQR />}
+
+            <div onClick={() => showQr()} className={`w-full ${(active) && "opacity-50"}`}>
+                <div className={'white-container-no-p w-full flex-wrap mb- mb-4'}>
+                    <div className={'bg-[url(/coffee.jpg)] bg-cover bg-top h-40 rounded-t-md'}></div>
+                    <div className={'p-5 flex flex-wrap gap-5 justify-end'}>
+                        <h2 className={'w-full'}>{voucher.name}</h2>
+                        <p className={'w-full'}>{voucher.description}</p>
+                        <p>Voucher used {used}/
+                            {uses !== null ? uses : <FontAwesomeIcon icon={faInfinity} />} times</p>
+                        <p>{formatDateToFinnish(voucher.end_date)} <FontAwesomeIcon icon={faClock} /></p>
+
+                    </div>
                 </div>
             </div>
-        </Link>
+        </>
     );
 };
 
