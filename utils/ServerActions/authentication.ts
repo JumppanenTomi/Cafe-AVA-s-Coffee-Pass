@@ -1,6 +1,6 @@
-"use server";;
-import { redirect } from "next/navigation";
+import { redirect } from 'next/dist/client/components/navigation';
 import { createClient } from "../supabase/server";
+"use server";;
 
 /**
  * Signs out the user.
@@ -54,6 +54,7 @@ export const authenticateWithGoodle = async () => {
         queryParams: {
           access_type: "offline",
           prompt: "consent",
+          emailRedirectTo: `${process.env.NEXT_PUBLIC_VERCEL_URL!}/auth/callback`,
         },
       },
     });
