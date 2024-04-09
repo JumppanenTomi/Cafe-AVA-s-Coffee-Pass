@@ -1,9 +1,9 @@
 "use client";
 
 import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
-import { createVouchers, fetchVoucherTypes } from "./server";
 import { Form } from "@/components/Inputs/Form";
 import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import { createVouchers, fetchVoucherTypes } from "@/utils/ServerActions/voucher";
 import { useEffect, useState } from "react";
 
 export default function CreateModal({
@@ -24,9 +24,10 @@ export default function CreateModal({
   const [voucherTypes, setVoucherTypes] = useState<any[]>([]);
 
   useEffect(() => {
+    //TODO: Add better error handling
     const getVoucherTypes = async () => {
       const data = await fetchVoucherTypes(text);
-      setVoucherTypes(data);
+      setVoucherTypes(data as any);
     };
 
     getVoucherTypes();
@@ -39,9 +40,9 @@ export default function CreateModal({
         flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full
       `}
     >
-      <div className="relative p-4 w-full max-w-2xl h-full md:h-auto">
+      <div className="relative w-full h-full max-w-2xl p-4 md:h-auto">
         <div className="relative p-4 bg-white rounded-lg shadow sm:p-5">
-          <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5">
+          <div className="flex items-center justify-between pb-4 mb-4 border-b rounded-t sm:mb-5">
             <h3 className="text-lg font-semibold text-gray-900">Add Voucher</h3>
             <button
               type="button"

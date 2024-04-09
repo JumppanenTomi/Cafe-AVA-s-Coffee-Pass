@@ -1,37 +1,8 @@
-import {createClient} from "@/utils/supabase/server";
-
-const getAllStaps = async () => {
-	'use server'
-	const supabase = createClient()
-	const user = await supabase.auth.getUser()
-	const userId = user.data.user?.id
-	const {count, error} = await supabase
-		.from("stamp_logs")
-		.select('*', {head: true, count: 'exact'})
-		.eq("user_id", userId)
-
-	if (error) console.log(error)
-	return count
-}
-
-const getAllUsedStaps = async () => {
-	'use server'
-	const supabase = createClient()
-	const user = await supabase.auth.getUser()
-	const userId = user.data.user?.id
-	const {count, error} = await supabase
-		.from("stamp_logs")
-		.select('*', {head: true, count: 'exact'})
-		.eq("user_id", userId)
-		.eq('is_used', true)
-
-	if (error) console.log(error)
-	return count
-}
+import { fetchAllStamps, fetchAllUsedStaps } from "@/utils/ServerActions/stamp";
 
 export async function Statistics() {
-	const stampsTotal = await getAllStaps()
-	const usedStamps = await getAllUsedStaps()
+	const stampsTotal = await fetchAllStamps()
+	const usedStamps = await fetchAllUsedStaps()
 
 	return (
 		<div className={'white-container w-full flex flex-wrap justify-between text-center'}>

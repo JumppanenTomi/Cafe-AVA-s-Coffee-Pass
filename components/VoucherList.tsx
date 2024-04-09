@@ -2,10 +2,10 @@
 import { faClock, faInfinity } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import formatDateToFinnish from "./formatDateToFinnish";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import VoucherUses from "@/types/VoucherUses";
+import formatDateToFinnish from "@/utils/formatDateToFinnish";
 
 const VoucherListItem = ({ voucher, used }:
     {
@@ -34,7 +34,7 @@ const VoucherListItem = ({ voucher, used }:
 const VoucherList = ({ initialVouchers, fetchVoucherUsePerUser, fetchAllVouchers, userId }: {
     initialVouchers: any,
     fetchVoucherUsePerUser: (voucherId: number) => Promise<number | undefined>,
-    fetchAllVouchers: () => Promise<any[] | null>,
+    fetchAllVouchers: () => Promise<any[] | undefined>,
     userId: string
 }) => {
     const [vouchers, setVouchers] = useState(initialVouchers)

@@ -1,8 +1,8 @@
 "use client";
 import { useEffect } from 'react';
-import { type User } from '@supabase/supabase-js'
+import { type User } from '@supabase/supabase-js';
 import { useState } from 'react';
-import { fetchUsers } from './server';
+import { fetchUsers } from '@/utils/ServerActions/user';
 
 export const revalidate = 3600
 
@@ -23,12 +23,12 @@ export default function Table() {
 
 
   return (
-    <div className="flex-1 w-full flex flex-col gap-8 py-4">
+    <div className="flex flex-col flex-1 w-full gap-8 py-4">
       <h3 className="text-3xl dark:text-white">Users</h3>
 
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div
-          className="p-4 flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
+          className="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 bg-white flex-column md:flex-row md:space-y-0 dark:bg-gray-900">
           <div>
             <button id="dropdownActionButton"
               onClick={() => setShowDropdown(!showDropdown)}
@@ -70,7 +70,7 @@ export default function Table() {
           </div>
           <label htmlFor="table-search" className="sr-only">Search</label>
           <div className="relative">
-            <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+            <div className="absolute inset-y-0 flex items-center pointer-events-none rtl:inset-r-0 start-0 ps-3">
               <svg className="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
@@ -78,11 +78,11 @@ export default function Table() {
               </svg>
             </div>
             <input type="text" id="table-search-users"
-              className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="block p-2 text-sm text-gray-900 border border-gray-300 rounded-lg ps-10 w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Search for users" />
           </div>
         </div>
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="p-4">
