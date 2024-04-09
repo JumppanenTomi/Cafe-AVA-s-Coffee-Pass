@@ -2,6 +2,12 @@
 import { createClient } from "../supabase/server";
 import { getUserId } from "./user";
 
+/**
+ * Adds a new temporary code to the database.
+ * 
+ * @param code - The code to be added.
+ * @returns A promise that resolves to the inserted code data, or an error if the insertion fails.
+ */
 export const addNewTempCode = async (code: string) => {
   try {
     const supabase = createClient();
@@ -27,6 +33,12 @@ export const addNewTempCode = async (code: string) => {
   }
 };
 
+/**
+ * Fetches the user ID associated with a given temporary code.
+ * @param code - The temporary code to fetch the user ID for.
+ * @returns The user ID if found, or null if not found.
+ * @throws If there is an error while fetching the user ID.
+ */
 export const fetchUserIdFromTempCode = async (code: string) => {
   try {
     const supabase = createClient();
@@ -51,6 +63,11 @@ export const fetchUserIdFromTempCode = async (code: string) => {
   }
 };
 
+/**
+ * Marks a temporary code as used in the database.
+ * @param code - The temporary code to mark as used.
+ * @returns A promise that resolves with an error if the operation fails, otherwise undefined.
+ */
 export const markTempCodeAsUsed = async (code: string) => {
   try {
     const supabase = createClient();

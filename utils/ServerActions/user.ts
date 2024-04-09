@@ -3,6 +3,10 @@ import { redirect } from "next/dist/client/components/navigation";
 import { createClient } from "../supabase/server";
 import { cache } from "react";
 
+/**
+ * Retrieves the user ID from the Supabase authentication service.
+ * @returns A Promise that resolves to a string representing the user ID, or null if there was an error.
+ */
 export const getUserId = async (): Promise<string | null> => {
   try {
     const supabase = createClient();
@@ -19,6 +23,12 @@ export const getUserId = async (): Promise<string | null> => {
   }
 };
 
+/**
+ * Fetches users from the server.
+ * 
+ * @param page - The page number to fetch.
+ * @returns An array of user objects.
+ */
 export const fetchUsers = cache(async (page: number) => {
   try {
     const supabase = createClient(true);
@@ -38,6 +48,12 @@ export const fetchUsers = cache(async (page: number) => {
   }
 });
 
+/**
+ * Updates the user's email address.
+ * 
+ * @param formData - The form data containing the new email address.
+ * @returns A redirect to the appropriate page based on the success or failure of the email update.
+ */
 export const changeEmail = async (formData: FormData) => {
   try {
     const supabase = createClient();

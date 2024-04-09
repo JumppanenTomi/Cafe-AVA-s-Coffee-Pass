@@ -1,5 +1,9 @@
 import { createClient } from "../supabase/server";
 
+/**
+ * Retrieves stamp timestamps from the server within a specific year range.
+ * @returns A Promise that resolves to an array of stamp timestamps.
+ */
 export const getStampTimestamps = async () => {
   try {
     ("use server");
@@ -29,6 +33,10 @@ export const getStampTimestamps = async () => {
   }
 };
 
+/**
+ * Retrieves the count of logins within a specified time range.
+ * @returns A Promise that resolves to an array of login codes.
+ */
 export const getLoginsCount = async () => {
   try {
     ("use server");

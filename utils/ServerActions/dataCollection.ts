@@ -2,6 +2,11 @@
 
 import { createClient } from "@/utils/supabase/server";
 
+/**
+ * Retrieves collected data for a user.
+ * @returns An object containing the user's email, user ID, stamp logs, and voucher logs.
+ * @throws If there is an error retrieving the data.
+ */
 export async function collectedData() {
   try {
     const supabase = createClient();

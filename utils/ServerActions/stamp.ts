@@ -2,6 +2,10 @@
 import { createClient } from "../supabase/server";
 import { getUserId } from "./user";
 
+/**
+ * Fetches all stamps for the current user.
+ * @returns {Promise<number | Error>} The count of stamps or an error object.
+ */
 export const fetchAllStamps = async () => {
   try {
     const supabase = createClient();
@@ -21,6 +25,10 @@ export const fetchAllStamps = async () => {
   }
 };
 
+/**
+ * Fetches the count of all used stamps for the current user.
+ * @returns {Promise<number | Error>} The count of used stamps, or an error if fetching fails.
+ */
 export const fetchAllUsedStaps = async () => {
   try {
     const supabase = createClient();
@@ -39,6 +47,12 @@ export const fetchAllUsedStaps = async () => {
   }
 };
 
+/**
+ * Fetches the number of active stamps for a given user.
+ * 
+ * @param userId - The ID of the user.
+ * @returns The number of active stamps for the user.
+ */
 export const fetchUserActiveStamps = async (userId: string) => {
   try {
     const supabase = createClient();
@@ -56,6 +70,10 @@ export const fetchUserActiveStamps = async (userId: string) => {
   }
 };
 
+/**
+ * Fetches the count of active stamps for the current user.
+ * @returns {Promise<number>} A promise that resolves to the count of active stamps.
+ */
 export const fetchCurrentUserActiveStampCount = async () => {
   try {
     const userId = await getUserId();
@@ -67,6 +85,11 @@ export const fetchCurrentUserActiveStampCount = async () => {
   }
 };
 
+/**
+ * Retrieves the number of required stamps from the environment variable.
+ * If the environment variable is not set or cannot be parsed as an integer, it returns a default value of 10.
+ * @returns The number of required stamps.
+ */
 export const getRequiredStamps = () => {
   try {
     return parseInt(process.env.STAMPS_REQUIRED || "10");
@@ -76,6 +99,12 @@ export const getRequiredStamps = () => {
   }
 };
 
+/**
+ * Adds a stamp log for the specified user.
+ * @param userId - The ID of the user.
+ * @returns A Promise that resolves with no value if the stamp log is added successfully,
+ * or rejects with an error if there was an issue adding the stamp log.
+ */
 export const addStampLog = async (userId: string) => {
   try {
     const supabase = createClient();
@@ -91,6 +120,14 @@ export const addStampLog = async (userId: string) => {
   }
 };
 
+/**
+ * Fetches stamps from the server based on the provided query, sort, and currentPage.
+ *
+ * @param query - The search query for filtering the stamps.
+ * @param sort - The field to sort the stamps by. Prefix with "-" for descending order.
+ * @param currentPage - The current page number for pagination.
+ * @returns A Promise that resolves to the fetched stamps data or an error object.
+ */
 export const fetchStamps = async (
   query: string,
   sort: string,
@@ -115,6 +152,12 @@ export const fetchStamps = async (
   }
 };
 
+/**
+ * Fetches the count of stamps from the "stamp_logs" table.
+ * 
+ * @param query - The query string.
+ * @returns A promise that resolves to the count of stamps, or an error if fetching fails.
+ */
 export const fetchStampsCount = async (query: string) => {
   try {
     const supabase = createClient(true);
@@ -130,6 +173,11 @@ export const fetchStampsCount = async (query: string) => {
   }
 };
 
+/**
+ * Deactivates stamps by updating the `is_used` field in the stamp_logs table.
+ * @param ids - An array of stamp log IDs to deactivate.
+ * @returns If an error occurs during deactivation, the error object is returned. Otherwise, undefined is returned.
+ */
 export const deactivateStamps = async (ids: number[]) => {
   try {
     const supabase = createClient(true);
@@ -145,6 +193,11 @@ export const deactivateStamps = async (ids: number[]) => {
   }
 };
 
+/**
+ * Deletes stamps from the "stamp_logs" table based on the provided IDs.
+ * @param ids - An array of numbers representing the IDs of the stamps to be deleted.
+ * @returns If an error occurs during the deletion process, the error object is returned. Otherwise, undefined is returned.
+ */
 export const deleteStamps = async (ids: number[]) => {
   try {
     const supabase = createClient(true);
@@ -160,6 +213,11 @@ export const deleteStamps = async (ids: number[]) => {
   }
 };
 
+/**
+ * Creates stamps based on the provided form data.
+ * @param formData - The form data containing the necessary information to create stamps.
+ * @returns A promise that resolves to the created stamps data or an error object.
+ */
 export const createStamps = async (formData: FormData) => {
   try {
     const supabase = createClient(true);

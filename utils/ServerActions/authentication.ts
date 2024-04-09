@@ -2,12 +2,21 @@
 import { redirect } from "next/navigation";
 import { createClient } from "../supabase/server";
 
+/**
+ * Signs out the user.
+ * @returns {Promise<void>} A promise that resolves when the user is signed out.
+ */
 export const signOut = async () => {
   const supabase = createClient();
   await supabase.auth.signOut();
   return redirect("/");
 };
 
+/**
+ * Signs in a user with the provided form data.
+ * @param formData - The form data containing the user's email.
+ * @returns A Promise that resolves to a redirect URL indicating the result of the sign-in process.
+ */
 export const signIn = async (formData: FormData) => {
   const email = formData.get("email") as string;
   const supabase = createClient();
@@ -35,6 +44,11 @@ export const signIn = async (formData: FormData) => {
   );
 };
 
+/**
+ * Signs up a user with the provided form data.
+ * @param formData - The form data containing the user's email.
+ * @returns A Promise that resolves to a redirect URL indicating the result of the sign-up process.
+ */
 export const signUp = async (formData: FormData) => {
   const email = formData.get("email") as string;
   const supabase = createClient();
