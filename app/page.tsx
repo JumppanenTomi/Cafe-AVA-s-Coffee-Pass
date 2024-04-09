@@ -3,6 +3,7 @@ import logo from "@/public/logo.png";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
+import SocialLogin from "@/components/SocialLogin";
 
 export default async function Index() {
   const supabase = createClient();
@@ -25,6 +26,12 @@ export default async function Index() {
           Welcome to our Digital Coffee Pass! Start your digital coffee journey
           with us today!
         </p>
+        <SocialLogin />
+        <div className={"flex flex-wrap w-full md:w-4/6 gap-5 items-center"}>
+          <hr className={'flex-grow border-black'} />
+          <p>or</p>
+          <hr className={'flex-grow border-black'} />
+        </div>
         <div className={"flex items-center w-full gap-4"}>
           <Link href='/auth/login' className='w-full btn-primary'>
             Login
