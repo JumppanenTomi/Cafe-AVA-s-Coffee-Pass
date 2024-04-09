@@ -54,7 +54,6 @@ export const authenticateWithGoodle = async () => {
         queryParams: {
           access_type: "offline",
           prompt: "consent",
-          redirect_uri: `${process.env.NEXT_PUBLIC_VERCEL_URL!}/auth/callback`,
         },
         redirectTo: `${process.env.NEXT_PUBLIC_VERCEL_URL!}/auth/callback`,
       },
