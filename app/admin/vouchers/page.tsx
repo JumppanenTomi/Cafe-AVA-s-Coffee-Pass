@@ -1,6 +1,6 @@
-import { fetchUsers } from "../users/server";
+import { fetchVouchers, fetchVouchersCount } from "@/utils/ServerActions/voucher";
 import VouchersClient from "./client";
-import { fetchVouchers, fetchVouchersCount } from "./server";
+import { fetchUsers } from "@/utils/ServerActions/user";
 
 export default async function VouchersPage({
   searchParams = {},
@@ -14,8 +14,9 @@ export default async function VouchersPage({
   const { query = '', sort = '-voucher_log_id', page } = searchParams;
   const currentPage = Number(page) || 1;
 
+  //TODO: Add better error handling
   const [vouchers, count] = await Promise.all([
-    fetchVouchers(query, sort, currentPage),
+    fetchVouchers(query, sort, currentPage) as any,
     fetchVouchersCount(query),
   ]);
 

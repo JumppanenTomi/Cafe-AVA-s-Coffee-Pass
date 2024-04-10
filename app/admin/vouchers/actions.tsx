@@ -1,6 +1,6 @@
 "use client";
+import { deleteVouchers } from "@/utils/ServerActions/voucher";
 import { useState } from "react";
-import { deleteVouchers } from "./server";
 
 export default function VouchersActions({ selected }: { selected: number[] }) {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -51,7 +51,7 @@ export default function VouchersActions({ selected }: { selected: number[] }) {
       <div
         id="dropdownAction"
         style={{ display: showDropdown ? "block" : "none" }}
-        className="z-10 absolute bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+        className="absolute z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
       >
         <div className="py-1">
           <a

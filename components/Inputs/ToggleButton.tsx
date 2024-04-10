@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion"
-import { useState } from "react"
+import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function ToggleButton() {
   const [toggle, setToggle] = useState<boolean>(false);

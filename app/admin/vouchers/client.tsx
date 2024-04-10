@@ -90,7 +90,7 @@ export default function VouchersClient({
           key={query + sort + currentPage}
           fallback={<div>Loading...</div>}
         >
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
             <TableHead
               headCells={headCells}
               handleSelectAllClick={handleSelectAllClick}

@@ -1,4 +1,4 @@
-import { fetchUsers } from "../users/server";
+import { fetchUsers } from "@/utils/ServerActions/user";
 import StampsClient from "./client";
 import { fetchStamps, fetchStampsCount } from "./server";
 

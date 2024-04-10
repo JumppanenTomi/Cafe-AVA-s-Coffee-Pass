@@ -24,18 +24,20 @@ export default function AutoCompleteInput({
   return (
     <div>
       {showLabel && (
-        <label className="input-label" htmlFor={inputName}>
+        <label className='input-label' htmlFor={inputName}>
           {inputLabel} {isRequired && <label>*</label>}
         </label>
       )}
       <input
-        className="input"
+        className='input'
         list={inputName}
         name={inputName}
         placeholder={inputPlaceholder}
         required={isRequired}
         defaultValue={defaultValue}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) => onInputChange(event.target.value)}
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+          onInputChange(event.target.value)
+        }
       />
       <datalist id={inputName}>
         {options.map((opt, index) => (
@@ -44,7 +46,7 @@ export default function AutoCompleteInput({
           </option>
         ))}
       </datalist>
-      {helperText && <p className="input-helper-text">{helperText}</p>}
+      {helperText && <p className='input-helper-text'>{helperText}</p>}
     </div>
   );
 }

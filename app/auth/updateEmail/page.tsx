@@ -1,10 +1,9 @@
-import { createClient } from "@/utils/supabase/server";
-import { redirect } from "next/navigation";
 import Nav from "@/components/Nav";
 import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
 import Link from "next/link";
 import { Form } from "@/components/Inputs/Form";
 import EmailInput from "@/components/Inputs/EmailInput";
+import { changeEmail } from "@/utils/ServerActions/user";
 
 let errors = "";
 export default function UpdateEmail({
@@ -12,36 +11,15 @@ export default function UpdateEmail({
 }: {
   searchParams: { isError: string; message: string };
 }) {
-  const changeEmail = async (formData: FormData) => {
-    "use server";
-
-    const supabase = createClient();
-    const newEmail = formData.get("email") as string;
-    console.log("new Email", newEmail);
-
-    const { data, error } = await supabase.auth.updateUser({
-      email: newEmail,
-    });
-
-    if (error) {
-      console.log("error", error);
-      errors = `${error}`;
-    } else {
-      return redirect(
-        "/auth/updateEmail?message=Check email for confirmation&isError=false"
-      );
-    }
-  };
-
   return (
-    <div className="flex-1 w-full flex flex-col items-center">
+    <div className="flex flex-col items-center flex-1 w-full">
       <Nav />
-      <div className="container mx-auto px-4">
+      <div className="container px-4 mx-auto">
         <Form error={errors} isError={searchParams.isError === "true"}>
           <EmailInput />
           <FormSubmitButton formAction={changeEmail}>Confirm</FormSubmitButton>
           {searchParams?.message && (
-            <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+            <p className="p-4 mt-4 text-center bg-foreground/10 text-foreground">
               {searchParams.message}
             </p>
           )}
@@ -49,7 +27,7 @@ export default function UpdateEmail({
       </div>
       <Link
         href="/client/settings"
-        className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+        className="flex px-3 py-2 no-underline rounded-md bg-btn-background hover:bg-btn-background-hover"
       >
         Back
       </Link>
