@@ -67,3 +67,17 @@ export const createStamps = async (formData: FormData) => {
   if (error) throw error;
   return data;
 }
+
+export const updateStamp = async (id: number, formData: FormData) => {
+  const supabase = createClient(true);
+  const rawFormData = {
+    user_id: formData.get('user_id'),
+    is_used: formData.get('is_used') === 'on' ? true : false,
+  };
+  const { error } = await supabase
+    .from("stamp_logs")
+    .update(rawFormData)
+    .eq('stamp_log_id', id);
+
+  if (error) throw error;
+}

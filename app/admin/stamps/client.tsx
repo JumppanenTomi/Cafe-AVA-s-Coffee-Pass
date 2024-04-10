@@ -1,23 +1,30 @@
 "use client";
 import { useState, Suspense } from "react";
-import StampsActions from "./actions";
 import Search from "@/components/Table/Search";
 import TableHead from "@/components/Table/TableHead";
-import TableBody from "@/components/Table/TableBody";
 import TablePagination from "@/components/Table/TablePagination";
-import CreateModal from "./modal";
+import AddStamp from "./addStamp";
+import MenuStamp from "./menuStamp";
+import { Stamp } from "./interface";
+
+const _ = require("lodash");
+
+const handleShowLabel = (row: any, headCell: HeadCell) => {
+  const value = _.get(row, headCell.id);
+
+  if (headCell.type == "datetime") {
+    return new Date(value).toLocaleString();
+  } else if (headCell.type == "boolean") {
+    return value ? "Yes" : "No";
+  } else {
+    return value;
+  }
+};
 
 export interface HeadCell {
   id: string;
   label: string;
   type: string;
-}
-
-export interface Stamp {
-  stamp_log_id: number;
-  timestamp: string;
-  user_id: string;
-  is_used: boolean;
 }
 
 export default function StampsClient({
@@ -36,7 +43,6 @@ export default function StampsClient({
   currentPage: number;
 }) {
   const [selected, setSelected] = useState<number[]>([]);
-  const [showAddModal, setShowAddModal] = useState(false);
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -47,70 +53,44 @@ export default function StampsClient({
     setSelected([]);
   };
 
-  const handleSelectClick = (event: React.ChangeEvent<unknown>, id: number) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected: number[] = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
-  };
-
-  const isSelected = (id: number) => selected.indexOf(id) !== -1;
-
   return (
     <div className="flex-1 w-full flex flex-col gap-8">
-      <CreateModal
-        show={showAddModal}
-        toggleShow={() => setShowAddModal(!showAddModal)}
-        users={users}
-      />
-
-      <div
-        className={`fixed inset-0 z-10 ${
-          showAddModal ? "" : "hidden"
-        } bg-gray-900/50 dark:bg-gray-900/60`}
-        id="sidebarBackdrop"
-        onClick={() => setShowAddModal(false)}
-      ></div>
-
       <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between">
-        <h3 className="text-3xl dark:text-white">Stamps</h3>
-        <button className="btn-primary" onClick={() => setShowAddModal(true)}>
-          Add stamp
-        </button>
+        <h3 className="text-3xl">Stamps</h3>
+        <AddStamp />
       </div>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div className="p-4 flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white">
-          <StampsActions selected={selected} />
+          <div></div>
           <Search placeholder="Search for stamps" />
         </div>
         <Suspense
           key={query + sort + currentPage}
           fallback={<div>Loading...</div>}
         >
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500">
             <TableHead
               headCells={headCells}
               handleSelectAllClick={handleSelectAllClick}
             />
-            <TableBody
-              data={stamps}
-              rowKey="stamp_log_id"
-              headCells={headCells}
-              handleSelectClick={handleSelectClick}
-              isSelected={isSelected}
-            />
+            <tbody>
+              {stamps.map((stamp, index) => (
+                <tr key={index} className="bg-white border-b hover:bg-gray-50">
+                  {headCells.map((headCell) => (
+                    <td
+                      key={headCell.id}
+                      className="px-6 py-4"
+                      suppressHydrationWarning
+                    >
+                      {handleShowLabel(stamp, headCell)}
+                    </td>
+                  ))}
+                  <td className="px-6 py-4 text-right">
+                    <MenuStamp stamp={stamp} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
           <TablePagination count={count} />
         </Suspense>
