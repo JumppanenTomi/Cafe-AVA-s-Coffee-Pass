@@ -1,18 +1,31 @@
 "use client";
 import { useState, Suspense } from "react";
-import StampsActions from "./actions";
 import Search from "@/components/Table/Search";
 import TableHead from "@/components/Table/TableHead";
-import TableBody from "@/components/Table/TableBody";
 import TablePagination from "@/components/Table/TablePagination";
 import { Voucher } from "./server";
-import CreateModal from "./modal";
+import AddVoucher from "./addVoucher";
+import MenuVoucher from "./menuVoucher";
 
 export interface HeadCell {
   id: string;
   label: string;
   type: string;
 }
+
+const _ = require("lodash");
+
+const handleShowLabel = (row: any, headCell: HeadCell) => {
+  const value = _.get(row, headCell.id);
+
+  if (headCell.type == "datetime") {
+    return new Date(value).toLocaleString();
+  } else if (headCell.type == "boolean") {
+    return value ? "Yes" : "No";
+  } else {
+    return value;
+  }
+};
 
 export default function VouchersClient({
   vouchers,
@@ -30,7 +43,6 @@ export default function VouchersClient({
   currentPage: number;
 }) {
   const [selected, setSelected] = useState<number[]>([]);
-  const [showAddModal, setShowAddModal] = useState(false);
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -64,29 +76,14 @@ export default function VouchersClient({
 
   return (
     <div className="flex-1 w-full flex flex-col gap-8">
-      <CreateModal
-        show={showAddModal}
-        toggleShow={() => setShowAddModal(!showAddModal)}
-        users={users}
-      />
-      <div
-        className={`fixed inset-0 z-10 ${
-          showAddModal ? "" : "hidden"
-        } bg-gray-900/50 dark:bg-gray-900/60`}
-        id="sidebarBackdrop"
-        onClick={() => setShowAddModal(false)}
-      ></div>
-
       <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between">
         <h3 className="text-3xl dark:text-white">Vouchers</h3>
-        <button className="btn-primary" onClick={() => setShowAddModal(true)}>
-          Add voucher
-        </button>
+        <AddVoucher />
       </div>
 
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div className="p-4 flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
-          <StampsActions selected={selected} />
+          <div></div>
           <Search placeholder="Search for vouchers" />
         </div>
         <Suspense
@@ -98,13 +95,27 @@ export default function VouchersClient({
               headCells={headCells}
               handleSelectAllClick={handleSelectAllClick}
             />
-            <TableBody
-              data={vouchers}
-              rowKey="voucher_log_id"
-              headCells={headCells}
-              handleSelectClick={handleSelectClick}
-              isSelected={isSelected}
-            />
+            <tbody>
+              {vouchers.map((voucher, index) => (
+                <tr
+                  key={index}
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                >
+                  {headCells.map((headCell) => (
+                    <td
+                      key={headCell.id}
+                      className="px-6 py-4"
+                      suppressHydrationWarning
+                    >
+                      {handleShowLabel(voucher, headCell)}
+                    </td>
+                  ))}
+                  <td className="px-6 py-4 text-right">
+                    <MenuVoucher voucher={voucher} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
           <TablePagination count={count} />
         </Suspense>

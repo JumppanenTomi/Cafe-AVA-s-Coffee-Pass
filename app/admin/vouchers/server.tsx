@@ -81,3 +81,17 @@ export const fetchVoucherTypes = async (query: string) => {
   if (error) throw error;
   return data;
 };
+
+export const updateVoucher = async (id: number, formData: FormData) => {
+  const supabase = createClient(true);
+  const rawFormData = {
+    user_id: formData.get('user_id'),
+    voucher_id: formData.get('voucher_id'),
+  };
+  const { error } = await supabase
+    .from("voucher_logs")
+    .update(rawFormData)
+    .eq('voucher_log_id', id);
+
+  if (error) throw error;
+}
