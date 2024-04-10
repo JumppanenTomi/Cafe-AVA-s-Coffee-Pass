@@ -4,9 +4,9 @@ interface AutoCompleteInputProps {
   inputLabel?: string;
   inputPlaceholder?: string;
   isRequired?: boolean;
-  defaultValue?: number | undefined;
+  defaultValue?: number | string | undefined;
   onInputChange?: (value: string) => void;
-  options: { id: string; label: string }[];
+  options: { id: string | number; label: string }[];
   helperText?: string;
 }
 
