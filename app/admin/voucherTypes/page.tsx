@@ -1,5 +1,5 @@
 import VoucherTypesClient from "./client";
-import { fetchVoucherTypes, fetchVoucherTypesCount } from "./server";
+import { fetchVoucherTypes, fetchVoucherTypesCount } from "@/utils/ServerActions/voucher_types";
 
 export default async function VoucherTypesPage({
   searchParams = {},
