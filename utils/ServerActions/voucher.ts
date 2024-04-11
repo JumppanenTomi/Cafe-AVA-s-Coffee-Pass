@@ -216,3 +216,25 @@ export const fetchVoucherTypes = async (query: string) => {
     return;
   }
 };
+
+
+export const fetchAllVouchers = async () => {
+  const supabase = createClient()
+  const userId = await getUserId();
+  try{
+    const {data, error} = await supabase
+    .from("all_vouchers")
+    .select(`*,voucher_type(*)`)
+    .or(`user_id.eq.${userId},public.eq.TRUE`);
+  
+  if(error){
+    throw new Error(error.message)
+  }
+  console.log(data);
+  
+  return data
+} catch (error: any){
+  console.error(`Failed to fetch voucher types: ${error.message}`);
+  return
+  }
+}
