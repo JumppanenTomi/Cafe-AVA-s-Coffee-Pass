@@ -4,7 +4,7 @@ import NumberInput from "@/components/Inputs/NumberInput";
 import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
 import { createStamps } from "./server";
 import { Form } from "@/components/Inputs/Form";
-import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 
 export default function CreateModal({
   show,

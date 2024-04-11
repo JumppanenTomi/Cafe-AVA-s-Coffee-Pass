@@ -3,7 +3,7 @@ import Image from "next/image";
 import logo from "@/public/logo.png";
 import { Form } from "@/components/Inputs/Form";
 import EmailInput from "@/components/Inputs/EmailInput";
-import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import { signUp } from "@/utils/ServerActions/authentication";
 
 export default function Register({

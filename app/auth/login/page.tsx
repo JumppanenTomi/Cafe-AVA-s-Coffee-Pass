@@ -1,4 +1,4 @@
-import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import EmailInput from "@/components/Inputs/EmailInput";
 import { Form } from "@/components/Inputs/Form";
 import Link from "next/link";

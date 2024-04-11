@@ -3,7 +3,7 @@ import logo from "@/public/logo.png";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import SocialLogin from "@/components/SocialLogin";
+import SocialLogin from "@/components/Inputs/buttons/SocialLogin";
 
 export default async function Index() {
   const supabase = createClient();

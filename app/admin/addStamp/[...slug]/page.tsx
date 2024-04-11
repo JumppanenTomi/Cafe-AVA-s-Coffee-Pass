@@ -1,6 +1,6 @@
 import { Form } from "@/components/Inputs/Form";
 import NumberInput from "@/components/Inputs/NumberInput";
-import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { fetchUserIdFromTempCode, markTempCodeAsUsed } from "@/utils/ServerActions/tempCode";

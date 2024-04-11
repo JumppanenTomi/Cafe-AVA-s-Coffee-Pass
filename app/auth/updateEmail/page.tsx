@@ -1,5 +1,5 @@
-import Nav from "@/components/Nav";
-import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import Nav from "@/components/navigation/Nav";
+import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import Link from "next/link";
 import { Form } from "@/components/Inputs/Form";
 import EmailInput from "@/components/Inputs/EmailInput";

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import QrCodeGen from "./QrCodes/QrCodeGen"
+import QrCodeGen from "./QrCodeGen"
 import { XCircleIcon } from "@heroicons/react/20/solid"
 
 const VoucherQR = ({ name, setShowQrCode, active, voucherId, used }:
