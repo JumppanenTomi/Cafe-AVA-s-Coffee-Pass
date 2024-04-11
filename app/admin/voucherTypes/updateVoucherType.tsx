@@ -96,7 +96,7 @@ export default function UpdateVoucherType({
                 inputLabel="Description"
                 inputPlaceholder="Enter voucher type description"
                 isRequired={false}
-                defaultValue={voucherType?.description}
+                defaultValue={voucherType?.description || ""}
               />
 
               <div className="grid gap-4 sm:grid-cols-2">
@@ -121,7 +121,7 @@ export default function UpdateVoucherType({
                   inputLabel="Uses per user"
                   inputPlaceholder="Enter uses per user"
                   isRequired={false}
-                  defaultValue={voucherType?.uses_per_user}
+                  defaultValue={voucherType?.uses_per_user || 0}
                 />
 
                 <NumberInput

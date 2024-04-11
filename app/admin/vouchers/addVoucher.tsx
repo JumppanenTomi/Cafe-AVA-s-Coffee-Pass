@@ -31,8 +31,12 @@ export default function AddVoucher() {
 
   useEffect(() => {
     const getVoucherTypes = async () => {
-      const data = await fetchVoucherTypes(voucherTypeInput);
-      setVoucherTypes(data);
+      const response = await fetchVoucherTypes(voucherTypeInput);
+      setVoucherTypes(response?.map((type) => ({
+        voucher_id: Number(type.voucher_id) || 0,
+        name: type.name || "",
+        description: type.description || "",
+      })) ?? []);
     };
 
     getVoucherTypes();
