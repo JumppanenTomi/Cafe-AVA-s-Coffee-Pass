@@ -1,5 +1,5 @@
 "use server";
-import { Tables } from "./../../types/supabase";
+import { Tables, TablesUpdate } from "./../../types/supabase";
 import { getFormattedDate } from "../getFormattedDate";
 import { createClient } from "../supabase/server";
 import { getUserId } from "./user";
@@ -168,9 +168,9 @@ export const createVouchers = async (formData: FormData) => {
       throw new Error("Missing user_id or voucher_id");
     }
 
-    const rawFormData: Tables<"voucher_logs"> = {
-      voucher_log_id: 0,
-      timestamp: null,
+    const rawFormData = {
+      //voucher_log_id: 0,
+      //timestamp: null,
       user_id: userId.toString(),
       voucher_id: parseInt(voucherId.toString()),
     };

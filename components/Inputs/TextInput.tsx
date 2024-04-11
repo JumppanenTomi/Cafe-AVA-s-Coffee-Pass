@@ -4,6 +4,7 @@ interface TextInputProps {
   inputLabel?: string;
   inputPlaceholder?: string;
   isRequired?: boolean;
+  defaultValue?: string;
   minLength?: number;
   maxLength?: number;
   helperText?: string;
@@ -15,12 +16,13 @@ export default function TextInput({
   inputLabel = "Text",
   inputPlaceholder = "Enter text here",
   isRequired = true,
+  defaultValue = "",
   minLength,
   maxLength,
   helperText = "",
 }: TextInputProps) {
   return (
-    <>
+    <div>
       {showLabel && (
         <label className="input-label" htmlFor={inputName}>
           {inputLabel} {isRequired && <label>*</label>}
@@ -32,10 +34,11 @@ export default function TextInput({
         name={inputName}
         placeholder={inputPlaceholder}
         required={isRequired}
+        defaultValue={defaultValue}
         minLength={minLength}
         maxLength={maxLength}
       />
       {helperText && <p className="input-helper-text">{helperText}</p>}
-    </>
+    </div>
   );
 }
