@@ -1,11 +1,9 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import { getUser } from "@/utils/ServerActions/user";
 
 export default async function RootLayout({children,}: { children: React.ReactNode; }) {
-	const supabase = createClient();
-	const {
-		data: {user},
-	} = await supabase.auth.getUser();
+	const user = await getUser()
 
 	if (!user) {
 		return redirect("/");

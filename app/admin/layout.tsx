@@ -1,5 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import { getUser } from "@/utils/ServerActions/user";
 
 export default async function AdminLayout({
   children,
@@ -8,10 +9,7 @@ export default async function AdminLayout({
   }) {
   
   //TODO: make role checking here
-  const supabase = createClient();
-	const {
-		data: {user},
-	} = await supabase.auth.getUser();
+  const user = await getUser()
 
 	if (!user) {
 		return redirect("/auth/login");

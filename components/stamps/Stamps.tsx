@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import Popup from "@/components/UIOverlays/popup";
 import { fetchCurrentUserActiveStampCount } from "@/utils/ServerActions/stamp";
+import { getUserId } from "@/utils/ServerActions/user";
 
 const Stamps = () => {
     const supabase = createClient();
@@ -14,8 +15,8 @@ const Stamps = () => {
 
     useEffect(() => {
         const getUser = async () => {
-            const { data: { user } } = await supabase.auth.getUser();
-            setUserId(user?.id || '')
+            const uid = await getUserId()
+            setUserId(uid || '')
         }
         getUser()
     }, [])
