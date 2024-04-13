@@ -3,6 +3,7 @@ interface DateInputProps {
   showLabel?: boolean;
   inputLabel?: string;
   inputPlaceholder?: string;
+  defaultValue?: string;
   isRequired?: boolean;
 }
 
@@ -11,22 +12,24 @@ export default function DateInput({
   showLabel = true,
   inputLabel = "Date",
   inputPlaceholder = "yyyy-mm-dd",
+  defaultValue = "",
   isRequired = true,
 }: DateInputProps) {
   return (
-    <>
+    <div>
       {showLabel && (
-        <label className='input-label' htmlFor={inputName}>
+        <label className="input-label" htmlFor={inputName}>
           {inputLabel} {isRequired && <span>*</span>}
         </label>
       )}
       <input
-        className='input'
-        type='date'
+        className="input"
+        type="date"
         name={inputName}
         placeholder={inputPlaceholder}
         required={isRequired}
+        defaultValue={defaultValue}
       />
-    </>
+    </div>
   );
 }

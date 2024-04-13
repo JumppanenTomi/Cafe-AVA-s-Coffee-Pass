@@ -1,6 +1,6 @@
 import { fetchUsers } from "@/utils/ServerActions/user";
 import StampsClient from "./client";
-import { fetchStamps, fetchStampsCount } from "./server";
+import { fetchStamps, fetchStampsCount } from "@/utils/ServerActions/stamp";
 
 export default async function StampsPage({
   searchParams = {},

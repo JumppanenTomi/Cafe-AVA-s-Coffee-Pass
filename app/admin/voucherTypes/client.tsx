@@ -3,23 +3,9 @@ import { useState, Suspense } from "react";
 import Search from "@/components/Table/Search";
 import TableHead from "@/components/Table/TableHead";
 import TablePagination from "@/components/Table/TablePagination";
-import AddStamp from "./addStamp";
-import MenuStamp from "./menuStamp";
-import { Stamp } from "./interface";
-
-const _ = require("lodash");
-
-const handleShowLabel = (row: any, headCell: HeadCell) => {
-  const value = _.get(row, headCell.id);
-
-  if (headCell.type == "datetime") {
-    return new Date(value).toLocaleString();
-  } else if (headCell.type == "boolean") {
-    return value ? "Yes" : "No";
-  } else {
-    return value;
-  }
-};
+import AddVoucherType from "./addVoucherType";
+import MenuVoucherType from "./menuVoucherType";
+import { VoucherType } from "./interface";
 
 export interface HeadCell {
   id: string;
@@ -27,17 +13,29 @@ export interface HeadCell {
   type: string;
 }
 
-export default function StampsClient({
-  stamps,
+const _ = require("lodash");
+
+const handleShowLabel = (row: any, headCell: HeadCell) => {
+  const value = _.get(row, headCell.id);
+
+  if (headCell.type == "datetime") {
+    return new Date(value).toLocaleDateString();
+  } else if (headCell.type == "boolean") {
+    return value ? "Yes" : "No";
+  } else {
+    return value;
+  }
+};
+
+export default function VoucherTypesClient({
+  voucherTypes,
   count,
-  users,
   query,
   sort,
   currentPage,
 }: {
-  stamps: Stamp[];
+  voucherTypes: VoucherType[];
   count: number;
-  users: any[];
   query: string;
   sort: string;
   currentPage: number;
@@ -46,7 +44,7 @@ export default function StampsClient({
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = stamps.map((n) => n.stamp_log_id);
+      const newSelected = voucherTypes.map((n) => n.voucher_id);
       setSelected(newSelected);
       return;
     }
@@ -56,13 +54,14 @@ export default function StampsClient({
   return (
     <div className="flex-1 w-full flex flex-col gap-8">
       <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between">
-        <h3 className="text-3xl">Stamps</h3>
-        <AddStamp />
+        <h3 className="text-3xl">Voucher Types</h3>
+        <AddVoucherType />
       </div>
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+
+      <div className="relative bg-white overflow-x-auto shadow-md sm:rounded-lg">
         <div className="p-4 flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white">
           <div></div>
-          <Search placeholder="Search for stamps" />
+          <Search placeholder="Search for voucherTypes" />
         </div>
         <Suspense
           key={query + sort + currentPage}
@@ -74,19 +73,22 @@ export default function StampsClient({
               handleSelectAllClick={handleSelectAllClick}
             />
             <tbody>
-              {stamps.map((stamp, index) => (
-                <tr key={index} className="bg-white border-b hover:bg-gray-50">
+              {voucherTypes.map((voucherType, index) => (
+                <tr
+                  key={index}
+                  className="bg-white border-b hover:bg-gray-50"
+                >
                   {headCells.map((headCell) => (
                     <td
                       key={headCell.id}
                       className="px-6 py-4"
                       suppressHydrationWarning
                     >
-                      {handleShowLabel(stamp, headCell)}
+                      {handleShowLabel(voucherType, headCell)}
                     </td>
                   ))}
                   <td className="px-6 py-4 text-right">
-                    <MenuStamp stamp={stamp} />
+                    <MenuVoucherType voucherType={voucherType} />
                   </td>
                 </tr>
               ))}
@@ -101,23 +103,38 @@ export default function StampsClient({
 
 const headCells: readonly HeadCell[] = [
   {
-    id: "stamp_log_id",
+    id: "voucher_id",
     type: "number",
-    label: "Stamp Id",
+    label: "Voucher Id",
   },
   {
-    id: "timestamp",
-    type: "datetime",
-    label: "Timestamp",
-  },
-  {
-    id: "user_id",
+    id: "name",
     type: "string",
-    label: "User",
+    label: "Name",
   },
   {
-    id: "is_used",
-    type: "boolean",
-    label: "Is used",
+    id: "description",
+    type: "string",
+    label: "Description",
+  },
+  {
+    id: "start_date",
+    type: "datetime",
+    label: "Start Date",
+  },
+  {
+    id: "end_date",
+    type: "datetime",
+    label: "End Date",
+  },
+  {
+    id: "uses_per_user",
+    type: "number",
+    label: "Uses per user",
+  },
+  {
+    id: "stamps_required",
+    type: "number",
+    label: "Stamps required",
   },
 ];

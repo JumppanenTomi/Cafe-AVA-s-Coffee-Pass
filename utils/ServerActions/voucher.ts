@@ -1,5 +1,5 @@
 "use server";
-import { Tables } from "./../../types/supabase";
+import { Tables, TablesUpdate } from "./../../types/supabase";
 import { getFormattedDate } from "../getFormattedDate";
 import { createClient } from "../supabase/server";
 import { getUserId } from "./user";
@@ -168,9 +168,9 @@ export const createVouchers = async (formData: FormData) => {
       throw new Error("Missing user_id or voucher_id");
     }
 
-    const rawFormData: Tables<"voucher_logs"> = {
-      voucher_log_id: 0,
-      timestamp: null,
+    const rawFormData = {
+      //voucher_log_id: 0,
+      //timestamp: null,
       user_id: userId.toString(),
       voucher_id: parseInt(voucherId.toString()),
     };
@@ -216,3 +216,30 @@ export const fetchVoucherTypes = async (query: string) => {
     return;
   }
 };
+
+/**
+ * Updates a voucher in the database.
+ * @param {number} id - The id of the voucher to update.
+ * @param {FormData} formData - The form data for the updated voucher.
+ * @returns {Promise} A promise that resolves when the update is complete.
+ * @throws Will throw an error if the update operation fails.
+ */
+export const updateVoucher = async (id: number, formData: FormData) => {
+  try {
+    const supabase = createClient(true);
+    const rawFormData: TablesUpdate<'voucher_logs'> = {
+      user_id: formData.get('user_id') as string,
+      voucher_id: parseInt(formData.get('voucher_id') as string) as number,
+    };
+
+    const { error } = await supabase
+      .from("voucher_logs")
+      .update(rawFormData)
+      .eq('voucher_log_id', id);
+
+    if (error) throw error;
+  } catch (error) {
+    console.error('Error updating voucher:', error);
+    return null;
+  }
+}

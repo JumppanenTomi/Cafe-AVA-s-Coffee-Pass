@@ -47,7 +47,7 @@ export default function AdminTemplate({
           <ul className="space-y-2 font-medium flex-grow">
             <li>
               <Link
-                href="#"
+                href="/admin"
                 className="flex items-center py-2 text-black dark:text-white hover:border-t-2 hover:border-b-2 hover:border-black dark:hover:border-white group"
               >
                 <span className="flex-1 ms-3 whitespace-nowrap uppercase">
@@ -82,6 +82,16 @@ export default function AdminTemplate({
               >
                 <span className="flex-1 ms-3 whitespace-nowrap uppercase">
                   Vouchers
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/admin/voucherTypes"
+                className="flex items-center py-2 text-black dark:text-white hover:border-t-2 hover:border-b-2 hover:border-black dark:hover:border-white group"
+              >
+                <span className="flex-1 ms-3 whitespace-nowrap uppercase">
+                  Voucher Types
                 </span>
               </Link>
             </li>

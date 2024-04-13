@@ -1,4 +1,5 @@
 "use server";
+import { TablesUpdate } from "@/types/supabase";
 import { createClient } from "../supabase/server";
 import { getUserId } from "./user";
 
@@ -238,3 +239,30 @@ export const createStamps = async (formData: FormData) => {
     return error;
   }
 };
+
+/**
+ * Updates a stamp in the database.
+ * @param {number} id - The id of the stamp to update.
+ * @param {FormData} formData - The form data for the updated stamp.
+ * @returns {Promise} A promise that resolves when the update is complete.
+ * @throws Will throw an error if the update operation fails.
+ */
+export const updateStamp = async (id: number, formData: FormData) => {
+  try {
+    const supabase = createClient(true);
+    const rawFormData: TablesUpdate<"stamp_logs"> = {
+      user_id: formData.get('user_id') as string,
+      is_used: formData.get('is_used') === 'on' ? true : false,
+    };
+
+    const { error } = await supabase
+      .from("stamp_logs")
+      .update(rawFormData)
+      .eq('stamp_log_id', id);
+
+    if (error) throw error;
+  } catch (error) {
+    console.error('Error updating stamp:', error);
+    throw error;
+  }
+}
