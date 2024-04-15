@@ -1,7 +1,6 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { getUser } from "@/utils/ServerActions/user";
 
 /**
  * Retrieves collected data for a user.
@@ -11,7 +10,10 @@ import { getUser } from "@/utils/ServerActions/user";
 export async function collectedData() {
   try {
     const supabase = createClient();
-    const user = await getUser()
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
     if (!user) {
       throw new Error("Failed to get user");

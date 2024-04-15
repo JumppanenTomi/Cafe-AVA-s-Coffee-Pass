@@ -23,24 +23,6 @@ export const getUserId = async (): Promise<string | null> => {
   }
 };
 
-export const getUser = async () => {
-  try {
-    const supabase = createClient();
-    const { 
-      data: { user }, error
-    } = await supabase.auth.getUser();
-
-    if (error) {
-      throw new Error(`Failed to get user: ${error.message}`);
-    }
-
-    return user;
-  } catch (error: any) {
-    console.error(error.message);
-    return null;
-  }
-};
-
 /**
  * Fetches users from the server.
  * 

@@ -1,4 +1,5 @@
 import SettingsNav from "@/components/navigation/SettingsNav"
+import Link from "next/link";
 import BackButton from "@/components/Inputs/buttons/BackButton";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
