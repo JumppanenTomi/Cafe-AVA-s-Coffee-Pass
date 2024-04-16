@@ -7,21 +7,21 @@ import formatDateToFinnish from "@/utils/formatDateToFinnish";
 import VoucherQR from "./VoucherQR";
 import { fetchAllVouchers } from "@/utils/ServerActions/voucher";
 
-const VoucherListItem = ({ voucher, used }:
+const VoucherListItem = ({ voucher }:
     {
-        voucher: any, used: number
+        voucher: any
     }) => {
-
+    const used = voucher.used
     const uses = voucher.voucher_type.uses_per_voucher
     const active = uses !== null && used >= uses
     const [showQrCode, setShowQrCode] = useState(false)
+
     const showQr = () => {
         setShowQrCode(true)
     }
-
     return (
         <>
-            {showQrCode && <VoucherQR name={voucher.name} setShowQrCode={setShowQrCode} active={active} voucherId={voucher.voucher_id} used={used} />}
+            {!active && showQrCode && <VoucherQR name={voucher.voucher_type.name} setShowQrCode={setShowQrCode} active={active} voucherId={voucher.voucher_id} used={used} />}
             <div onClick={() => showQr()} className={`w-full ${(active) && "opacity-50"}`}>
                 <div className={'white-container-no-p w-full flex-wrap mb- mb-4'}>
                     <div className={'bg-[url(/coffee.jpg)] bg-cover bg-top h-40 rounded-t-md'}></div>
@@ -38,7 +38,7 @@ const VoucherListItem = ({ voucher, used }:
     );
 };
 
-const VoucherList = ({ initialVouchers, userId }: {
+const VoucherList = ({ initialVouchers }: {
     initialVouchers: any,
     userId: string
 }) => {
@@ -88,7 +88,7 @@ const VoucherList = ({ initialVouchers, userId }: {
     return (
         <div>
             {vouchers && vouchers.length > 0 ? vouchers.map((voucher: any) => (
-                <VoucherListItem key={voucher.id} voucher={voucher} used={voucher.used} />
+                <VoucherListItem key={voucher.id} voucher={voucher} />
             )) : (
                 <h1>No active vouchers.</h1>
             )}
