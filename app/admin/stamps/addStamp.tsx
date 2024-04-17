@@ -9,7 +9,7 @@ import { User } from "./interface";
 import { fetchUsers } from "@/utils/ServerActions/user";
 import { createStamps } from "@/utils/ServerActions/stamp";
 
-export default function AddStamp(props?: { user_id: string }) {
+export default function AddStamp(props?: { user_id?: string }) {
   const [modal, setModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const router = useRouter();

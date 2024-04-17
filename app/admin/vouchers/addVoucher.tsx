@@ -8,7 +8,7 @@ import { User, VoucherType } from "./interface";
 import { fetchUsers } from "@/utils/ServerActions/user";
 import { createVouchers, fetchVoucherTypes } from "@/utils/ServerActions/voucher";
 
-export default function AddVoucher(props?: { user_id: string }) {
+export default function AddVoucher(props?: { user_id?: string }) {
   const [modal, setModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const [voucherTypes, setVoucherTypes] = useState<VoucherType[]>([]);
