@@ -1,18 +1,23 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import NumberInput from "@/components/Inputs/NumberInput";
 import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
 import { Form } from "@/components/Inputs/Form";
 import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
-import { User, VoucherType } from "./interface";
+import { User } from "./interface";
 import { fetchUsers } from "@/utils/ServerActions/user";
-import { createVouchers, fetchVoucherTypes } from "@/utils/ServerActions/voucher";
+import {
+  getRequiredStamps,
+  useMultipleStamps,
+} from "@/utils/ServerActions/stamp";
 
-export default function AddVoucher(props?: { user_id?: string }) {
+export default function BulkRemoveStamps(props?: {
+  user_id?: string;
+  currentAmount?: number;
+}) {
   const [modal, setModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
-  const [voucherTypes, setVoucherTypes] = useState<VoucherType[]>([]);
-  const [voucherTypeInput, setVoucherTypeInput] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -27,28 +32,14 @@ export default function AddVoucher(props?: { user_id?: string }) {
     };
 
     getUsers();
+    getRequiredStamps;
   }, []);
 
-  useEffect(() => {
-    const getVoucherTypes = async () => {
-      const response = await fetchVoucherTypes(voucherTypeInput);
-      setVoucherTypes(
-        response?.map((type) => ({
-          voucher_id: Number(type.voucher_id) || 0,
-          name: type.name || "",
-          description: type.description || "",
-        })) ?? []
-      );
-    };
-
-    getVoucherTypes();
-  }, [voucherTypeInput]);
-
   const handleSubmit = async (formData: FormData) => {
-    await createVouchers(formData);
-
-    router.refresh();
-    setModal(false);
+    await useMultipleStamps(formData).then(() => {
+      router.refresh();
+      setModal(false);
+    });
   };
 
   const handleChange = () => setModal(!modal);
@@ -56,7 +47,7 @@ export default function AddVoucher(props?: { user_id?: string }) {
   return (
     <div>
       <button className='btn-primary' onClick={handleChange}>
-        Add voucher
+        Remove stamps
       </button>
 
       <div
@@ -77,7 +68,7 @@ export default function AddVoucher(props?: { user_id?: string }) {
           <div className='relative p-4 bg-white rounded-lg shadow sm:p-5'>
             <div className='flex items-center justify-between pb-4 mb-4 border-b rounded-t sm:mb-5'>
               <h3 className='text-lg font-semibold text-gray-900'>
-                Add voucher
+                {"Remove Stamp(s)"}
               </h3>
               <button
                 type='button'
@@ -113,15 +104,14 @@ export default function AddVoucher(props?: { user_id?: string }) {
                 }))}
               />
 
-              <AutoCompleteInput
-                inputName='voucher_id'
-                inputLabel='Voucher Type'
-                inputPlaceholder='Select a voucher type'
-                onInputChange={(value) => setVoucherTypeInput(value)}
-                options={voucherTypes.map((type) => ({
-                  id: type.voucher_id,
-                  label: type.name,
-                }))}
+              <NumberInput
+                inputName='amount'
+                inputLabel='Amount'
+                inputPlaceholder='Number of stamps'
+                min={1}
+                defaultValue={1}
+                max={props?.currentAmount ? props.currentAmount : undefined}
+                helperText='The number of stamps deactivated for this user.'
               />
               <FormSubmitButton
                 formAction={handleSubmit}
