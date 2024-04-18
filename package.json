@@ -18,6 +18,7 @@
     "@supabase/supabase-js": "latest",
     "autoprefixer": "10.4.17",
     "chart.js": "^4.4.2",
+    "cookies-next": "^4.1.1",
     "framer-motion": "^11.0.12",
     "geist": "^1.2.1",
     "jwt-decode": "^4.0.0",
