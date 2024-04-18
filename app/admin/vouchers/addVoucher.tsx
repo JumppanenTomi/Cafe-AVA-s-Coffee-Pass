@@ -84,6 +84,7 @@ export default function AddVoucher(props?: { user_id?: string }) {
                 inputName='user_id'
                 inputLabel='User'
                 inputPlaceholder='Select a user'
+                defaultValue={props?.user_id || undefined}
                 options={users.map((user) => ({
                   id: user.id,
                   label: user.email,
