@@ -4,13 +4,13 @@ import { useRouter } from "next/navigation";
 import NumberInput from "@/components/Inputs/NumberInput";
 import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
 import { Form } from "@/components/Inputs/Form";
-import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
 import { User } from "./interface";
 import { fetchUsers } from "@/utils/ServerActions/user";
 import {
   getRequiredStamps,
   useMultipleStamps,
 } from "@/utils/ServerActions/stamp";
+import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 
 export default function BulkRemoveStamps(props?: {
   user_id?: string;

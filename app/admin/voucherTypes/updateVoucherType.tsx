@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Form } from "@/components/Inputs/Form";
-import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import { VoucherType } from "./interface";
 import TextInput from "@/components/Inputs/TextInput";
 import NumberInput from "@/components/Inputs/NumberInput";

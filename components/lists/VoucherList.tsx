@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import VoucherUses from "@/types/VoucherUses";
 import formatDateToFinnish from "@/utils/formatDateToFinnish";
-import VoucherQR from "./VoucherQR";
+import VoucherQR from "../QrCodes/VoucherQR";
 
 const VoucherListItem = ({ voucher, used }:
     {

@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
-import Popup from "@/components/popup";
+import Popup from "@/components/UIOverlays/popup";
 import { fetchCurrentUserActiveStampCount } from "@/utils/ServerActions/stamp";
 
 const Stamps = () => {

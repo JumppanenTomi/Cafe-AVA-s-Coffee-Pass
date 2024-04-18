@@ -1,7 +1,7 @@
 // Created by Tomi Jumppanen on 29.02.2024
 
 import Image from "next/image";
-import logo from "@/public/logo.png"
+import logo from "@/public/images/logo.png"
 import {faUser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Link from "next/link";

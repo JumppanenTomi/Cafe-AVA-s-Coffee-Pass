@@ -1,7 +1,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import BackButton from "@/components/BackButton";
-import Nav from "@/components/Nav";
+import BackButton from "@/components/Inputs/buttons/BackButton";
+import Nav from "@/components/navigation/Nav";
 
 
 const DynamicMap = dynamic(

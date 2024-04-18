@@ -1,9 +1,9 @@
-import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import EmailInput from "@/components/Inputs/EmailInput";
 import { Form } from "@/components/Inputs/Form";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/public/logo.png";
+import logo from "@/public/images/logo.png";
 import { signIn } from "@/utils/ServerActions/authentication";
 
 export default function Login({

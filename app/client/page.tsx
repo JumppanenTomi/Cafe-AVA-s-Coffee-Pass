@@ -1,4 +1,4 @@
-import Nav from "@/components/Nav";
+import Nav from "@/components/navigation/Nav";
 import StampCode from "@/components/QrCodes/stampCode";
 import { Statistics } from "@/components/Statistics";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,7 +9,7 @@ import {
 	IconDefinition
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import StampCard from "@/components/StampCard";
+import StampCard from "@/components/stamps/StampCard";
 type NavigationLinkProps = {
 	href: string;
 	icon: IconDefinition;
