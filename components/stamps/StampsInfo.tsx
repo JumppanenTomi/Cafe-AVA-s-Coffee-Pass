@@ -1,6 +1,6 @@
 "use client";
 import { InformationCircleIcon } from "@heroicons/react/20/solid";
-import Popup from "./popup";
+import Popup from "../UIOverlays/popup";
 import { useEffect, useState } from "react";
 import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 

@@ -1,10 +1,10 @@
 import Image from "next/image";
-import logo from "@/public/logo.png";
-import maker from "@/public/maker.png";
+import logo from "@/public/images/logo.png";
+import maker from "@/public/images/maker.png";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
-import SocialLogin from "@/components/SocialLogin";
+import SocialLogin from "@/components/Inputs/buttons/SocialLogin";
 import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 
 export default async function Index() {

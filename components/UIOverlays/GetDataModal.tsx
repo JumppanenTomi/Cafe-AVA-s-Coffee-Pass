@@ -1,6 +1,6 @@
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import { useEffect, useState } from 'react';
-import MyDoc from "@/components/CollectedDataDoc";
+import MyDoc from "@/components/templates/CollectedDataDoc";
 import { collectedData } from '@/utils/ServerActions/dataCollection';
 
 interface GetDataModalProps {

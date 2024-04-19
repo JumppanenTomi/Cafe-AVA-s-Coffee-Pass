@@ -1,5 +1,5 @@
 import { Form } from "@/components/Inputs/Form";
-import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import TextboxInput from "@/components/Inputs/TextboxInput";
 import {
   fetchAllSiteSettings,
