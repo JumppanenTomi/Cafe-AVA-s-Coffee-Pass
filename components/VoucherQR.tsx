@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import QrCodeGen from "./QrCodes/QrCodeGen"
 import { XCircleIcon } from "@heroicons/react/20/solid"
+import { faPersonWalkingDashedLineArrowRight } from "@fortawesome/free-solid-svg-icons"
 
 const VoucherQR = ({ name, setShowQrCode, active, voucherId, used }:
     {
@@ -12,9 +13,11 @@ const VoucherQR = ({ name, setShowQrCode, active, voucherId, used }:
     }) => {
     const [currentUsed, setCurrentUsed] = useState(used)
 
+
     // Don't show if Inactive
     useEffect(() => {
         active ? setShowQrCode(false) : setShowQrCode(true)
+
     }, [active])
     // Close if stamp is given or taken.
     // There is a bug that closes the voucher on initial update of 'used',
@@ -33,7 +36,7 @@ const VoucherQR = ({ name, setShowQrCode, active, voucherId, used }:
                     <div className="close-button" onClick={() => setShowQrCode(false)} >
                         <XCircleIcon className="h-9 w-9" />
                     </div>
-                    <QrCodeGen text={process.env.SITE_URL + '/client/vouchers/voucher' + voucherId} width={300} />
+                    <QrCodeGen text={process.env.SITE_URL + '/client/vouchers/voucher/' + voucherId} width={300} />
                     <div className="voucher-part">
                         {name}
                     </div>

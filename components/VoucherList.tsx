@@ -21,7 +21,7 @@ const VoucherListItem = ({ voucher }:
     }
     return (
         <>
-            {!active && showQrCode && <VoucherQR name={voucher.voucher_type.name} setShowQrCode={setShowQrCode} active={active} voucherId={voucher.voucher_id} used={used} />}
+            {!active && showQrCode && <VoucherQR name={voucher.voucher_type.name} setShowQrCode={setShowQrCode} active={active} voucherId={voucher.id} used={used} />}
             <div onClick={() => showQr()} className={`w-full ${(active) && "opacity-50"}`}>
                 <div className={'white-container-no-p w-full flex-wrap mb- mb-4'}>
                     <div className={'bg-[url(/coffee.jpg)] bg-cover bg-top h-40 rounded-t-md'}></div>
