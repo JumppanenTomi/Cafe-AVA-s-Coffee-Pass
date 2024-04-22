@@ -72,7 +72,6 @@ const VoucherList = ({ initialVouchers }: {
                     event: '*',
                     schema: 'public',
                     table: 'voucher_type',
-                    //filter: `user_id=eq.${userId}`
                 },
                 (payload) => {
                     handleChange()

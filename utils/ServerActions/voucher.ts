@@ -218,6 +218,8 @@ export const fetchVoucherTypes = async (query: string) => {
 };
 
 
+// this is for second version of database
+
 export const fetchAllVouchers = async () => {
   const supabase = createClient()
   const userId = await getUserId();
@@ -230,8 +232,7 @@ export const fetchAllVouchers = async () => {
   if(error){
     throw new Error(error.message)
   }
-  console.log(data);
-  
+  // console.log(data);
   return data
 } catch (error: any){
   console.error(`Failed to fetch voucher types: ${error.message}`);
