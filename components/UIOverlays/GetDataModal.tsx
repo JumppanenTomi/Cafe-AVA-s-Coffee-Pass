@@ -8,8 +8,14 @@ interface GetDataModalProps {
   onClose: () => void
 }
 
+/**
+ * Confirmation modal after clicking Download collected user information
+ * @param isVisible - Boolean value that controls if the modal is shown or not
+ * @param onClose - Function that changes the value of the isVisible variable
+ * @returns The modal or nothing if the modal has been closed
+ */
 export default function GetDataModal({ isVisible, onClose }: GetDataModalProps) {
-  const [data, setData] = useState({ email: "", userId: "", stampLogs: [{ timestamp: "", stamp_log_id: 0 }], voucherLogs: [{ timestamp: "", voucher_log_id: 0 }] });
+  const [data, setData] = useState({ email: "", userId: "", stampLogs: [{ timestamp: "", stamp_log_id: 0 }], voucherLogs: [{ timestamp: "", voucher_log_id: 0 }], fullName: "" });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,6 +32,7 @@ export default function GetDataModal({ isVisible, onClose }: GetDataModalProps) 
           timestamp: log.timestamp ?? "",
           voucher_log_id: log.voucher_log_id
         })),
+        fullName: response.fullName,
       });
     };
 
@@ -53,7 +60,7 @@ export default function GetDataModal({ isVisible, onClose }: GetDataModalProps) 
             <div className="px-4 py-3 bg-orange sm:flex sm:flex-col md:flex-row-reverse sm:px-6">
               <div className="inline-flex justify-center w-full px-3 py-2 btn-secondary hover:bg-gray-50 sm:mt-0 sm:w-auto">
                 {/* onClose function cannot be added to PDFDownloadLink components onClick, because if it is there the modal will close but the download will get cancelled */}
-                <PDFDownloadLink document={<MyDoc email={data.email} userId={data.userId} stampLogs={data.stampLogs} voucherLogs={data.voucherLogs} />} fileName="Cafe AVA Coffee Pass collected user information.pdf">
+                <PDFDownloadLink document={<MyDoc email={data.email} userId={data.userId} stampLogs={data.stampLogs} voucherLogs={data.voucherLogs} fullName={data.fullName} />} fileName="Cafe AVA Coffee Pass collected user information.pdf">
                   {({ blob, url, loading, error }) =>
                     loading ? 'Loading document' : 'Download'
                   }
