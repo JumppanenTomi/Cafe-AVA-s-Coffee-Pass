@@ -71,7 +71,7 @@ const Stamps = () => {
       .on(
         "postgres_changes",
         {
-          event: "*",
+          event: "INSERT",
           schema: "public",
           table: "stamp_logs",
           filter: `user_id=eq.${userId}`,
