@@ -13,7 +13,13 @@ import OverZoomIn from "@/components/Animations/Render/OverZoomIn";
 import RollDown from "@/components/Animations/Render/RollDown";
 import { Statistics } from "@/components/Statistics";
 import FadeIn from "@/components/Animations/Render/FadeIn";
+import StampsInfo from "@/components/stamps/StampsInfo";
+import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 type NavigationLinkProps = {
+  href: string;
+  icon: IconDefinition;
+  label: string;
+  isExternal?: boolean;
   href: string;
   icon: IconDefinition;
   label: string;
