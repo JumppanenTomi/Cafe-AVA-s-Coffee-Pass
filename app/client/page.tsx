@@ -1,6 +1,5 @@
 import Nav from "@/components/navigation/Nav";
 import StampCode from "@/components/QrCodes/stampCode";
-import { Statistics } from "@/components/Statistics";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUpRightFromSquare,
@@ -10,13 +9,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import StampCard from "@/components/stamps/StampCard";
+import OverZoomIn from "@/components/Animations/Render/OverZoomIn";
+import RollDown from "@/components/Animations/Render/RollDown";
+import { Statistics } from "@/components/Statistics";
+import FadeIn from "@/components/Animations/Render/FadeIn";
 import StampsInfo from "@/components/stamps/StampsInfo";
 import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 type NavigationLinkProps = {
   href: string;
   icon: IconDefinition;
   label: string;
-  isExternal?: boolean;
+  isExternal?: boolean
 };
 
 const HomeLinkItem: React.FC<NavigationLinkProps> = ({
@@ -51,30 +54,38 @@ export default async function ProtectedPage() {
     <>
       <Nav />
       <div className='flex flex-col items-center justify-center flex-grow gap-5'>
-        <Statistics />
-        <div className='flex flex-row flex-wrap w-full white-container'>
+        <FadeIn duration={0.8} className='w-full'>
+          <Statistics />
+        </FadeIn>
+        <FadeIn
+          className='flex flex-row flex-wrap w-full white-container'
+          duration={0.8}
+        >
           <HomeLinkItem
             href='/client/vouchers'
             icon={faTicket}
             label='Vouchers'
           />
           <HomeLinkItem
+
             href={menuUrl?.value || "/error"}
             icon={faUtensils}
             label='Menu'
             isExternal={true}
           />
-        </div>
+        </FadeIn>
         <div className={"flex flex-col items-center justify-center"}>
-          <div className={"w-full flex justify-end mb-2"}>
-            <StampsInfo />
-          </div>
-          <div className={"white-container z-40 flex items-end flex-col"}>
+          <OverZoomIn className='z-40 white-container' duration={0.8}>
             <StampCode />
-          </div>
-          <div className={"w-11/12 flex justify-center"}>
+          </OverZoomIn>
+          <RollDown
+            animateTop={[-150, 0]}
+            className='flex justify-center w-11/12 top-full'
+            delay={1}
+            duration={0.4}
+          >
             <StampCard />
-          </div>
+          </RollDown>
         </div>
       </div>
     </>
