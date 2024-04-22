@@ -218,6 +218,27 @@ export const fetchVoucherTypes = async (query: string) => {
 };
 
 
+export const updateVoucher = async (id: number, formData: FormData) => {
+  try {
+    const supabase = createClient(true);
+    const rawFormData: TablesUpdate<'voucher_logs'> = {
+      user_id: formData.get('user_id') as string,
+      voucher_id: parseInt(formData.get('voucher_id') as string) as number,
+    };
+
+    const { error } = await supabase
+      .from("voucher_logs")
+      .update(rawFormData)
+      .eq('voucher_log_id', id);
+
+    if (error) throw error;
+  } catch (error) {
+    console.error('Error updating voucher:', error);
+    return null;
+  }
+}
+
+
 // this is for second version of database
 
 export const fetchAllVouchers = async () => {
