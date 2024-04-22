@@ -13,6 +13,8 @@ import OverZoomIn from "@/components/Animations/Render/OverZoomIn";
 import RollDown from "@/components/Animations/Render/RollDown";
 import { Statistics } from "@/components/Statistics";
 import FadeIn from "@/components/Animations/Render/FadeIn";
+import StampsInfo from "@/components/stamps/StampsInfo";
+import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 type NavigationLinkProps = {
   href: string;
   icon: IconDefinition;
@@ -47,6 +49,7 @@ const HomeLinkItem: React.FC<NavigationLinkProps> = ({
 };
 
 export default async function ProtectedPage() {
+  const menuUrl = await fetchSiteSetting("menuUrl");
   return (
     <>
       <Nav />
@@ -58,6 +61,8 @@ export default async function ProtectedPage() {
           className='flex flex-row flex-wrap w-full white-container'
           duration={0.8}
         >
+        <Statistics />
+        <div className='flex flex-row flex-wrap w-full white-container'>
           <HomeLinkItem
             href='/client/vouchers'
             icon={faTicket}
@@ -65,6 +70,8 @@ export default async function ProtectedPage() {
           />
           <HomeLinkItem
             href='https://cafeava.fi/index.php/menu/'
+
+            href={menuUrl?.value || "/error"}
             icon={faUtensils}
             label='Menu'
             isExternal={true}
@@ -82,6 +89,17 @@ export default async function ProtectedPage() {
           >
             <StampCard />
           </RollDown>
+        </div>
+        <div className={"flex flex-col items-center justify-center"}>
+          <div className={"w-full flex justify-end mb-2"}>
+            <StampsInfo />
+          </div>
+          <div className={"white-container z-40 flex items-end flex-col"}>
+            <StampCode />
+          </div>
+          <div className={"w-11/12 flex justify-center"}>
+            <StampCard />
+          </div>
         </div>
       </div>
     </>
