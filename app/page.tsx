@@ -5,8 +5,8 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import SocialLogin from "@/components/Inputs/buttons/SocialLogin";
-import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 import FadeIn from "@/components/Animations/Render/FadeIn";
+import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 
 export default async function Index() {
   const supabase = createClient();

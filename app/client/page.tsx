@@ -53,6 +53,7 @@ const HomeLinkItem: React.FC<NavigationLinkProps> = ({
 };
 
 export default async function ProtectedPage() {
+  const menuUrl = await fetchSiteSetting("menuUrl");
   return (
     <>
       <Nav />
@@ -71,6 +72,8 @@ export default async function ProtectedPage() {
           />
           <HomeLinkItem
             href='https://cafeava.fi/index.php/menu/'
+
+            href={menuUrl?.value || "/error"}
             icon={faUtensils}
             label='Menu'
             isExternal={true}
