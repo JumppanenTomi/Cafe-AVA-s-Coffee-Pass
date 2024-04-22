@@ -19,11 +19,7 @@ type NavigationLinkProps = {
   href: string;
   icon: IconDefinition;
   label: string;
-  isExternal?: boolean;
-  href: string;
-  icon: IconDefinition;
-  label: string;
-  isExternal?: boolean;
+  isExternal?: boolean
 };
 
 const HomeLinkItem: React.FC<NavigationLinkProps> = ({
@@ -71,7 +67,6 @@ export default async function ProtectedPage() {
             label='Vouchers'
           />
           <HomeLinkItem
-            href='https://cafeava.fi/index.php/menu/'
 
             href={menuUrl?.value || "/error"}
             icon={faUtensils}
