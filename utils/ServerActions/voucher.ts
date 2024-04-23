@@ -217,13 +217,7 @@ export const fetchVoucherTypes = async (query: string) => {
   }
 };
 
-/**
- * Updates a voucher in the database.
- * @param {number} id - The id of the voucher to update.
- * @param {FormData} formData - The form data for the updated voucher.
- * @returns {Promise} A promise that resolves when the update is complete.
- * @throws Will throw an error if the update operation fails.
- */
+
 export const updateVoucher = async (id: number, formData: FormData) => {
   try {
     const supabase = createClient(true);
@@ -241,5 +235,28 @@ export const updateVoucher = async (id: number, formData: FormData) => {
   } catch (error) {
     console.error('Error updating voucher:', error);
     return null;
+  }
+}
+
+
+// this is for second version of database
+
+export const fetchAllVouchers = async () => {
+  const supabase = createClient()
+  const userId = await getUserId();
+  try{
+    const {data, error} = await supabase
+    .from("all_vouchers")
+    .select(`*,voucher_type(*)`)
+    .or(`user_id.eq.${userId},public.eq.TRUE`);
+  
+  if(error){
+    throw new Error(error.message)
+  }
+  // console.log(data);
+  return data
+} catch (error: any){
+  console.error(`Failed to fetch voucher types: ${error.message}`);
+  return
   }
 }
