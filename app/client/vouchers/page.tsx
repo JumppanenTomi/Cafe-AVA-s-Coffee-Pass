@@ -2,7 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import Nav from "@/components/Nav";
 import { Suspense } from "react";
 import BackButton from "@/components/BackButton";
-import VoucherList from "@/components/VoucherList";
+import VoucherList from "@/components/lists/VoucherList";
 import { fetchActiveVouchers, fetchAllVouchers, fetchVoucherUsePerUser } from "@/utils/ServerActions/voucher";
 
 export default async function VouchersPage() {

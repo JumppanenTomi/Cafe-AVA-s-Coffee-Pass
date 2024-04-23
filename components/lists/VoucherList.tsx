@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import formatDateToFinnish from "@/utils/formatDateToFinnish";
-import VoucherQR from "./VoucherQR";
+import VoucherQR from "../QrCodes/VoucherQR";
 import { fetchAllVouchers } from "@/utils/ServerActions/voucher";
 
 const VoucherListItem = ({ voucher }:
