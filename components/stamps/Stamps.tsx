@@ -6,6 +6,7 @@ import { fetchCurrentUserActiveStampCount } from "@/utils/ServerActions/stamp";
 import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 import CoffeeCup from "../SVG/CoffeeCup";
 import { GiftIcon } from "@heroicons/react/24/outline";
+import { supabaseTableSubscription } from "@/utils/ServerActions/subscriptions";
 
 const Stamps = () => {
   const supabase = createClient();
@@ -67,41 +68,14 @@ const Stamps = () => {
 
     const showPopUp = () => {
       setIsPopupVisible(true);
-    }
-
-    const subscription = supabase
-      .channel("table-db-changes")
-       // Listen to all changes in the stamp_logs table to update stamp count in realtime
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "stamp_logs",
-          filter: `user_id=eq.${userId}`,
-        },
-        (payload) => {
-          handleChange();
-        }
-      )
-       // Listen to INSERT changes on stamp_logs table and show a popup when a new stamp is added
-      .on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "stamp_logs",
-          filter: `user_id=eq.${userId}`,
-        },
-        (payload) => {
-          showPopUp();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      subscription.unsubscribe();
     };
+
+    supabaseTableSubscription(
+      "stamp_logs",
+      `user_id=eq.${userId}`,
+      handleChange,
+      showPopUp
+    );
   }, [userId]);
 
   return stampsRequired ? (

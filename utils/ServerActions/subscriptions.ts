@@ -1,12 +1,23 @@
 import { createClient } from "@/utils/supabase/client";
 
 /**
- * Server side function that subscribes to every change in stamp_logs table.
- * @param userId - The ID of the user whose QR code was scanned.
- * @param handleChange - A function that fetches user's active stamps and save the stamp amount to a variable
- * @returns Unsubscribe from stamp_logs
+ * Subscribes to changes in a specific table in the database.
+ * @param table - The name of the table to subscribe to.
+ * @param filter - The filter to apply to the subscription.
+ * @param anyCase - A callback function to handle any event type, if not specified.
+ * @param onInsert - A callback function to handle INSERT events.
+ * @param onDelete - A callback function to handle DELETE events.
+ * @param onUpdate - A callback function to handle UPDATE events.
+ * @returns A function to unsubscribe from the subscription.
  */
-export const stampLogsSubscription = async (userId: number, handleChange: () => void) => {
+export const supabaseTableSubscription=async (
+  table: string,
+  filter: string,
+  anyCase?: (...args: any[]) => void,
+  onInsert?: (...args: any[]) => void,
+  onDelete?: (...args: any[]) => void,
+  onUpdate?: (...args: any[]) => void
+) => {
   const supabase = createClient();
   const subscription = supabase
     .channel("table-db-changes")
@@ -15,16 +26,24 @@ export const stampLogsSubscription = async (userId: number, handleChange: () => 
       {
         event: "*",
         schema: "public",
-        table: "stamp_logs",
-        filter: `user_id=eq.${userId}`,
+        table: table,
+        filter: filter,
       },
       (payload) => {
-        handleChange();
+        if (payload.eventType === "INSERT" && onInsert) {
+          onInsert
+        } else if (payload.eventType === "DELETE" && onDelete) {
+          onDelete
+        } else if (payload.eventType === "UPDATE" && onUpdate) {
+          onUpdate
+        } else {
+          anyCase
+        }
       }
     )
     .subscribe();
 
   return () => {
     subscription.unsubscribe();
-  }
-}
+  };
+};

@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { fetchUsers } from "@/utils/ServerActions/user";
 import { fetchUserIdFromTempCode } from "@/utils/ServerActions/tempCode";
 import { fetchUserActiveStamps } from "@/utils/ServerActions/stamp";
-import { stampLogsSubscription } from "@/utils/ServerActions/subscriptions";
+import { supabaseTableSubscription } from "@/utils/ServerActions/subscriptions";
 import AddVoucher from "../../vouchers/addVoucher";
 import AddStamp from "../../stamps/addStamp";
 import BulkRemoveStamps from "../../stamps/bulkRemoveStamps";
@@ -36,7 +36,7 @@ export default function Page({ params }: { params: { slug: string[] } }) {
       setStamps(stampCount || 0);
     };
 
-    stampLogsSubscription(id, handleChange)
+    supabaseTableSubscription("stamp_logs", `user_id=eq.${id}`, handleChange);
   }, [id]);
 
   return stamps && id && users && user ? (
