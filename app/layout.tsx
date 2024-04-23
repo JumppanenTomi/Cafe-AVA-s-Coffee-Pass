@@ -2,6 +2,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import "./globals.css";
 import localFont from "next/font/local";
+import CookieCompliance from "@/components/CookieCompliance";
 config.autoAddCss = false;
 
 const defaultUrl = process.env.VERCEL_URL
@@ -28,6 +29,7 @@ export default function RootLayout({
           {children}
         </main>
       </body>
+      <CookieCompliance />
     </html>
   );
 }

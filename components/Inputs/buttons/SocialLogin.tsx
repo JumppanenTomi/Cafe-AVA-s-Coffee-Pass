@@ -1,5 +1,5 @@
 import { authenticateWithGoodle } from "@/utils/ServerActions/authentication";
-import CheckboxInput from "./Inputs/CheckboxInput";
+import CheckboxInput from "../CheckboxInput";
 
 export default function SocialLogin() {
   return (
