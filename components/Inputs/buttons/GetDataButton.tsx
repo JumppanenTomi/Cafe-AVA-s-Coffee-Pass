@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import GetDataModal from "./GetDataModal";
+import GetDataModal from "../../UIOverlays/GetDataModal";
 
 export default function GetDataButton() {
   const [showModal, setShowModal] = useState(false);

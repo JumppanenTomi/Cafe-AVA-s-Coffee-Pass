@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Form } from "@/components/Inputs/Form";
-import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
 import ToggleInput from "@/components/Inputs/ToggleInput";
 import { Stamp, User } from "./interface";

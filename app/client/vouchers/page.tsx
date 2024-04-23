@@ -1,9 +1,12 @@
 import { createClient } from "@/utils/supabase/server";
-import Nav from "@/components/Nav";
+import Nav from "@/components/navigation/Nav";
 import { Suspense } from "react";
-import BackButton from "@/components/BackButton";
+import BackButton from "@/components/Inputs/buttons/BackButton";
 import VoucherList from "@/components/lists/VoucherList";
-import { fetchActiveVouchers, fetchAllVouchers, fetchVoucherUsePerUser } from "@/utils/ServerActions/voucher";
+import {
+	fetchAllVouchers,
+} from "@/utils/ServerActions/voucher";
+import FadeIn from "@/components/Animations/Render/FadeIn";
 
 export default async function VouchersPage() {
 	const initialVouchers = await fetchAllVouchers();
@@ -14,8 +17,13 @@ export default async function VouchersPage() {
 	return (
 		<Suspense>
 			<Nav />
-			<VoucherList initialVouchers={initialVouchers} userId={user?.id || ''} />
+			<FadeIn duration={1} className='w-full'>
+				<VoucherList
+					initialVouchers={initialVouchers}
+					userId={user?.id || ""}
+				/>
+			</FadeIn>
 			<BackButton />
 		</Suspense>
 	);
-};
+}

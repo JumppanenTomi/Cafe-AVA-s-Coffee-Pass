@@ -1,8 +1,8 @@
 import { createClient } from "@/utils/supabase/server";
-import AuthButton from "@/components/AuthButton";
-import ToggleButton from "@/components/Inputs/ToggleButton";
-import LinkButton from "@/components/Inputs/LinkButton";
-import GetDataButton from "@/components/GetDataButton";
+import AuthButton from "@/components/Inputs/buttons/AuthButton";
+import ToggleButton from "@/components/Inputs/buttons/ToggleButton";
+import LinkButton from "@/components/Inputs/buttons/LinkButton";
+import GetDataButton from "@/components/Inputs/buttons/GetDataButton";
 
 export default async function SettingsPage() {
 	const supabase = createClient();

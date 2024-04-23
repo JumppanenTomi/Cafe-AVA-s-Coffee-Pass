@@ -3,6 +3,7 @@ interface TextInputProps {
   showLabel?: boolean;
   inputLabel?: string;
   inputPlaceholder?: string;
+  defaultValue?: string;
   isRequired?: boolean;
   minLength?: number;
   maxLength?: number;
@@ -16,6 +17,7 @@ export default function TextboxInput({
   showLabel = true,
   inputLabel = "Text",
   inputPlaceholder = "Enter text here",
+  defaultValue = "",
   isRequired = true,
   minLength,
   maxLength,
@@ -37,6 +39,7 @@ export default function TextboxInput({
         required={isRequired}
         minLength={minLength}
         maxLength={maxLength}
+        defaultValue={defaultValue}
         rows={rows}
         cols={cols}
       />

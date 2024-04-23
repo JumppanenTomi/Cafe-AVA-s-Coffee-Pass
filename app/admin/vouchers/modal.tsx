@@ -2,7 +2,7 @@
 
 import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
 import { Form } from "@/components/Inputs/Form";
-import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
+import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import { createVouchers, fetchVoucherTypes } from "@/utils/ServerActions/voucher";
 import { useEffect, useState } from "react";
 

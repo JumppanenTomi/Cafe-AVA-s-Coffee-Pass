@@ -9,6 +9,87 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      all_vouchers: {
+        Row: {
+          active: boolean | null
+          created_at: string
+          end_date: string | null
+          end_time: string | null
+          id: string
+          public: boolean | null
+          start_date: string | null
+          start_time: string | null
+          used: number | null
+          user_id: string | null
+          voucher_type: number | null
+        }
+        Insert: {
+          active?: boolean | null
+          created_at?: string
+          end_date?: string | null
+          end_time?: string | null
+          id?: string
+          public?: boolean | null
+          start_date?: string | null
+          start_time?: string | null
+          used?: number | null
+          user_id?: string | null
+          voucher_type?: number | null
+        }
+        Update: {
+          active?: boolean | null
+          created_at?: string
+          end_date?: string | null
+          end_time?: string | null
+          id?: string
+          public?: boolean | null
+          start_date?: string | null
+          start_time?: string | null
+          used?: number | null
+          user_id?: string | null
+          voucher_type?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_private_voucher_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_private_voucher_voucher_type_fkey"
+            columns: ["voucher_type"]
+            isOneToOne: false
+            referencedRelation: "voucher_type"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      site_settings: {
+        Row: {
+          desc: string | null
+          id: number
+          key: string
+          readableName: string
+          value: string | null
+        }
+        Insert: {
+          desc?: string | null
+          id?: number
+          key: string
+          readableName: string
+          value?: string | null
+        }
+        Update: {
+          desc?: string | null
+          id?: number
+          key?: string
+          readableName?: string
+          value?: string | null
+        }
+        Relationships: []
+      }
       stamp_logs: {
         Row: {
           is_used: boolean
@@ -138,6 +219,33 @@ export type Database = {
           },
         ]
       }
+      voucher_type: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: number
+          name: string | null
+          redeem_message: string | null
+          uses_per_voucher: number | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: number
+          name?: string | null
+          redeem_message?: string | null
+          uses_per_voucher?: number | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: number
+          name?: string | null
+          redeem_message?: string | null
+          uses_per_voucher?: number | null
+        }
+        Relationships: []
+      }
       vouchers: {
         Row: {
           description: string | null
@@ -178,6 +286,10 @@ export type Database = {
           event: Json
         }
         Returns: Json
+      }
+      delete_temp_codes_rows: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
       }
     }
     Enums: {
