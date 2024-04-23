@@ -63,11 +63,28 @@ const Stamps = () => {
     const handleChange = async () => {
       const stampCount = await fetchCurrentUserActiveStampCount();
       setActiveStampCount(stampCount || 0);
-      setIsPopupVisible(true);
     };
+
+    const showPopUp = () => {
+      setIsPopupVisible(true);
+    }
 
     const subscription = supabase
       .channel("table-db-changes")
+       // Listen to all changes in the stamp_logs table to update stamp count in realtime
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "stamp_logs",
+          filter: `user_id=eq.${userId}`,
+        },
+        (payload) => {
+          handleChange();
+        }
+      )
+       // Listen to INSERT changes on stamp_logs table and show a popup when a new stamp is added
       .on(
         "postgres_changes",
         {
@@ -77,7 +94,7 @@ const Stamps = () => {
           filter: `user_id=eq.${userId}`,
         },
         (payload) => {
-          handleChange();
+          showPopUp();
         }
       )
       .subscribe();
