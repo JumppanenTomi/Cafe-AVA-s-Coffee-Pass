@@ -1,53 +1,57 @@
-import { Form } from "@/components/Inputs/Form";
-import NumberInput from "@/components/Inputs/NumberInput";
-import { FormSubmitButton } from "@/components/Inputs/FormSubmitButton";
-import { redirect } from "next/navigation";
-import Link from "next/link";
-import { fetchUserIdFromTempCode, markTempCodeAsUsed } from "@/utils/ServerActions/tempCode";
-import { addStampLog } from "@/utils/ServerActions/stamp";
+"use client";
+import { useEffect, useMemo, useState } from "react";
+import { fetchUsers } from "@/utils/ServerActions/user";
+import { fetchUserIdFromTempCode } from "@/utils/ServerActions/tempCode";
+import { fetchUserActiveStamps } from "@/utils/ServerActions/stamp";
+import { supabaseTableSubscription } from "@/utils/ServerActions/subscriptions";
+import AddVoucher from "../../vouchers/addVoucher";
+import AddStamp from "../../stamps/addStamp";
+import BulkRemoveStamps from "../../stamps/bulkRemoveStamps";
 
-export default async function Page({params}: { params: { slug: string[] } }) {
-	const processUserStamp = async (formData: FormData) => {
-		'use server'
-		const code = params.slug[0]
-		const times = parseInt(formData.get("number") as string)
-		try {
-			const userId = await fetchUserIdFromTempCode(code);
-			for (let i = 0; i < times; i++) {
-				await addStampLog(userId);
-			}
-			await markTempCodeAsUsed(code)
-		} catch (error: any) {
-			console.error(error);
-			redirect("/admin/addStamp/" + code + "/Failed " + error.message);
-		}
-		redirect("/admin/success");
-	};
+export default function Page({ params }: { params: { slug: string[] } }) {
+  const [users, setUsers] = useState<any>();
+  const [id, setId] = useState<any>();
+  const [stamps, setStamps] = useState<any>();
 
-	const id = await fetchUserIdFromTempCode(params.slug[0]);
-	const message = params.slug[1] && params.slug[1].replaceAll("%20", " ");
+  useEffect(() => {
+    fetchUsers(1).then((data) => setUsers(data));
+    fetchUserIdFromTempCode(params.slug[0]).then((data) => setId(data));
+  }, [params.slug[0]]);
 
-	return (
-		<div className="flex flex-col items-center justify-center flex-1 w-full gap-5 p-5">
-			{(id) ? (
-				<>
-					<Form isError={true} error={message}>
-						<NumberInput inputLabel={"How many stamps is given?"} min={1} max={10}/>
-						<FormSubmitButton formAction={processUserStamp} pendingText={"loading..."}>
-							Submit
-						</FormSubmitButton>
-					</Form>
-				</>
-			) : (
-				<>
-					<div className={'white-container flex items-center flex-col gap-5'}>
-						<h1 className={'font-medium text-xl'}>Invalid code</h1>
-						<p>Code is either expired or it doesnt exist.</p>
-					</div>
-					<Link href={'/admin'} className={'btn-primary'}>Back to admin panel</Link>
-				</>
-			)
-			}
-		</div>
-	)
+  useEffect(() => {
+    if (id) {
+      fetchUserActiveStamps(id).then((data) => setStamps(data));
+    }
+  }, [id]);
+
+  const user = useMemo(() => {
+    if (users && id) {
+      return users.find((user: any) => user.id === id);
+    }
+  }, [users]);
+
+  useEffect(() => {
+    const handleChange = async () => {
+      const stampCount = await fetchUserActiveStamps(id);
+      setStamps(stampCount || 0);
+    };
+
+    supabaseTableSubscription("stamp_logs", `user_id=eq.${id}`, handleChange);
+  }, [id]);
+
+  return stamps && id && users && user ? (
+    <div className='flex flex-col items-center justify-center flex-1 w-full gap-5 p-5'>
+      <div className={"flex gap-5 flex-col items-center md:flex-row"}>
+        <AddStamp user_id={id} />
+        <AddVoucher user_id={id} />
+        <BulkRemoveStamps user_id={id} currentAmount={stamps} />
+      </div>
+      <h2>{user.email}</h2>
+      <h2>User currently has {stamps} stamps</h2>
+    </div>
+  ) : (
+    <div className='flex flex-col items-center justify-center flex-1 w-full gap-5 p-5'>
+      <p>Loading...</p>
+    </div>
+  );
 }

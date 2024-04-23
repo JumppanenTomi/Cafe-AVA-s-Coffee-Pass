@@ -12,6 +12,9 @@ module.exports = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      animation: {
+        'ping': 'ping 2s linear infinite', // Adjust the duration (2s in this example)
+      }
     }
   },
   plugins: [],

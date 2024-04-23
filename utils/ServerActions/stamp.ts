@@ -50,7 +50,7 @@ export const fetchAllUsedStaps = async () => {
 
 /**
  * Fetches the number of active stamps for a given user.
- * 
+ *
  * @param userId - The ID of the user.
  * @returns The number of active stamps for the user.
  */
@@ -91,13 +91,8 @@ export const fetchCurrentUserActiveStampCount = async () => {
  * If the environment variable is not set or cannot be parsed as an integer, it returns a default value of 10.
  * @returns The number of required stamps.
  */
-export const getRequiredStamps = () => {
-  try {
-    return parseInt(process.env.STAMPS_REQUIRED || "10");
-  } catch (error: any) {
-    console.error("Error getting required stamps: ", error);
-    return error;
-  }
+export const getRequiredStamps = async () => {
+  return parseInt(process.env.STAMPS_REQUIRED || "10");
 };
 
 /**
@@ -114,6 +109,26 @@ export const addStampLog = async (userId: string) => {
       .insert([{ user_id: userId }])
       .select();
     if (stampError) throw stampError;
+    return;
+  } catch (error: any) {
+    console.error("Error adding stamp log: ", error);
+    return error;
+  }
+};
+
+/**
+ * Adds a stamp log for the specified user.
+ * @param userId - The ID of the user.
+ * @returns A Promise that resolves with no value if the stamp log is added successfully,
+ * or rejects with an error if there was an issue adding the stamp log.
+ */
+export const addMultipleStampLog = async (formData: FormData) => {
+  const userId = formData.get("user_id") as string;
+  const count = parseInt(formData.get("count") as string);
+  try {
+    for (let i = 0; i < count; i++) {
+      await addStampLog(userId);
+    }
     return;
   } catch (error: any) {
     console.error("Error adding stamp log: ", error);
@@ -155,7 +170,7 @@ export const fetchStamps = async (
 
 /**
  * Fetches the count of stamps from the "stamp_logs" table.
- * 
+ *
  * @param query - The query string.
  * @returns A promise that resolves to the count of stamps, or an error if fetching fails.
  */
@@ -241,6 +256,51 @@ export const createStamps = async (formData: FormData) => {
 };
 
 /**
+ * Updates the oldest stamps for a user to 'used'.
+ * @param {number} userId - The id of the user.
+ * @param {number} amount - The number of stamps to update.
+ * @returns {Promise} A promise that resolves when the update is complete.
+ * @throws Will throw an error if the update operation fails.
+ */
+export const useMultipleStamps = async (formData: FormData) => {
+  try {
+    const supabase = createClient(true);
+    const userId = formData.get("user_id") as string;
+    const amount = parseInt(formData.get("amount") as string) || 1;
+
+    // Fetch the oldest unused stamps for the usery
+    const { data: stamps, error: fetchError } = await supabase
+      .from("stamp_logs")
+      .select("stamp_log_id")
+      .eq("user_id", userId)
+      .eq("is_used", false)
+      .order("timestamp", { ascending: true })
+      .limit(amount);
+
+    if (fetchError) throw fetchError;
+    if (!stamps || stamps.length === 0)
+      throw new Error("No unused stamps found for this user.");
+
+    // Update the fetched stamps to 'used'
+    stamps.map(async (stamp) => {
+      const rawFormData: TablesUpdate<"stamp_logs"> = {
+        user_id: userId,
+        is_used: true,
+      };
+      const { error } = await supabase
+        .from("stamp_logs")
+        .update(rawFormData)
+        .eq("stamp_log_id", stamp.stamp_log_id);
+      if (error) throw error;
+    });
+    return;
+  } catch (error) {
+    console.error("Error using stamps:", error);
+    throw error;
+  }
+};
+
+/**
  * Updates a stamp in the database.
  * @param {number} id - The id of the stamp to update.
  * @param {FormData} formData - The form data for the updated stamp.
@@ -251,18 +311,18 @@ export const updateStamp = async (id: number, formData: FormData) => {
   try {
     const supabase = createClient(true);
     const rawFormData: TablesUpdate<"stamp_logs"> = {
-      user_id: formData.get('user_id') as string,
-      is_used: formData.get('is_used') === 'on' ? true : false,
+      user_id: formData.get("user_id") as string,
+      is_used: formData.get("is_used") === "on" ? true : false,
     };
 
     const { error } = await supabase
       .from("stamp_logs")
       .update(rawFormData)
-      .eq('stamp_log_id', id);
+      .eq("stamp_log_id", id);
 
     if (error) throw error;
   } catch (error) {
-    console.error('Error updating stamp:', error);
+    console.error("Error updating stamp:", error);
     throw error;
   }
-}
+};

@@ -4,7 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 
 /**
  * Retrieves collected data for a user.
- * @returns An object containing the user's email, user ID, stamp logs, and voucher logs.
+ * @returns An object containing the user's email, user ID, stamp logs, voucher logs and full name from social login.
  * @throws If there is an error retrieving the data.
  */
 export async function collectedData() {
@@ -54,6 +54,7 @@ export async function collectedData() {
       voucherLogs: voucherLogs?.[0]
         ? voucherLogs
         : [{ timestamp: "", voucher_log_id: 0 }],
+      fullName: user.user_metadata.full_name ? user.user_metadata.full_name : ""
     };
   } catch (error) {
     console.error("Error in collectedData function:", error);
