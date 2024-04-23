@@ -10,16 +10,30 @@ interface MyDocProps {
   email: string,
   userId: string,
   stampLogs: { timestamp: string, stamp_log_id: number }[],
-  voucherLogs: { timestamp: string, voucher_log_id: number }[]
+  voucherLogs: { timestamp: string, voucher_log_id: number }[],
+  fullName: string,
 }
 
-// The PDF file for collected user information
-// There is currently no separator between pages
-const MyDoc = ({ email, userId, stampLogs, voucherLogs }: MyDocProps) => (
+/**
+ * PDF template for Users' collected data
+ * @param email - User's email
+ * @param userId - User's ID
+ * @param stampLogs - Stamp logs based on user's ID
+ * @param voucherLogs - Voucher logs based on user's ID
+ * @param fullName - User's full name provided by social login, if social login wasn't used, fullName is an empty string instead 
+ * @returns PDF document including all data that has been collected about the user
+ */
+const MyDoc = ({ email, userId, stampLogs, voucherLogs, fullName }: MyDocProps) => (
   <Document>
     <Page wrap>
       <Text style={tw("text-2xl text-center mt-5")}>Collected data</Text>
       <View style={tw("flex flex-col m-5 border-2 border-black")}>
+        {fullName != "" &&
+          <View style={tw("w-full flex flex-col border-b-2 p-2")}>
+            <Text>Full Name (from Social Login):</Text>
+            <Text style={tw("py-2")}>{fullName}</Text>
+          </View>
+        }
         <View style={tw("w-full flex flex-col border-b-2 p-2")}>
           <Text>Email:</Text>
           <Text style={tw("py-2")}>{email}</Text>
