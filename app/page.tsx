@@ -24,14 +24,25 @@ export default async function Index() {
   return (
     <FadeIn duration={1} className='flex flex-1 w-full'>
       <div className='flex flex-col items-center flex-1 w-full'>
-        <div className="flex flex-col items-center justify-center gap-5 p-5 w-full flex-grow bg-[url('/coffee.jpg')] bg-cover bg-top">
-          <Image src={logo} alt={"ava logo"} width={100} />
+        <div className='flex flex-col items-center flex-grow w-full gap-5 p-5 bg-center bg-cover justify-evenly'>
+          <Image
+            src={maker}
+            alt={"ava logo"}
+            width={300}
+            className='w-full max-w-[300px]'
+          />
+          {logoUrl && logoUrl.value ? (
+            <>
+              <Image src={logoUrl.value} alt={"Logo"} width={150} height={50} layout={"intrinsic"} />
+            </>
+          ) : (
+            <Image src={logo} alt={"Cafe AVA- Logo"} width={150} height={50} loading={"lazy"} />
+          )}
         </div>
         <div className='flex flex-col items-center justify-center w-full max-w-screen-sm gap-5 p-5 py-16'>
           <h1 className={"font-bold text-3xl"}>Welcome!</h1>
           <p className={"text-center font-medium max-w-screen-sm"}>
-            Welcome to our Digital Coffee Pass! Start your digital coffee
-            journey with us today!
+            {greetings?.value || "Error loading welcome message."}
           </p>
           <SocialLogin />
           <div className={"flex flex-wrap w-full md:w-4/6 gap-5 items-center"}>

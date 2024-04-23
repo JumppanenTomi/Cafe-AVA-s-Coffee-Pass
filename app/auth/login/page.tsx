@@ -1,12 +1,12 @@
-import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
+import {FormSubmitButton} from "@/components/Inputs/buttons/FormSubmitButton";
 import EmailInput from "@/components/Inputs/EmailInput";
-import { Form } from "@/components/Inputs/Form";
+import {Form} from "@/components/Inputs/Form";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/images/logo.png";
 import maker from "@/public/images/maker.png";
-import { signIn } from "@/utils/ServerActions/authentication";
-import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
+import {signIn} from "@/utils/ServerActions/authentication";
+import {fetchSiteSetting} from "@/utils/ServerActions/siteSetting";
 
 export default async function Login({
   searchParams,
@@ -19,17 +19,19 @@ export default async function Login({
   return (
     <div className='flex flex-col items-center flex-1 w-full'>
       <div className='flex flex-col items-center flex-grow w-full gap-5 p-5 bg-center bg-cover justify-evenly'>
-        {logoUrl && logoUrl.value ? (
-          <img src={logoUrl.value} alt={"Cafe AVA- Logo"} width={100} />
-        ) : (
-          <Image src={logo} alt={"Cafe AVA- Logo"} width={100} />
-        )}
         <Image
           src={maker}
           alt={"ava logo"}
           width={300}
           className='w-full max-w-[300px]'
         />
+        {logoUrl && logoUrl.value ? (
+            <>
+              <Image src={logoUrl.value} alt={"Logo"} width={150} height={50} layout={"intrinsic"}/>
+            </>
+        ) : (
+            <Image src={logo} alt={"Cafe AVA- Logo"} width={150} height={50} loading={"lazy"}/>
+        )}
       </div>
       <div className='flex flex-col items-center justify-center w-full max-w-screen-sm gap-5 p-5 py-16'>
         <h1 className={"font-bold text-3xl"}>Login</h1>
