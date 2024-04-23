@@ -18,9 +18,13 @@
 	}
 }
 
+* {
+	text-transform: uppercase;
+}
 
-
-
+input, textarea{
+	text-transform: none;
+}
 
 .animate-in {
 	animation: animateIn 0.3s ease 0.15s both;
@@ -39,11 +43,11 @@
 }
 
 .btn-primary {
-	@apply border-2 border-black bg-black rounded-md px-4 py-2 text-orange mb-2 text-center hover:opacity-70;
+	@apply px-4 py-2 mb-2 text-center bg-black border-2 border-black rounded-md text-orange hover:opacity-70;
 }
 
 .btn-secondary {
-	@apply border-2 border-black rounded-md px-4 py-2 text-black text-center font-bold mb-2 hover:opacity-70;
+	@apply px-4 py-2 mb-2 font-bold text-center text-black border-2 border-black rounded-md hover:opacity-70;
 }
 
 .input-label {
@@ -120,7 +124,7 @@ h3 {
 }
 
 .circle1, .circle2 {
-	@apply bg-orange absolute w-5 h-5 rounded-full;
+	@apply absolute w-5 h-5 rounded-full bg-orange;
 }
 
 .circle1 {
