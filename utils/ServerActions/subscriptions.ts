@@ -13,7 +13,7 @@ import { createClient } from "@/utils/supabase/client";
 export const supabaseTableSubscription=async (
   table: string,
   filter: string,
-  anyCase?: (...args: any[]) => void,
+  anyCase: (...args: any[]) => void,
   onInsert?: (...args: any[]) => void,
   onDelete?: (...args: any[]) => void,
   onUpdate?: (...args: any[]) => void
@@ -31,13 +31,13 @@ export const supabaseTableSubscription=async (
       },
       (payload) => {
         if (payload.eventType === "INSERT" && onInsert) {
-          onInsert
+          onInsert();
         } else if (payload.eventType === "DELETE" && onDelete) {
-          onDelete
+          onDelete();
         } else if (payload.eventType === "UPDATE" && onUpdate) {
-          onUpdate
+          onUpdate();
         } else {
-          anyCase
+          anyCase();
         }
       }
     )

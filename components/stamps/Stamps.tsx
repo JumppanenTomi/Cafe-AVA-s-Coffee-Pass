@@ -68,6 +68,7 @@ const Stamps = () => {
 
     const showPopUp = () => {
       setIsPopupVisible(true);
+      handleChange();
     };
 
     supabaseTableSubscription(
