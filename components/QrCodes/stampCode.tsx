@@ -8,8 +8,11 @@ const StampCode = () => {
     addNewTempCode(code)
 
     return (
-        <QrCodeGen text={process.env.NEXT_PUBLIC_VERCEL_URL + '/admin/addStamp/' + code} width={300}></QrCodeGen>
-    )
+      <QrCodeGen
+        text={process.env.NEXT_PUBLIC_VERCEL_URL + "/admin/addStamp/" + code}
+        width={640}
+      ></QrCodeGen>
+    );
 }
 
 export default StampCode
