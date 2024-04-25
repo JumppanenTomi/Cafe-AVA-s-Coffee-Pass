@@ -1,3 +1,4 @@
+import Nav from "@/components/navigation/Nav";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -16,7 +17,8 @@ export default async function RootLayout({
   }
 
   return (
-    <div className='flex flex-col items-center flex-1 w-full max-w-screen-sm gap-5 p-5'>
+    <div className='flex flex-col flex-1 w-full max-w-screen-sm gap-5 p-5 md:p-0'>
+      <Nav />
       {children}
     </div>
   );
