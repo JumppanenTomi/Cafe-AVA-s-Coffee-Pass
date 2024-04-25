@@ -313,7 +313,7 @@ export const fetchAllVouchers = async () => {
 
     await Promise.all(publicVouchers.map(async (pv) => {
       try {
-        const used = await getPublicVoucherUses(pv.voucher_type.id) || [];
+        const used = await getPublicVoucherUses(pv.id) || [];
         pv.used = used.length > 0 ? used[0].used_per_user : 0;
       } catch (error: any) {
         console.error(`Error fetching public voucher uses: ${error.message}`);
