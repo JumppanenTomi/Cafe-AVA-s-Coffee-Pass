@@ -10,7 +10,7 @@ const StampCode = () => {
     return (
       <QrCodeGen
         text={process.env.NEXT_PUBLIC_VERCEL_URL + "/admin/addStamp/" + code}
-        width={640}
+        width={400}
       ></QrCodeGen>
     );
 }
