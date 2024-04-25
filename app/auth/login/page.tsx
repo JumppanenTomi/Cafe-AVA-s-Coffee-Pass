@@ -1,12 +1,10 @@
-import {FormSubmitButton} from "@/components/Inputs/buttons/FormSubmitButton";
+import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import EmailInput from "@/components/Inputs/EmailInput";
-import {Form} from "@/components/Inputs/Form";
+import { Form } from "@/components/Inputs/Form";
 import Link from "next/link";
-import Image from "next/image";
-import logo from "@/public/images/logo.png";
-import maker from "@/public/images/maker.png";
-import {signIn} from "@/utils/ServerActions/authentication";
-import {fetchSiteSetting} from "@/utils/ServerActions/siteSetting";
+import { signIn } from "@/utils/ServerActions/authentication";
+import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
+import LogoContainer from "@/components/logoContainer";
 
 export default async function Login({
   searchParams,
@@ -14,28 +12,13 @@ export default async function Login({
   searchParams: { isError: string; message: string };
 }) {
   const logintext = await fetchSiteSetting("loginText");
-  const logoUrl = await fetchSiteSetting("logoUrl");
 
   return (
-    <div className='flex flex-col items-center flex-1 w-full'>
-      <div className='flex flex-col items-center flex-grow w-full gap-5 p-5 bg-center bg-cover justify-evenly'>
-        <Image
-          src={maker}
-          alt={"ava logo"}
-          width={300}
-          className='w-full max-w-[300px]'
-        />
-        {logoUrl && logoUrl.value ? (
-            <>
-              <Image src={logoUrl.value} alt={"Logo"} width={150} height={50} layout={"intrinsic"}/>
-            </>
-        ) : (
-            <Image src={logo} alt={"Cafe AVA- Logo"} width={150} height={50} loading={"lazy"}/>
-        )}
-      </div>
-      <div className='flex flex-col items-center justify-center w-full max-w-screen-sm gap-5 p-5 py-16'>
-        <h1 className={"font-bold text-3xl"}>Login</h1>
-        <p className={"text-center font-medium max-w-screen-sm"}>
+    <div className='flex flex-col justify-between flex-1 w-full'>
+      <LogoContainer />
+      <div className='flex flex-col items-center justify-center gap-5 p-5'>
+        <h1>Login</h1>
+        <p className={"text-center"}>
           {logintext?.value || "Error loading login message."}
         </p>
         <Form
@@ -51,15 +34,15 @@ export default async function Login({
               Sign In
             </FormSubmitButton>
           </div>
-          {process.env.NEXT_PUBLIC_VERCEL_URL! === "http://localhost:3000" && (
-            <div className={"flex flex-col"}>
-              <Link href={"http://127.0.0.1:54324/"} className={"btn-primary"}>
-                Open dev mailbox
-              </Link>
-              <label>*only visible when in local environment</label>
-            </div>
-          )}
         </Form>
+        {process.env.NEXT_PUBLIC_VERCEL_URL! === "http://localhost:3000" && (
+          <div className={"flex flex-col w-full"}>
+            <Link href={"http://127.0.0.1:54324/"} className={"btn-primary"}>
+              Open dev mailbox
+            </Link>
+            <label>*only visible when in local environment</label>
+          </div>
+        )}
       </div>
     </div>
   );
