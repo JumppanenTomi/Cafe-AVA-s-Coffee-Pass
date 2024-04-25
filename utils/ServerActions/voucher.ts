@@ -292,8 +292,8 @@ const getPublicVoucherUses = async (voucherId: number) => {
     if (error) {
       throw new Error(error.message);
     }
-    console.log('logs', data);
-    return data;
+    console.log('used', data[0].used_per_user);
+    return data[0].used_per_user;
   } catch (error: any) {
     console.error(`Failed to fetch public vouchers uses: ${error.message}`);
 
@@ -314,7 +314,7 @@ export const fetchAllVouchers = async () => {
     await Promise.all(publicVouchers.map(async (pv) => {
       try {
         const used = await getPublicVoucherUses(pv.id) || [];
-        pv.used = used.length > 0 ? used[0].used_per_user : 0;
+        pv.used = used ? used : 0;
       } catch (error: any) {
         console.error(`Error fetching public voucher uses: ${error.message}`);
         pv.used = 0;
@@ -327,5 +327,27 @@ export const fetchAllVouchers = async () => {
   } catch (error: any) {
     console.error(`Failed to fetch vouchers: ${error.message}`);
     return [];
+  }
+};
+
+export const usePublicVoucher = async (voucherId: number) => {
+  const supabase = createClient();
+  const userId = await getUserId(); // Make sure this is securely obtained
+  const currentUsed = await getPublicVoucherUses(voucherId);
+
+  try {
+    const { data, error } = await supabase
+      .from('public_voucher_logs')
+      .update({ used_per_user: currentUsed + 1 })
+      .eq('user_id', `${userId}`)
+      .eq('public_voucher_id', `${voucherId}`)
+
+    if (error) {
+      console.error('Error updating public voucher log:', error);
+    } else {
+      console.log('Increment successful:', data);
+    }
+  } catch (error) {
+    console.error('Error updating public voucher log uses:', error);
   }
 };
