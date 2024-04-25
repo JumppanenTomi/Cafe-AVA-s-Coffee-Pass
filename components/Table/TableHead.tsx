@@ -9,10 +9,8 @@ export interface HeadCell {
 
 export default function TableHead({
   headCells,
-  handleSelectAllClick,
 }: {
   headCells: readonly HeadCell[];
-  handleSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -49,8 +47,7 @@ export default function TableHead({
             </div>
           </th>
         ))}
-        <th scope="col" className="px-6 py-3">
-        </th>
+        <th scope="col" className="px-6 py-3"></th>
       </tr>
     </thead>
   );

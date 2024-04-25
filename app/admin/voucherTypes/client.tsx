@@ -1,5 +1,5 @@
 "use client";
-import { useState, Suspense } from "react";
+import { Suspense } from "react";
 import Search from "@/components/Table/Search";
 import TableHead from "@/components/Table/TableHead";
 import TablePagination from "@/components/Table/TablePagination";
@@ -40,17 +40,6 @@ export default function VoucherTypesClient({
   sort: string;
   currentPage: number;
 }) {
-  const [selected, setSelected] = useState<number[]>([]);
-
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelected = voucherTypes.map((n) => n.voucher_id);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
-
   return (
     <div className="flex-1 w-full flex flex-col gap-8">
       <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between">
@@ -68,16 +57,10 @@ export default function VoucherTypesClient({
           fallback={<div>Loading...</div>}
         >
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-            <TableHead
-              headCells={headCells}
-              handleSelectAllClick={handleSelectAllClick}
-            />
+            <TableHead headCells={headCells} />
             <tbody>
               {voucherTypes.map((voucherType, index) => (
-                <tr
-                  key={index}
-                  className="bg-white border-b hover:bg-gray-50"
-                >
+                <tr key={index} className="bg-white border-b hover:bg-gray-50">
                   {headCells.map((headCell) => (
                     <td
                       key={headCell.id}
