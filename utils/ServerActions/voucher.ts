@@ -239,6 +239,33 @@ export const updateVoucher = async (id: number, formData: FormData) => {
   }
 }
 
+/**
+ * Updates a row in public_voucher_logs table
+ * @param uses - New value for the used_per_user column when user redeems a voucher
+ * @param user_id - Id of the user who the scanned voucher belongs to
+ * @param voucher_id public_voucher_id 
+ * @returns Updates the value for used_per_user column
+ */
+export const updatePublicVoucherLogs = async (uses: number, user_id: string, voucher_id: number) => {
+  try {
+    const supabase = createClient(true);
+    const rawFormData: TablesUpdate<'public_voucher_logs'> = {
+      used_per_user: uses
+    };
+
+    const { error } = await supabase
+      .from('public_voucher_logs')
+      .update(rawFormData)
+      .eq('user_id', user_id)
+      .eq('public_voucher_id', voucher_id);
+
+    if (error) throw error;
+  } catch (error) {
+    console.error('Error updating public voucher logs:', error)
+    return null;
+  }
+}
+
 // this is for second version of database
 
 const getPrivateVouchers = async () => {
@@ -278,6 +305,29 @@ const getPublicVouchers = async () => {
   }
 }
 
+
+/**
+ * Fetches all public voucher logs
+ * @returns An array that contains all rows for public_voucher_logs table
+ */
+export const getAllPublicVoucherLogs = async () => {
+  const supabase = createClient();
+
+  try {
+    const { data, error } = await supabase
+      .from('public_voucher_logs')
+      .select('*')
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data
+  } catch (error: any) {
+    console.error(`Failed to fetch all public voucher logs: ${error.message}`)
+  }
+}
+
 const getPublicVoucherUses = async (voucherId: number) => {
   const userId = await getUserId();
 
@@ -313,7 +363,7 @@ export const fetchAllVouchers = async () => {
 
     await Promise.all(publicVouchers.map(async (pv) => {
       try {
-        const used = await getPublicVoucherUses(pv.voucher_type.id) || [];
+        const used = await getPublicVoucherUses(pv.id) || [];
         pv.used = used.length > 0 ? used[0].used_per_user : 0;
       } catch (error: any) {
         console.error(`Error fetching public voucher uses: ${error.message}`);

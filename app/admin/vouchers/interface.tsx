@@ -10,8 +10,11 @@ export interface Voucher {
 }
 
 export interface UpdatedVouchers {
-  id: string;
-  name: string | null
+  id: string | null;
+  used: number | null;
+  active: boolean | null;
+  name: string | null;
+  uses_per_voucher: number | null;
 }
 
 export interface VoucherType {

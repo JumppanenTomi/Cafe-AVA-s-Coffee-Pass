@@ -7,8 +7,8 @@ import RedeemVoucher from "../../vouchers/redeemVoucher";
 export default function Page({ params }: { params: { slug: string[] } }) {
   const [users, setUsers] = useState<any>();
   const [vouchers, setVouchers] = useState<any>();
-  const [userId, setUserId] = useState<any>()
-  const [voucherId, setVoucherId] = useState<any>()
+  const [userId, setUserId] = useState<any>();
+  const [voucherId, setVoucherId] = useState<any>();
 
   useEffect(() => {
     const getAndSet = async () => {
@@ -29,7 +29,7 @@ export default function Page({ params }: { params: { slug: string[] } }) {
 
   const voucher = useMemo(() => {
     if (vouchers && voucherId) {
-      return vouchers.find((voucher: any) => voucher.id === voucherId);
+      return vouchers.find((voucher: any) => voucher.id == voucherId);
     }
   }, [vouchers])
 
@@ -38,7 +38,7 @@ export default function Page({ params }: { params: { slug: string[] } }) {
       <h2>{user.email}</h2>
       <h2>User has redeemed a {voucher.voucher_type.name} voucher</h2>
       <div className={"flex gap-5 flex-col items-center md:flex-row"}>
-        <RedeemVoucher user_id={userId} voucher_id={voucherId} />
+        <RedeemVoucher user_id={userId} voucher_id={voucherId} uses={voucher.used} max_uses={voucher.voucher_type ? voucher.voucher_type.uses_per_voucher : null}/>
       </div>
     </div>
   ) : (
