@@ -323,7 +323,7 @@ export const fetchAllVouchers = async () => {
       }
     }));
 
-    const allVouchers = privateVouchers.concat(publicVouchers);
+    const allVouchers = [...privateVouchers, ...publicVouchers]
     console.log(allVouchers);
 
     return allVouchers;
@@ -340,7 +340,7 @@ export const usePublicVoucher = async (voucherId: number) => {
   try {
     const { data, error } = await supabase
       //Custom database function that updates column used_per_user by 1 in public_voucher_logs table
-      .rpc("increment_public_voucher", { p_user_id: userId, p_voucher_id: voucherId, })
+      .rpc("increment_public_voucher", { p_voucher_id: voucherId, p_user_id: userId! })
     if (error) {
       console.error('Error updating public voucher log:', error);
     } else {
@@ -357,7 +357,7 @@ export const usePrivateVoucher = async (voucherId: number) => {
   try {
     const { data, error } = await supabase
       //Custom database function that updates column used by 1 in all_vouchers table for user id and voucher type
-      .rpc("increment_private_voucher", { p_voucher_type: voucherId, p_user_id: userId }) //custom database function
+      .rpc("increment_private_voucher", { p_voucher_type: voucherId, p_user_id: userId! }) //custom database function
     if (error) {
       console.error('Error updating public voucher log:', error);
     } else {
