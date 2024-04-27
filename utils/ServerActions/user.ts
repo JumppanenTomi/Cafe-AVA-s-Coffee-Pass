@@ -129,10 +129,10 @@ export const changeEmail = async (formData: FormData) => {
   } catch (error: any) {
     console.error(`Failed to update email: ${error.message}`);
     return redirect(
-      "/auth/updateEmail?message=Failed to update email&isError=true"
+      "/client/settings/updateEmail?message=Failed to update email&isError=true"
     );
   }
   return redirect(
-    "/auth/updateEmail?message=Please first verify the link sent to your old email, then proceed to confirm the change by clicking on the link sent to your new email.&isError=false"
+    "/client/settings/updateEmail?message=Please first verify the link sent to your old email, then proceed to confirm the change by clicking on the link sent to your new email.&isError=false"
   );
 };
