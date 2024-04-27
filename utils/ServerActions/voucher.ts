@@ -248,7 +248,6 @@ export const fetchAllVouchers = async () => {
     const {data, error} = await supabase
     .from("all_vouchers")
     .select(`*,voucher_type(*)`)
-    .or(`user_id.eq.${userId},public.eq.TRUE`);
   
   if(error){
     throw new Error(error.message)
