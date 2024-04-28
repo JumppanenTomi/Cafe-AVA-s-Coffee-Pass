@@ -87,17 +87,17 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "public_public_voucher_logs_public_voucher_id_fkey"
-            columns: ["public_voucher_id"]
-            isOneToOne: false
-            referencedRelation: "public_vouchers"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "public_public_voucher_logs_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_voucher_logs_public_voucher_id_fkey"
+            columns: ["public_voucher_id"]
+            isOneToOne: false
+            referencedRelation: "public_vouchers"
             referencedColumns: ["id"]
           },
         ]
@@ -110,8 +110,8 @@ export type Database = {
           id: number
           start_date: string | null
           start_time: string | null
+          used: number | null
           voucher_id: number | null
-          used?: number| null
         }
         Insert: {
           created_at?: string
@@ -120,8 +120,8 @@ export type Database = {
           id?: number
           start_date?: string | null
           start_time?: string | null
+          used?: number | null
           voucher_id?: number | null
-          used?: number| null
         }
         Update: {
           created_at?: string
@@ -130,12 +130,12 @@ export type Database = {
           id?: number
           start_date?: string | null
           start_time?: string | null
+          used?: number | null
           voucher_id?: number | null
-          used?: number| null
         }
         Relationships: [
           {
-            foreignKeyName: "public_public_vouchers_voucher_id_fkey"
+            foreignKeyName: "public_vouchers_voucher_id_fkey"
             columns: ["voucher_id"]
             isOneToOne: false
             referencedRelation: "voucher_type"
@@ -366,6 +366,20 @@ export type Database = {
       }
       delete_temp_codes_rows: {
         Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      increment_private_voucher: {
+        Args: {
+          p_voucher_type: number
+          p_user_id: string
+        }
+        Returns: undefined
+      }
+      increment_public_voucher: {
+        Args: {
+          p_voucher_id: number
+          p_user_id: string
+        }
         Returns: undefined
       }
     }

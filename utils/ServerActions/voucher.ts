@@ -342,8 +342,8 @@ const getPublicVoucherUses = async (voucherId: number) => {
     if (error) {
       throw new Error(error.message);
     }
-    console.log('logs', data);
-    return data;
+    console.log('used', data[0].used_per_user);
+    return data[0].used_per_user;
   } catch (error: any) {
     console.error(`Failed to fetch public vouchers uses: ${error.message}`);
 
@@ -363,19 +363,57 @@ export const fetchAllVouchers = async () => {
 
     await Promise.all(publicVouchers.map(async (pv) => {
       try {
-        const used = await getPublicVoucherUses(pv.id) || [];
-        pv.used = used.length > 0 ? used[0].used_per_user : 0;
+        const used = await getPublicVoucherUses(pv.id) || 0
+        console.log(used);
+
+        pv.used = used ? used : 0;
       } catch (error: any) {
         console.error(`Error fetching public voucher uses: ${error.message}`);
         pv.used = 0;
       }
     }));
 
-    const allVouchers = privateVouchers.concat(publicVouchers);
+    const allVouchers = [...privateVouchers, ...publicVouchers]
     console.log(allVouchers);
+
     return allVouchers;
   } catch (error: any) {
     console.error(`Failed to fetch vouchers: ${error.message}`);
     return [];
+  }
+};
+
+export const usePublicVoucher = async (voucherId: number) => {
+  const supabase = createClient();
+  const userId = await getUserId();
+
+  try {
+    const { data, error } = await supabase
+      //Custom database function that updates column used_per_user by 1 in public_voucher_logs table
+      .rpc("increment_public_voucher", { p_voucher_id: voucherId, p_user_id: userId! })
+    if (error) {
+      console.error('Error updating public voucher log:', error);
+    } else {
+      console.log('Public voucher increment successful:', data);
+    }
+  } catch (error) {
+    console.error('Error updating public voucher log uses:', error);
+  }
+};
+
+export const usePrivateVoucher = async (voucherId: number) => {
+  const supabase = createClient();
+  const userId = await getUserId();
+  try {
+    const { data, error } = await supabase
+      //Custom database function that updates column used by 1 in all_vouchers table for user id and voucher type
+      .rpc("increment_private_voucher", { p_voucher_type: voucherId, p_user_id: userId! }) //custom database function
+    if (error) {
+      console.error('Error updating public voucher log:', error);
+    } else {
+      console.log('Private voucher increment successful:', data);
+    }
+  } catch (error) {
+    console.error('Error updating public voucher log uses:', error);
   }
 };
