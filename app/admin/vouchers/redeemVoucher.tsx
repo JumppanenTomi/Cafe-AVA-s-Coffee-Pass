@@ -1,20 +1,27 @@
 import { useRouter } from "next/navigation";
 import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
 import { Form } from "@/components/Inputs/Form";
-import NumberInput from "@/components/Inputs/NumberInput";
 import AdminAddButton from "@/components/Inputs/buttons/AdminAddButton";
 import AdminAddModalButton from "@/components/Inputs/buttons/AdminAddModalButton";
-import { Voucher, User, UpdatedVouchers } from "./interface";
+import { User, UpdatedVouchers } from "./interface";
 import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchUsers } from "@/utils/ServerActions/user";
-import { fetchAllVouchers, getAllPublicVoucherLogs, updatePublicVoucherLogs } from "@/utils/ServerActions/voucher";
+import { fetchAllVouchers, usePublicVoucher, usePrivateVoucher } from "@/utils/ServerActions/voucher";
 
-export default function RedeemVoucher(props: { user_id: string, voucher_id: string, uses: number, max_uses: number | null }) {
+export default function RedeemVoucher(props:
+  {
+    redeemed_user_id: string,
+    voucher_id: string | number,
+    uses: number,
+    max_uses: number | null,
+    voucher_user_id: string | null,
+    user_email: string | null,
+    times_used: number | null,
+  }) {
   const [modal, setModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const [vouchers, setVouchers] = useState<UpdatedVouchers[]>([]);
-  const [pvLogs, setpvLogs] = useState<any>();
   const router = useRouter();
 
   useEffect(() => {
@@ -34,47 +41,30 @@ export default function RedeemVoucher(props: { user_id: string, voucher_id: stri
         setVouchers(
           response.map((voucher) => ({
             id: voucher.id || null,
-            used: voucher.used ? voucher.used : null,
-            active: voucher.active ? voucher.active : null,
             name: voucher.voucher_type ? voucher.voucher_type.name : "",
-            uses_per_voucher: voucher.voucher_type ? voucher.voucher_type.uses_per_voucher : null
           }))
         );
       }
     };
 
-    const getpvLogs = async () => {
-      const response = await getAllPublicVoucherLogs();
-      setpvLogs(response)
-    };
-
     getUsers();
     getVouchers();
-    getpvLogs();
   }, []);
 
-  const publicVoucherLog = useMemo(() => {
-    if (pvLogs && props.user_id && props.voucher_id && props.uses) {
-      return pvLogs.find((log: any) => {
-        if (
-          (log.public_voucher_id == props.voucher_id) &&
-          (log.user_id == props.user_id) &&
-          (log.used_per_user == props.uses && log.used_per_user >= 0))
-          return true;
-      });
-    }
-  }, [pvLogs])
 
+  // Update a private or public voucher based on if the voucher has a userId attached to it
   const handleSubmit = async (formData: FormData) => {
-    const logtest = pvLogs.find((log: any) => {
-      if (
-        (log.public_voucher_id == formData.get("voucher_id")) &&
-        (log.user_id == formData.get("user_id")) &&
-        (log.used_per_user == props.uses && log.used_per_user >= 0))
-        return true;
-    });
-    if (logtest && (props.max_uses == null || props.max_uses < logtest.used_per_user)) {
-      updatePublicVoucherLogs(logtest.used_per_user + 1, logtest.user_id, logtest.public_voucher_id)
+    const userId = formData.get("user_id") as string
+    const voucherId = formData.get("voucher_id") as unknown as number
+    if (props.max_uses == null || (props.times_used != null && props.times_used < props.max_uses)) {
+      console.log("passed the null and used check")
+      if (props.voucher_user_id == null) {
+        usePublicVoucher(voucherId, userId)
+      } else if (props.voucher_user_id != null) {
+        usePrivateVoucher(voucherId)
+      }
+    } else {
+      console.log("max uses and times used check failed")
     }
 
     router.refresh();
@@ -109,7 +99,7 @@ export default function RedeemVoucher(props: { user_id: string, voucher_id: stri
                 inputName='user_id'
                 inputLabel='User'
                 inputPlaceholder='Select a user'
-                defaultValue={props.user_id ? props.user_id : undefined}
+                defaultValue={props.redeemed_user_id ? props.redeemed_user_id : undefined}
                 options={users.map((user) => ({
                   id: user.id,
                   label: user.email,

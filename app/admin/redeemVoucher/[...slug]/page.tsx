@@ -38,7 +38,15 @@ export default function Page({ params }: { params: { slug: string[] } }) {
       <h2>{user.email}</h2>
       <h2>User has redeemed a {voucher.voucher_type.name} voucher</h2>
       <div className={"flex gap-5 flex-col items-center md:flex-row"}>
-        <RedeemVoucher user_id={userId} voucher_id={voucherId} uses={voucher.used} max_uses={voucher.voucher_type ? voucher.voucher_type.uses_per_voucher : null}/>
+        <RedeemVoucher 
+        redeemed_user_id={userId} 
+        voucher_id={voucherId} 
+        uses={voucher.used ? voucher.used : null} 
+        max_uses={voucher.voucher_type ? voucher.voucher_type.uses_per_voucher : null}
+        voucher_user_id={voucher.user_id ? voucher.user_id : null}
+        user_email={user ? user.email : null}
+        times_used={voucher.used}
+        />
       </div>
     </div>
   ) : (
