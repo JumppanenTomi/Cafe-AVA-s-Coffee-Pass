@@ -405,7 +405,7 @@ export const usePrivateVoucher = async (voucherId: number) => {
   try {
     const { data, error } = await supabase
       //Custom database function that updates column used by 1 in all_vouchers table for all_voucher.id
-      .rpc("increment_private_voucher_test", { p_voucher_id: voucherId }) //custom database function
+      .rpc("increment_private_voucher", { p_voucher_id: voucherId }) //custom database function
     if (error) {
       console.error('Error updating public voucher log:', error);
     } else {

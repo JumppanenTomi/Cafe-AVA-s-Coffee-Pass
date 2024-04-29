@@ -370,13 +370,6 @@ export type Database = {
       }
       increment_private_voucher: {
         Args: {
-          p_voucher_type: number
-          p_user_id: string
-        }
-        Returns: undefined
-      }
-      increment_private_voucher_test: {
-        Args: {
           p_voucher_id: number
         }
         Returns: undefined
