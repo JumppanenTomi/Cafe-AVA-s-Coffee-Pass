@@ -59,9 +59,11 @@ export default function RedeemVoucher(props:
     if (props.max_uses == null || (props.times_used != null && props.times_used < props.max_uses)) {
       console.log("passed the null and used check")
       if (props.voucher_user_id == null) {
-        usePublicVoucher(voucherId, userId)
+        await usePublicVoucher(voucherId, userId)
+        alert("Public voucher redeemed succesfully")
       } else if (props.voucher_user_id != null) {
-        usePrivateVoucher(voucherId)
+        await usePrivateVoucher(voucherId)
+        alert("Private voucher redeemed succesfully")
       }
     } else {
       console.log("max uses and times used check failed")
