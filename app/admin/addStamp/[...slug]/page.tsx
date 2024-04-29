@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import { fetchUsers } from "@/utils/ServerActions/user";
 import { fetchUserIdFromTempCode } from "@/utils/ServerActions/tempCode";
 import { fetchUserActiveStamps } from "@/utils/ServerActions/stamp";
+import { supabaseTableSubscription } from "@/utils/ServerActions/subscriptions";
 import AddVoucher from "../../vouchers/addVoucher";
 import AddStamp from "../../stamps/addStamp";
 import BulkRemoveStamps from "../../stamps/bulkRemoveStamps";
@@ -28,6 +29,15 @@ export default function Page({ params }: { params: { slug: string[] } }) {
       return users.find((user: any) => user.id === id);
     }
   }, [users]);
+
+  useEffect(() => {
+    const handleChange = async () => {
+      const stampCount = await fetchUserActiveStamps(id);
+      setStamps(stampCount || 0);
+    };
+
+    supabaseTableSubscription("stamp_logs", `user_id=eq.${id}`, handleChange);
+  }, [id]);
 
   return stamps && id && users && user ? (
     <div className='flex flex-col items-center justify-center flex-1 w-full gap-5 p-5'>

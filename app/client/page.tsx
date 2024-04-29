@@ -1,4 +1,3 @@
-import Nav from "@/components/navigation/Nav";
 import StampCode from "@/components/QrCodes/stampCode";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,13 +12,13 @@ import OverZoomIn from "@/components/Animations/Render/OverZoomIn";
 import RollDown from "@/components/Animations/Render/RollDown";
 import { Statistics } from "@/components/Statistics";
 import FadeIn from "@/components/Animations/Render/FadeIn";
-import StampsInfo from "@/components/stamps/StampsInfo";
 import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
+import getRole from "@/utils/getRole";
 type NavigationLinkProps = {
   href: string;
   icon: IconDefinition;
   label: string;
-  isExternal?: boolean
+  isExternal?: boolean;
 };
 
 const HomeLinkItem: React.FC<NavigationLinkProps> = ({
@@ -31,34 +30,33 @@ const HomeLinkItem: React.FC<NavigationLinkProps> = ({
   const linkProps = isExternal ? { target: "_blank", href } : { href };
 
   return (
-    <div className='flex flex-col items-center justify-center flex-grow'>
-      <Link
-        {...linkProps}
-        className='flex flex-col items-center justify-center gap-2'
-      >
-        <FontAwesomeIcon icon={icon} size='3x' />
-        <h2>
-          {label}{" "}
-          {isExternal && (
-            <FontAwesomeIcon icon={faArrowUpRightFromSquare} size={"xs"} />
-          )}
-        </h2>
-      </Link>
-    </div>
+    <Link
+      {...linkProps}
+      className='flex flex-col items-center justify-center gap-2'
+    >
+      <FontAwesomeIcon icon={icon} size='3x' />
+      <label>
+        {label}{" "}
+        {isExternal && (
+          <FontAwesomeIcon icon={faArrowUpRightFromSquare} size={"xs"} />
+        )}
+      </label>
+    </Link>
   );
 };
 
 export default async function ProtectedPage() {
   const menuUrl = await fetchSiteSetting("menuUrl");
+  const userRole = await getRole();
+
   return (
     <>
-      <Nav />
-      <div className='flex flex-col items-center justify-center flex-grow gap-5'>
+      <div className='flex flex-col items-center justify-center flex-grow w-full gap-5'>
         <FadeIn duration={0.8} className='w-full'>
           <Statistics />
         </FadeIn>
         <FadeIn
-          className='flex flex-row flex-wrap w-full white-container'
+          className='flex flex-row flex-wrap w-full gap-5 justify-evenly white-container'
           duration={0.8}
         >
           <HomeLinkItem
@@ -67,7 +65,6 @@ export default async function ProtectedPage() {
             label='Vouchers'
           />
           <HomeLinkItem
-
             href={menuUrl?.value || "/error"}
             icon={faUtensils}
             label='Menu'
@@ -87,6 +84,11 @@ export default async function ProtectedPage() {
             <StampCard />
           </RollDown>
         </div>
+        {(userRole === "owner" || userRole === "barista") && (
+          <Link href={"/admin"} className={"btn-primary"}>
+            Admin Dashboard
+          </Link>
+        )}
       </div>
     </>
   );

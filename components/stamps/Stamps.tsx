@@ -6,6 +6,7 @@ import { fetchCurrentUserActiveStampCount } from "@/utils/ServerActions/stamp";
 import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 import CoffeeCup from "../SVG/CoffeeCup";
 import { GiftIcon } from "@heroicons/react/24/outline";
+import { supabaseTableSubscription } from "@/utils/ServerActions/subscriptions";
 
 const Stamps = () => {
   const supabase = createClient();
@@ -63,28 +64,19 @@ const Stamps = () => {
     const handleChange = async () => {
       const stampCount = await fetchCurrentUserActiveStampCount();
       setActiveStampCount(stampCount || 0);
+    };
+
+    const showPopUp = () => {
       setIsPopupVisible(true);
+      handleChange();
     };
 
-    const subscription = supabase
-      .channel("table-db-changes")
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "stamp_logs",
-          filter: `user_id=eq.${userId}`,
-        },
-        (payload) => {
-          handleChange();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      subscription.unsubscribe();
-    };
+    supabaseTableSubscription(
+      "stamp_logs",
+      `user_id=eq.${userId}`,
+      handleChange,
+      showPopUp
+    );
   }, [userId]);
 
   return stampsRequired ? (
