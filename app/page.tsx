@@ -1,12 +1,10 @@
-import Image from "next/image";
-import logo from "@/public/images/logo.png";
-import maker from "@/public/images/maker.png";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import SocialLogin from "@/components/Inputs/buttons/SocialLogin";
 import FadeIn from "@/components/Animations/Render/FadeIn";
 import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
+import LogoContainer from "@/components/logoContainer";
 
 export default async function Index() {
   const supabase = createClient();
@@ -19,29 +17,14 @@ export default async function Index() {
   }
 
   const greetings = await fetchSiteSetting("welcomeText");
-  const logoUrl = await fetchSiteSetting("logoUrl");
 
   return (
-    <FadeIn duration={1} className='flex flex-1 w-full'>
-      <div className='flex flex-col items-center flex-1 w-full'>
-        <div className='flex flex-col items-center flex-grow w-full gap-5 p-5 bg-center bg-cover justify-evenly'>
-          <Image
-            src={maker}
-            alt={"ava logo"}
-            width={300}
-            className='w-full max-w-[300px]'
-          />
-          {logoUrl && logoUrl.value ? (
-            <>
-              <Image src={logoUrl.value} alt={"Logo"} width={150} height={50} layout={"intrinsic"} />
-            </>
-          ) : (
-            <Image src={logo} alt={"Cafe AVA- Logo"} width={150} height={50} loading={"lazy"} />
-          )}
-        </div>
-        <div className='flex flex-col items-center justify-center w-full max-w-screen-sm gap-5 p-5 py-16'>
-          <h1 className={"font-bold text-3xl"}>Welcome!</h1>
-          <p className={"text-center font-medium max-w-screen-sm"}>
+    <FadeIn duration={1} className='flex flex-grow max-w-screen-sm'>
+      <div className='flex flex-col justify-between flex-1 max-h-full'>
+        <LogoContainer />
+        <div className='flex flex-col items-center justify-center gap-5 p-5'>
+          <h1>Welcome!</h1>
+          <p className={"text-center"}>
             {greetings?.value || "Error loading welcome message."}
           </p>
           <SocialLogin />

@@ -1,5 +1,5 @@
 "use client";
-import { useState, Suspense } from "react";
+import { Suspense } from "react";
 import Search from "@/components/Table/Search";
 import TableHead from "@/components/Table/TableHead";
 import TablePagination from "@/components/Table/TablePagination";
@@ -42,38 +42,6 @@ export default function VouchersClient({
   sort: string;
   currentPage: number;
 }) {
-  const [selected, setSelected] = useState<number[]>([]);
-
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelected = vouchers.map((n) => n.voucher_log_id);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
-
-  const handleSelectClick = (event: React.ChangeEvent<unknown>, id: number) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected: number[] = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-    setSelected(newSelected);
-  };
-
-  const isSelected = (id: number) => selected.indexOf(id) !== -1;
-
   return (
     <div className="flex flex-col flex-1 w-full gap-8">
       <div className="flex flex-wrap items-center justify-between space-y-4 flex-column sm:flex-row sm:space-y-0">
@@ -93,7 +61,6 @@ export default function VouchersClient({
           <table className="w-full text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
             <TableHead
               headCells={headCells}
-              handleSelectAllClick={handleSelectAllClick}
             />
             <tbody>
               {vouchers.map((voucher, index) => (
