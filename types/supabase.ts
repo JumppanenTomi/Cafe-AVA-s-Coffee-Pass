@@ -16,7 +16,6 @@ export type Database = {
           end_date: string | null
           end_time: string | null
           id: string
-          public: boolean | null
           start_date: string | null
           start_time: string | null
           used: number | null
@@ -29,7 +28,6 @@ export type Database = {
           end_date?: string | null
           end_time?: string | null
           id?: string
-          public?: boolean | null
           start_date?: string | null
           start_time?: string | null
           used?: number | null
@@ -42,7 +40,6 @@ export type Database = {
           end_date?: string | null
           end_time?: string | null
           id?: string
-          public?: boolean | null
           start_date?: string | null
           start_time?: string | null
           used?: number | null
@@ -60,6 +57,86 @@ export type Database = {
           {
             foreignKeyName: "public_private_voucher_voucher_type_fkey"
             columns: ["voucher_type"]
+            isOneToOne: false
+            referencedRelation: "voucher_type"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      public_voucher_logs: {
+        Row: {
+          created_at: string
+          id: number
+          public_voucher_id: number | null
+          used_per_user: number | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          public_voucher_id?: number | null
+          used_per_user?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          public_voucher_id?: number | null
+          used_per_user?: number | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_public_voucher_logs_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "public_voucher_logs_public_voucher_id_fkey"
+            columns: ["public_voucher_id"]
+            isOneToOne: false
+            referencedRelation: "public_vouchers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      public_vouchers: {
+        Row: {
+          created_at: string
+          end_date: string | null
+          end_time: string | null
+          id: number
+          start_date: string | null
+          start_time: string | null
+          used: number | null
+          voucher_id: number | null
+        }
+        Insert: {
+          created_at?: string
+          end_date?: string | null
+          end_time?: string | null
+          id?: number
+          start_date?: string | null
+          start_time?: string | null
+          used?: number | null
+          voucher_id?: number | null
+        }
+        Update: {
+          created_at?: string
+          end_date?: string | null
+          end_time?: string | null
+          id?: number
+          start_date?: string | null
+          start_time?: string | null
+          used?: number | null
+          voucher_id?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_vouchers_voucher_id_fkey"
+            columns: ["voucher_id"]
             isOneToOne: false
             referencedRelation: "voucher_type"
             referencedColumns: ["id"]
@@ -289,6 +366,20 @@ export type Database = {
       }
       delete_temp_codes_rows: {
         Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      increment_private_voucher: {
+        Args: {
+          p_voucher_type: number
+          p_user_id: string
+        }
+        Returns: undefined
+      }
+      increment_public_voucher: {
+        Args: {
+          p_voucher_id: number
+          p_user_id: string
+        }
         Returns: undefined
       }
     }

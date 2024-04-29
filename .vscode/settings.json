@@ -5,7 +5,7 @@
   "deno.lint": true,
   "deno.unstable": true,
   "[typescript]": {
-    "editor.defaultFormatter": "denoland.vscode-deno"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }

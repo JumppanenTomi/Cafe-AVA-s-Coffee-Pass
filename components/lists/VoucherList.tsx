@@ -77,6 +77,28 @@ const VoucherList = ({ initialVouchers }: {
                     handleChange()
                 }
             )
+            .on(
+                'postgres_changes',
+                {
+                    event: '*',
+                    schema: 'public',
+                    table: 'public_vouchers',
+                },
+                (payload) => {
+                    handleChange()
+                }
+            ).on(
+                'postgres_changes',
+                {
+                    event: '*',
+                    schema: 'public',
+                    table: 'public_voucher_logs',
+                },
+                (payload) => {
+                    handleChange()
+                }
+            )
+
             .subscribe();
 
         return () => {
