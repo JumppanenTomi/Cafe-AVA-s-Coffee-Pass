@@ -59,7 +59,7 @@ export const fetchUserIdFromTempCode = async (code: string) => {
   } catch (error: any) {
     //Todo: Add logging
     console.error(`Failed to fetch user ID from temp code: ${error.message}`);
-    return error;
+    return null;
   }
 };
 
