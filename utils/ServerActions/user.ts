@@ -2,6 +2,7 @@
 import { redirect } from "next/dist/client/components/navigation";
 import { createClient } from "../supabase/server";
 import { cache } from "react";
+import { User } from "@supabase/supabase-js";
 import { Pool } from "pg";
 import QrCodeGen from "@/components/QrCodes/QrCodeGen";
 
@@ -96,13 +97,13 @@ export const fetchUsers = cache(async (page: number) => {
     const { data, error } = await supabase.auth.admin.listUsers({
       page: page,
       perPage: 50,
-    });
+    })
 
     if (error) {
       throw new Error(`Failed to fetch users: ${error.message}`);
     }
 
-    return data.users;
+    return data.users as User[];
   } catch (error: any) {
     console.error(`Failed to fetch users: ${error.message}`);
     return [];

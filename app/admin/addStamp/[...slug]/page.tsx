@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { fetchUsers } from "@/utils/ServerActions/user";
 import { fetchUserIdFromTempCode } from "@/utils/ServerActions/tempCode";
 import { fetchUserActiveStamps } from "@/utils/ServerActions/stamp";
@@ -7,11 +7,12 @@ import { supabaseTableSubscription } from "@/utils/ServerActions/subscriptions";
 import AddVoucher from "../../vouchers/addVoucher";
 import AddStamp from "../../stamps/addStamp";
 import BulkRemoveStamps from "../../stamps/bulkRemoveStamps";
+import { User } from "@supabase/supabase-js";
 
 export default function Page({ params }: { params: { slug: string[] } }) {
-  const [users, setUsers] = useState<any>();
-  const [id, setId] = useState<any>();
-  const [stamps, setStamps] = useState<any>();
+  const [users, setUsers] = useState<User[]>();
+  const [id, setId] = useState<string | null>();
+  const [stamps, setStamps] = useState<number | null>(0);
 
   useEffect(() => {
     fetchUsers(1).then((data) => setUsers(data));
@@ -27,10 +28,13 @@ export default function Page({ params }: { params: { slug: string[] } }) {
   const user = useMemo(() => {
     if (users && id) {
       return users.find((user: any) => user.id === id);
+    } else {
+      return { email: "Loading..." } as User;
     }
   }, [users]);
 
   useEffect(() => {
+    if (typeof id !== "string") return;
     const handleChange = async () => {
       const stampCount = await fetchUserActiveStamps(id);
       setStamps(stampCount || 0);
@@ -39,19 +43,19 @@ export default function Page({ params }: { params: { slug: string[] } }) {
     supabaseTableSubscription("stamp_logs", `user_id=eq.${id}`, handleChange);
   }, [id]);
 
-  return stamps && id && users && user ? (
-    <div className='flex flex-col items-center justify-center flex-1 w-full gap-5 p-5'>
-      <div className={"flex gap-5 flex-col items-center md:flex-row"}>
-        <AddStamp user_id={id} />
-        <AddVoucher user_id={id} />
-        <BulkRemoveStamps user_id={id} currentAmount={stamps} />
+  return id !== null && stamps !== null ? (
+    <Suspense fallback={<p>Loading...</p>}>
+      <div className='flex flex-col items-center justify-center flex-1 w-full gap-5 p-5'>
+        <div className={"flex gap-5 flex-col items-center md:flex-row"}>
+          <AddStamp user_id={id} />
+          <AddVoucher user_id={id} />
+          <BulkRemoveStamps user_id={id} currentAmount={stamps} />
+        </div>
+        <h2>{user?.email}</h2>
+        <h2>User currently has {stamps} stamps</h2>
       </div>
-      <h2>{user.email}</h2>
-      <h2>User currently has {stamps} stamps</h2>
-    </div>
+    </Suspense>
   ) : (
-    <div className='flex flex-col items-center justify-center flex-1 w-full gap-5 p-5'>
-      <p>Loading...</p>
-    </div>
+    <p>Couldn't find user or amount of stamps</p>
   );
 }
