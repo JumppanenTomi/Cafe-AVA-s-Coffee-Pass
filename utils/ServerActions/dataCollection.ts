@@ -5,7 +5,7 @@ import { createClient } from "@/utils/supabase/server";
 /**
  * Retrieves collected data for a user.
  * @returns An object containing the user's email, user ID, stamp logs, voucher logs and full name from social login.
- * @throws If there is an error retrieving the data.
+ * @throws an error if something went wrong while retrieving data
  */
 export async function collectedData() {
   try {
@@ -16,10 +16,10 @@ export async function collectedData() {
     } = await supabase.auth.getUser();
 
     if (!user) {
-      throw new Error("Failed to get user");
+      throw new Error("Failed to get user for collected data");
     }
 
-    let stampLogs, voucherLogs;
+    let stampLogs, privateVoucherLogs, publicVoucherLogs;
 
     try {
       const { data, error } = await supabase
@@ -29,19 +29,31 @@ export async function collectedData() {
       if (error) throw error;
       stampLogs = data;
     } catch (error) {
-      console.error("Error fetching stamp logs:", error);
+      console.error("Error fetching stamp logs for collected data:", error);
       throw error;
     }
 
     try {
       const { data, error } = await supabase
-        .from("voucher_logs")
-        .select("timestamp, voucher_log_id")
+        .from("all_vouchers")
+        .select("created_at, id")
         .eq("user_id", user.id);
       if (error) throw error;
-      voucherLogs = data;
+      privateVoucherLogs = data;
     } catch (error) {
-      console.error("Error fetching voucher logs:", error);
+      console.error("Error fetching voucher logs for collected data:", error);
+      throw error;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from("public_voucher_logs")
+        .select("created_at, id") 
+        .eq("user_id", user.id)
+      if (error) throw error;
+      publicVoucherLogs = data;
+    } catch (error) {
+      console.error("Error fetching public voucher logs for collected data:", error)
       throw error;
     }
 
@@ -51,9 +63,12 @@ export async function collectedData() {
       stampLogs: stampLogs?.[0]
         ? stampLogs
         : [{ timestamp: "", stamp_log_id: 0 }],
-      voucherLogs: voucherLogs?.[0]
-        ? voucherLogs
-        : [{ timestamp: "", voucher_log_id: 0 }],
+      privateVoucherLogs: privateVoucherLogs?.[0]
+        ? privateVoucherLogs
+        : [{ created_at: "", id: "" }],
+        publicVoucherLogs: publicVoucherLogs?.[0]
+        ? publicVoucherLogs
+        : [{ created_at: "", id: 0 }],
       fullName: user.user_metadata.full_name ? user.user_metadata.full_name : ""
     };
   } catch (error) {

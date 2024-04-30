@@ -23,7 +23,8 @@ export default function GetDataModal({
     email: "",
     userId: "",
     stampLogs: [{ timestamp: "", stamp_log_id: 0 }],
-    voucherLogs: [{ timestamp: "", voucher_log_id: 0 }],
+    privateVoucherLogs: [{ created_at: "", id: "" }],
+    publicVoucherLogs: [{ created_at: "", id: 0 }],
     fullName: "",
   });
 
@@ -38,9 +39,13 @@ export default function GetDataModal({
         email: response.email ?? "",
         userId: response.userId,
         stampLogs: response.stampLogs,
-        voucherLogs: response.voucherLogs.map((log) => ({
-          timestamp: log.timestamp ?? "",
-          voucher_log_id: log.voucher_log_id,
+        privateVoucherLogs: response.privateVoucherLogs.map((log) => ({
+          created_at: log.created_at ?? "",
+          id: log.id,
+        })),
+        publicVoucherLogs: response.publicVoucherLogs.map((log) => ({
+          created_at: log.created_at ?? "",
+          id: log.id,
         })),
         fullName: response.fullName,
       });
@@ -68,7 +73,8 @@ export default function GetDataModal({
                   email={data.email}
                   userId={data.userId}
                   stampLogs={data.stampLogs}
-                  voucherLogs={data.voucherLogs}
+                  privateVoucherLogs={data.privateVoucherLogs}
+                  publicVoucherLogs={data.publicVoucherLogs}
                   fullName={data.fullName}
                 />
               }

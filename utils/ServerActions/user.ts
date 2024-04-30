@@ -4,7 +4,6 @@ import { createClient } from "../supabase/server";
 import { cache } from "react";
 import { User } from "@supabase/supabase-js";
 import { Pool } from "pg";
-import QrCodeGen from "@/components/QrCodes/QrCodeGen";
 
 // Create a database pool with one connection.
 const pool = new Pool({
