@@ -248,6 +248,10 @@ export const fetchAllVouchers = async () => {
     const {data, error} = await supabase
     .from("all_vouchers")
     .select(`*,voucher_type(*)`)
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
   
   if(error){
     throw new Error(error.message)
