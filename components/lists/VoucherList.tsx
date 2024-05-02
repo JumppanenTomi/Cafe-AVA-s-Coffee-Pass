@@ -37,7 +37,7 @@ const VoucherListItem = ({ voucher }:
                         <p className={'w-full'}>{voucher.voucher_type.description}</p>
                         <p>Voucher used {used}/
                             {uses !== null ? uses : <FontAwesomeIcon icon={faInfinity} />} times</p>
-                        <p>{formatDateToFinnish(voucher.end_date)} <FontAwesomeIcon icon={faClock} /></p>
+                        <p>{formatDateToFinnish(voucher.end)} <FontAwesomeIcon icon={faClock} /></p>
                     </div>
                 </div>
             </div>
