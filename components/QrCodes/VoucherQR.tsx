@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react"
 import QrCodeGen from "./QrCodeGen"
 import { XCircleIcon } from "@heroicons/react/20/solid";
+<<<<<<< Updated upstream
 import ReactCardFlip from 'react-card-flip';
+=======
+import ReactCardFlip from "react-card-flip";
+>>>>>>> Stashed changes
 
 const VoucherQR = ({
   name,
@@ -20,6 +24,10 @@ const VoucherQR = ({
 }) => {
   const [currentUsed, setCurrentUsed] = useState(used);
   const [flip, setFlip] = useState(false);
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
   // Don't show if Inactive
   useEffect(() => {
@@ -28,7 +36,12 @@ const VoucherQR = ({
   // Close if stamp is given or taken.
   useEffect(() => {
     if (used !== currentUsed) {
+<<<<<<< Updated upstream
       setFlip(!flip)
+=======
+
+      setShowQrCode(false);
+>>>>>>> Stashed changes
       setCurrentUsed(used);
       setTimeout(() =>
         setShowQrCode(false)
@@ -36,6 +49,7 @@ const VoucherQR = ({
     }
   }, [used]);
 
+<<<<<<< Updated upstream
 
   return (
     <div className='voucher-background'>
@@ -60,8 +74,22 @@ const VoucherQR = ({
             </div>
             <div className='circle1' />
             <div className='circle2' />
+=======
+  setTimeout(() => {
+    setFlip(!flip)
+  }, 3000)
+  return (
+    <div className='voucher-background'>
+      <ReactCardFlip isFlipped={flip}
+        flipDirection="horizontal">
+
+        <div className='voucher flex flex-col items-center flex-1 w-full'>
+          <div className='close-button' onClick={() => setShowQrCode(false)}>
+            <XCircleIcon className='h-9 w-9' />
+>>>>>>> Stashed changes
           </div>
         </div>
+<<<<<<< Updated upstream
         <div className='flex flex-col items-center flex-1 w-full'>
 
           <div className='voucher'>
@@ -73,17 +101,33 @@ const VoucherQR = ({
             </div>
             <div className='flex items-center voucher-part'>
               <h3>{redeemMessage}</h3>
+=======
+
+        <div className="voucherBack">
+          <div className='voucher flex flex-col items-center flex-1 w-full'>
+            <div className='close-button' onClick={() => setShowQrCode(false)}>
+              <XCircleIcon className='h-9 w-9' />
+            </div>
+            <h3>BOOOOOOO</h3>
+            <div className='flex items-center voucher-part'>
+
+>>>>>>> Stashed changes
               <div className='circleActive animate-ping' />
               <div className='circleActive' />
             </div>
             <div className='circle1' />
             <div className='circle2' />
           </div>
+<<<<<<< Updated upstream
 
         </div>
 
+=======
+        </div>
+>>>>>>> Stashed changes
       </ReactCardFlip>
     </div>
+
   );
 };
 export default VoucherQR
