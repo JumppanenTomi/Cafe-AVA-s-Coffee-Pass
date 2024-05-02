@@ -5,15 +5,23 @@ export async function Statistics() {
 	const usedStamps = await fetchAllUsedStaps()
 
 	return (
-		<div className={'white-container w-full flex flex-wrap justify-between text-center'}>
-			<div>
-				<h4><b>Used Stamps</b></h4>
-				<h4>{usedStamps}</h4>
-			</div>
-			<div>
-				<h4><b>Total Stamps</b></h4>
-				<h4>{stampsTotal}</h4>
-			</div>
-		</div>
-	)
+    <div
+      className={
+        "white-container w-full flex flex-wrap justify-evenly text-center gap-5"
+      }
+    >
+      <div>
+        <h4>
+          <b>Used Stamps</b>
+        </h4>
+        <h4>{usedStamps}</h4>
+      </div>
+      <div>
+        <h4>
+          <b>Total Stamps</b>
+        </h4>
+        <h4>{stampsTotal}</h4>
+      </div>
+    </div>
+  );
 }
