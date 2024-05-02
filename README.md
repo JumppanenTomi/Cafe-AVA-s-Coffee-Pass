@@ -78,10 +78,10 @@ Cafe AVA - Coffee Pass is a web-based platform designed to provide users with ea
 1. **Start Supabase Stack**: Navigate to your project folder and start the Supabase stack:
 
    ```bash
-   start supabase
+   supabase start
    ```
 
-2. **Update Environment Variables**: Copy the `anon` and `service_role` keys from the startup prompt and paste them into your `.env.local` file.
+2. **Update Environment Variables**: Create copy of `.env.example` file and rename it to `.env.local`, then copy the `anon` and `service_role` keys from the supabase startup prompt and replace them into your `.env.local` file. Also remove database credential lines from `.env.local` file.
 
 3. **Pull Latest Database Changes (Optional)**:
 
@@ -89,7 +89,7 @@ Cafe AVA - Coffee Pass is a web-based platform designed to provide users with ea
    supabase db pull
    ```
 
-4. **Apply latest migration**:
+4. **Apply latest migration (only if there was changes from remote)**:
 
    ```bash
     supabase migration up
@@ -97,15 +97,21 @@ Cafe AVA - Coffee Pass is a web-based platform designed to provide users with ea
 
 ## Running the Application
 
-1. **Start the Application**:
+1. **Install packages**:
+
+   ```bash
+   npm install
+   ```
+
+2. **Start the Application**:
 
    ```bash
    npm run dev
    ```
 
-2. **Access the Application**: Navigate to [http://localhost:3000](http://localhost:3000) to view the application.
+3. **Access the Application**: Navigate to [http://localhost:3000](http://localhost:3000) to view the application.
 
-3. **Grant Admin Access**: After registering in the application, add your user to the `user_roles` table as an owner or a barista. Access admin features at [http://localhost:3000/admin/](http://localhost:3000/admin/).
+4. **Grant Admin Access**: After registering in the application, add your user to the `user_roles` table as an owner or a barista. Access admin features at [http://localhost:3000/admin/](http://localhost:3000/admin/).
 
 ## Contributors
 
