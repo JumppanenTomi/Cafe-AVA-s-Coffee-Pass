@@ -1,19 +1,18 @@
-"use server";
+"use server";;
 import { redirect } from "next/dist/client/components/navigation";
 import { createClient } from "../supabase/server";
 import { cache } from "react";
 import { User } from "@supabase/supabase-js";
 import { Pool } from "pg";
-import QrCodeGen from "@/components/QrCodes/QrCodeGen";
 
-// Create a database pool with one connection.
-const pool = new Pool({
-  ssl: { rejectUnauthorized: false },
-  host: "aws-0-eu-central-1.pooler.supabase.com",
-  database: "postgres",
-  user: "postgres.dmbskonhidnlxxucgcak",
-  port: 5432,
-  password: "xBKW3Oy2Y5tIEhDH",
+// Create a database pool with one connection. Also if running localy we disable SSL, but if running on a server we enable it.
+const pool=new Pool({
+  ssl: process.env.NEXT_PRIVATE_DB_HOST!==undefined? { rejectUnauthorized: false }:undefined,
+  host: process.env.NEXT_PRIVATE_DB_HOST||"127.0.0.1",
+  database: process.env.NEXT_PRIVATE_DB_NAME||"postgres",
+  user: process.env.NEXT_PRIVATE_DB_USER||"postgres",
+  port: process.env.NEXT_PRIVATE_DB_PORT? parseInt(process.env.NEXT_PRIVATE_DB_PORT):54322,
+  password: process.env.NEXT_PRIVATE_DB_PASSWORD||"postgres",
 });
 
 // Do no export this function, it is suposed to be used only in this file. this function is used to query the database. And if exposed to client componenents it might be used to query the database in a way that is not intended.
