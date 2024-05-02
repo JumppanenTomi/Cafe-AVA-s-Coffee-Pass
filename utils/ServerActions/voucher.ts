@@ -293,7 +293,7 @@ const getPublicVoucherUses = async (voucherId: number) => {
       throw new Error(error.message);
     }
     console.log('used', data[0].used_per_user);
-    return data[0].used_per_user;
+    return data[0].uses_per_voucher;
   } catch (error: any) {
     console.error(`Failed to fetch public vouchers uses: ${error.message}`);
 

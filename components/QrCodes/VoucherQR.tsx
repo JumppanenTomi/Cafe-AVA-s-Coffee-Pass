@@ -1,11 +1,7 @@
-import { useEffect, useState } from "react"
-import QrCodeGen from "./QrCodeGen"
+import { useEffect, useState } from "react";
+import QrCodeGen from "./QrCodeGen";
 import { XCircleIcon } from "@heroicons/react/20/solid";
-<<<<<<< Updated upstream
 import ReactCardFlip from 'react-card-flip';
-=======
-import ReactCardFlip from "react-card-flip";
->>>>>>> Stashed changes
 
 const VoucherQR = ({
   name,
@@ -20,42 +16,26 @@ const VoucherQR = ({
   active: boolean;
   voucherId: number;
   used: number;
-  redeemMessage: string
+  redeemMessage: string;
 }) => {
   const [currentUsed, setCurrentUsed] = useState(used);
   const [flip, setFlip] = useState(false);
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
-
-  // Don't show if Inactive
   useEffect(() => {
-    active ? setShowQrCode(false) : setShowQrCode(true);
-  }, [active]);
-  // Close if stamp is given or taken.
-  useEffect(() => {
-    if (used !== currentUsed) {
-<<<<<<< Updated upstream
-      setFlip(!flip)
-=======
-
-      setShowQrCode(false);
->>>>>>> Stashed changes
+    if (used !== currentUsed || active) {
+      console.log("Booooom");
+      setFlip(true);
       setCurrentUsed(used);
-      setTimeout(() =>
-        setShowQrCode(false)
-        , 3000)
+      setTimeout(() => setShowQrCode(false), 3000);
     }
   }, [used]);
 
-<<<<<<< Updated upstream
-
   return (
     <div className='voucher-background'>
-      <ReactCardFlip isFlipped={flip} flipDirection="horizontal">
-        <div className='flex flex-col items-center flex-1 w-full'>
-          <div className='voucher'>
+      <div className="mt-8">
+        <ReactCardFlip isFlipped={flip} flipDirection="horizontal">
+
+          <div className="voucher" >
             <div className='close-button' onClick={() => setShowQrCode(false)}>
               <XCircleIcon className='h-9 w-9' />
             </div>
@@ -72,62 +52,29 @@ const VoucherQR = ({
               <div className='circleActive animate-ping' />
               <div className='circleActive' />
             </div>
-            <div className='circle1' />
-            <div className='circle2' />
-=======
-  setTimeout(() => {
-    setFlip(!flip)
-  }, 3000)
-  return (
-    <div className='voucher-background'>
-      <ReactCardFlip isFlipped={flip}
-        flipDirection="horizontal">
 
-        <div className='voucher flex flex-col items-center flex-1 w-full'>
-          <div className='close-button' onClick={() => setShowQrCode(false)}>
-            <XCircleIcon className='h-9 w-9' />
->>>>>>> Stashed changes
           </div>
-        </div>
-<<<<<<< Updated upstream
-        <div className='flex flex-col items-center flex-1 w-full'>
 
-          <div className='voucher'>
+          <div className="voucher">
             <div className='close-button' onClick={() => setShowQrCode(false)}>
               <XCircleIcon className='h-9 w-9' />
             </div>
-            <div className="w-[300px] h-[300px] bg-white">
-              <h2>{redeemMessage}</h2>
+            <div className="bg-white w-[300px] h-[300px] ">
+              <div className="text-center pt-20">
+                <h2>{redeemMessage}</h2>
+              </div>
             </div>
             <div className='flex items-center voucher-part'>
-              <h3>{redeemMessage}</h3>
-=======
-
-        <div className="voucherBack">
-          <div className='voucher flex flex-col items-center flex-1 w-full'>
-            <div className='close-button' onClick={() => setShowQrCode(false)}>
-              <XCircleIcon className='h-9 w-9' />
-            </div>
-            <h3>BOOOOOOO</h3>
-            <div className='flex items-center voucher-part'>
-
->>>>>>> Stashed changes
+              <h3>redeemed</h3>
               <div className='circleActive animate-ping' />
               <div className='circleActive' />
             </div>
-            <div className='circle1' />
-            <div className='circle2' />
+
           </div>
-<<<<<<< Updated upstream
-
-        </div>
-
-=======
-        </div>
->>>>>>> Stashed changes
-      </ReactCardFlip>
-    </div>
-
+        </ReactCardFlip >
+      </div>
+    </div >
   );
 };
-export default VoucherQR
+
+export default VoucherQR;

@@ -17,13 +17,12 @@ const VoucherListItem = ({ voucher }:
     const [showQrCode, setShowQrCode] = useState(false)
 
     const showQr = () => {
-        setShowQrCode(true)
+        setShowQrCode(!showQrCode)
     }
     return (
         <>
             {!active && showQrCode && <VoucherQR name={voucher.voucher_type.name}
                 setShowQrCode={setShowQrCode}
-                active={active}
                 voucherId={voucher.id}
                 used={used}
                 redeemMessage={voucher.voucher_type.redeem_message}
