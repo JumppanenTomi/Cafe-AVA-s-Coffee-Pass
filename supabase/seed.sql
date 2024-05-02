@@ -8,7 +8,9 @@ VALUES
 ('registerText', 'Once you have submitted your email, a sign-in link will be sent directly to your inbox. Using this link, you can securely access website.', 'Register Text', 'Instructions that users see when registering'),
 ('loginText', 'Once you have submitted your email, a sign-in link will be sent directly to your inbox. Using this link, you can securely access website.', 'Login Text', 'Instructions users see when loggin in.'),
 ('stampsCollectedText', 'You have collected all stamps!', 'Stamps Collected Text', 'This message is shown to user insted of "coffee pass" if user has collected all stamps.'),
-('menuUrl', 'https://cafeava.fi/index.php/menu/', 'URL for Menu', 'URL of coffee/food menu');
+('menuUrl', 'https://cafeava.fi/index.php/menu/', 'URL for Menu', 'URL of coffee/food menu'),
+('privacyPolicyUrl', 'https://cafeava.fi/', 'Privacy policy URL', 'URL of privacy policy'),
+('termsOfUseUrl', 'https://cafeava.fi/', 'Terms of Use URL', 'Terms of Use URL');
 
 INSERT INTO voucher_type 
     ("created_at", "name", "description", "redeem_message", "uses_per_voucher")
