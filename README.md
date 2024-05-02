@@ -1,140 +1,119 @@
+# Cafe AVA - Coffee Pass
+
+## Overview
+
+Cafe AVA - Coffee Pass is a web-based platform designed to provide users with easy access to Cafe AVA's services. Its core feature is serving as a coffee pass for customers, offering rewards based on coffee purchases. Additionally, it includes a coupon feature and various functionalities for employees to manage coupons, stamps, and customer information.
+
+## Features
+
+- **Coffee Passport**: Customers collect stamps and earn rewards based on coffee purchases.
+- **Coupon Feature**: Distributes various offers and benefits to customers.
+- **Administration Functions**: Employees manage coupons, stamps, and customer information.
+
+## Screenshots
+
+<img src="public/images/screenshots/landing.png" alt="Landing Page" width="300">
+<img src="public/images/screenshots/home.png" alt="Home Page" width="300">
+
+## Technology Stack
+
+- **Framework**: Next.js
+- **Database & Authentication**: Supabase
+
 # Setting Up Locally
 
-## Database (Supabase)
+## Prerequisites
 
-### 1. Install Docker
+- Docker installed
+- Package manager (Brew for MacOS and Linux, Scoop for Windows)
 
-To run Supabase services locally, Docker is required. If you don't have it already, you can download Docker from [here](https://www.docker.com/get-started/).
+## Installation
 
-### 2. Install Package Manager
+1. **Clone repository**:
 
-Before installing the Supabase CLI, you need to have either Brew (for MacOS and Linux) or Scoop (for Windows) installed. These are package managers that Supabase CLI uses for distribution. (also NPM is available, but it seems bit buggy)
+   ```bash
+     git clone https://github.com/JumppanenTomi/coffee-pass
+   ```
 
-- For MacOS and Linux, use [Brew](https://brew.sh/).
-- For Windows, use [Scoop](https://scoop.sh/).
+   or if you are planning to use project in production you should fork it.
 
-### 3. Install Supabase CLI
+1. **Install Docker**: Download and install Docker from [here](https://www.docker.com/get-started/).
 
-#### Using Brew
+1. **Install Package Manager**:
 
-```bash
-brew install supabase/tap/supabase
-```
+   - For MacOS and Linux, use [Brew](https://brew.sh/).
+   - For Windows, use [Scoop](https://scoop.sh/).
 
-#### Using Scoop
+1. **Install Supabase CLI**:
 
-```bash
-scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
-scoop install supabase
-```
+   - **Using Brew**:
 
-#### Using NPM (not recommended)
+     ```bash
+     brew install supabase/tap/supabase
+     ```
 
-Install as dev dependency
+   - **Using Scoop**:
 
-```bash
-npm i supabase --save-dev
-```
+     ```bash
+     scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
+     scoop install supabase
+     ```
 
-or globaly
+1. **Login to Supabase CLI and Link Project with Remote (Optional)**:
 
-```bash
-npm i supabase -g
-```
+   - Sign in to Supabase CLI:
 
-### 4. Login to Supabase CLI and Link Project with Remote (Optional)
+     ```bash
+     supabase login
+     ```
 
-This step is only required if you are planning to upload changes to your remote database schema or to load remote changes to your local environment.
+   - Link your local project with the remote project:
 
-To begin, sign in to Supabase CLI using the following command and follow the instructions prompted:
+     ```bash
+     supabase link
+     ```
 
-```bash
-supabase login
-```
+## Database Setup
 
-Once logged in, you need to link your local project with the remote project. Execute the command below to initiate the linking process:
+1. **Start Supabase Stack**: Navigate to your project folder and start the Supabase stack:
 
-```bash
-supabase link
-```
+   ```bash
+   start supabase
+   ```
 
-This command will display a list of projects associated with your account. Use the arrow keys to select the correct project and press Enter. You will then be prompted to enter or copy-paste your database password.
+2. **Update Environment Variables**: Copy the `anon` and `service_role` keys from the startup prompt and paste them into your `.env.local` file.
 
-By linking your local project with the remote one, you establish a connection that allows you to push and pull changes between your local environment and the remote Supabase project.
+3. **Pull Latest Database Changes (Optional)**:
 
-### 5. Start Supabase Stack
+   ```bash
+   supabase db pull
+   ```
 
-Navigate to your project folder and start the Supabase stack using the following command:
+4. **Apply latest migration**:
 
-```bash
-start supabase
-```
+   ```bash
+    supabase migration up
+   ```
 
-The initial startup might take some time, but within a few minutes, you should see a prompt similar to this:
+## Running the Application
 
-```
-Started supabase local development setup.
+1. **Start the Application**:
 
-         API URL: http://127.0.0.1:54321
-     GraphQL URL: http://127.0.0.1:54321/graphql/v1
-          DB URL: postgresql://postgres:postgres@127.0.0.1:54322/postgres
-      Studio URL: http://127.0.0.1:54323
-    Inbucket URL: http://127.0.0.1:54324
-      JWT secret: XXXXX
-        anon key: XXXXX
-service_role key: XXXXX
-```
+   ```bash
+   npm run dev
+   ```
 
-Copy the `anon` and `service_role` key values and paste them into your `.env.local` file.
+2. **Access the Application**: Navigate to [http://localhost:3000](http://localhost:3000) to view the application.
 
-### 6. Pull Latest Database Changes
+3. **Grant Admin Access**: After registering in the application, add your user to the `user_roles` table as an owner or a barista. Access admin features at [http://localhost:3000/admin/](http://localhost:3000/admin/).
 
-To ensure that you are working with the latest version of the database (also in future if there are any changes in
-remote you should do this), use the following bash command:
+## Contributors
 
-```bash
-supabase db pull #optional, latest migrations should already be in git
-```
+- Tomi Jumppanen
+- Dat Pham
+- Tuomas Heikkilä
+- Anton Tugushi
 
-This command will fetch the latest database changes and create a new migration file in the `supabase\migrations` folder.
+## License
 
-Although the newest version of the database changes may not be immediately available in your local database, you can
-update your local database to the latest version using the following command:
-
-```bash
-supabase migration up
-```
-
-Executing this command in your bash terminal will instruct the Supabase stack to apply the newest migration file to your
-database, ensuring that your local database is up-to-date with the latest changes.
-
-### 7. Deploy Local Database Changes to Remote
-
-Once you've made changes to your local database, you can create a new migration file to capture these changes using the command below:
-
-```bash
-supabase db diff --use-migra name_of_file -f name_of_file
-```
-
-This command functions similarly to creating a new branch and committing changes in Git.
-
-After creating the migration file, you can push these changes to the remote database using the following command:
-
-```bash
-supabase db push
-```
-
-However, we have set up a GitHub action file, the deployment process to the remote database is automated. This action file triggers the deployment process automatically after Git branch is merged into the main branch.
-
----
-This manual was written using Supabase own instruction that can be found [here](https://supabase.com/docs/guides/cli/getting-started?platform=windowsp)
-
-## Start Application
-
-With the Supabase stack running locally, you're ready to start developing. Start your app with the following prompt:
-
-```bash
-npm run dev
-```
-
-Now, you can navigate to [http://localhost:3000](http://localhost:3000) to view your application. Please note that the local Supabase stack doesn't require normal SMTP configuration. Therefore, all emails, including authentication emails, can be found ONLY on the Inbucket site at [http://127.0.0.1:54324](http://127.0.0.1:54324).
+Source code is licensed under the [MIT License](https://opensource.org/licenses/MIT). However, the use of any Cafe AVA branding, such as logos, is prohibited.
