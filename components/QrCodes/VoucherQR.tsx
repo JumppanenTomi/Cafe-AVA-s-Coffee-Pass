@@ -13,7 +13,7 @@ const VoucherQR = ({
 }: {
   name: string;
   setShowQrCode: React.Dispatch<React.SetStateAction<boolean>>;
-  active: boolean;
+  active: boolean,
   voucherId: number;
   used: number;
   redeemMessage: string;
@@ -23,10 +23,11 @@ const VoucherQR = ({
 
   useEffect(() => {
     if (used !== currentUsed || active) {
-      console.log("Booooom");
       setFlip(true);
       setCurrentUsed(used);
-      setTimeout(() => setShowQrCode(false), 3000);
+      setTimeout(() => {
+        setShowQrCode(false)
+      }, 3000);
     }
   }, [used]);
 
@@ -61,7 +62,7 @@ const VoucherQR = ({
             </div>
             <div className="bg-white w-[300px] h-[300px] ">
               <div className="text-center pt-20">
-                <h2>{redeemMessage}</h2>
+                <h2>{redeemMessage ? redeemMessage : "Enjoy!"}</h2>
               </div>
             </div>
             <div className='flex items-center voucher-part'>

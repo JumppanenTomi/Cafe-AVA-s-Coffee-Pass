@@ -17,16 +17,19 @@ const VoucherListItem = ({ voucher }:
     const [showQrCode, setShowQrCode] = useState(false)
 
     const showQr = () => {
-        setShowQrCode(!showQrCode)
+        if (!active) {
+            setShowQrCode(!showQrCode)
+        }
     }
+
     return (
         <>
-            {!active && showQrCode && <VoucherQR name={voucher.voucher_type.name}
+            {showQrCode && <VoucherQR name={voucher.voucher_type.name}
                 setShowQrCode={setShowQrCode}
+                active={active}
                 voucherId={voucher.id}
                 used={used}
                 redeemMessage={voucher.voucher_type.redeem_message}
-
             />}
             <div onClick={() => showQr()} className={`w-full ${(active) && "opacity-50"}`}>
                 <div className={'white-container-no-p w-full flex-wrap mb- mb-4'}>
