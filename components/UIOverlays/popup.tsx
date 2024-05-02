@@ -1,3 +1,4 @@
+import { XMarkIcon } from "@heroicons/react/20/solid";
 import React, { useEffect } from "react";
 
 interface Props {
@@ -30,24 +31,11 @@ const Popup: React.FC<Props> = ({
       >
         <div
           className={
-            "white-container-no-p flex max-w-screen-md flex-col p-5 items-end"
+            "white-container-no-p flex max-w-screen-sm flex-col p-5 items-end m-5"
           }
         >
           <button onClick={onClose}>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 24 24'
-              strokeWidth={1.5}
-              stroke='currentColor'
-              className='w-10 h-10'
-            >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                d='m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z'
-              />
-            </svg>
+            <XMarkIcon className={"w-8 h-8"} />
           </button>
           <div className={"p-5"}>{children}</div>
         </div>
