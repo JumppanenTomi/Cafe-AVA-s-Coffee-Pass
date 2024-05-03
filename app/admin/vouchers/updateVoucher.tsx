@@ -8,7 +8,7 @@ import { Voucher, User, VoucherType } from "./interface";
 import { fetchUsers } from "@/utils/ServerActions/user";
 import {
   fetchVoucherTypes,
-  updateVoucher,
+  // updateVoucher,
 } from "@/utils/ServerActions/voucher";
 
 export default function UpdateVoucher({
@@ -52,7 +52,7 @@ export default function UpdateVoucher({
   }, [voucherTypeInput]);
 
   const handleUpdate = async (formData: FormData) => {
-    await updateVoucher(voucher?.voucher_log_id, formData);
+    // await updateVoucher(voucher?.voucher_log_id, formData);
 
     router.refresh();
     setModal(false);
@@ -74,9 +74,8 @@ export default function UpdateVoucher({
       </li>
 
       <div
-        className={`fixed inset-0 z-10 ${
-          modal ? "" : "hidden"
-        } bg-gray-900/50 dark:bg-gray-900/60`}
+        className={`fixed inset-0 z-10 ${modal ? "" : "hidden"
+          } bg-gray-900/50 dark:bg-gray-900/60`}
         id='sidebarBackdrop'
         onClick={handleChange}
       ></div>

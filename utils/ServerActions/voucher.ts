@@ -400,7 +400,7 @@ export const usePublicVoucher = async (voucherId: number, userId: string) => {
   }
 };
 
-export const usePrivateVoucher = async (voucherId: string) => {
+export const usePrivateVoucher = async (voucherId: number) => {
   const supabase = createClient();
   try {
     const { data, error } = await supabase
