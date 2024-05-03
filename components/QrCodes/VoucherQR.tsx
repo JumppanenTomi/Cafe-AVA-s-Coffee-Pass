@@ -9,13 +9,15 @@ const VoucherQR = ({
   active,
   voucherId,
   used,
-  redeemMessage
+  redeemMessage,
+  userId,
 }: {
   name: string;
   setShowQrCode: React.Dispatch<React.SetStateAction<boolean>>;
   active: boolean,
   voucherId: number;
   used: number;
+  userId: string
   redeemMessage: string;
 }) => {
   const [currentUsed, setCurrentUsed] = useState(used);
@@ -43,8 +45,8 @@ const VoucherQR = ({
             <QrCodeGen
               text={
                 process.env.NEXT_PUBLIC_VERCEL_URL +
-                "/client/vouchers/voucher/" +
-                voucherId
+                "/admin/redeemVoucher/" +
+                voucherId + "/" + userId
               }
               width={300}
             />
