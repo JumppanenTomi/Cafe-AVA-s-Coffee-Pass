@@ -119,7 +119,7 @@ export const updateVoucherType = async (id: number, formData: FormData) => {
       .update(rawFormData)
       .eq('id', id);
 
-    if (error) throw error;
+     if (error) throw error;
   } catch (error) {
     console.error('Error updating voucher type:', error);
     throw error;

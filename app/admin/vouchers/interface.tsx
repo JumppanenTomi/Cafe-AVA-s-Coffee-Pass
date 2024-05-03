@@ -13,6 +13,11 @@ export interface Voucher {
   };
 }
 
+export interface UpdatedVouchers {
+  id: string | number | null;
+  name: string | null;
+}
+
 export interface VoucherType {
   created_at: string;
   description: string | null;
@@ -26,3 +31,4 @@ export interface User {
   id: string;
   email: string;
 }
+

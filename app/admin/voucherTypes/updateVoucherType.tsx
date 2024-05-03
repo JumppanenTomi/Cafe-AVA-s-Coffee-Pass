@@ -41,9 +41,8 @@ export default function UpdateVoucherType({
       </li>
 
       <div
-        className={`fixed inset-0 z-10 ${
-          modal ? "" : "hidden"
-        } bg-gray-900/50 dark:bg-gray-900/60`}
+        className={`fixed inset-0 z-10 ${modal ? "" : "hidden"
+          } bg-gray-900/50 dark:bg-gray-900/60`}
         id="sidebarBackdrop"
         onClick={handleChange}
       ></div>

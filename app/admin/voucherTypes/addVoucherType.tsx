@@ -15,7 +15,6 @@ export default function AddVoucherType() {
 
   const handleSubmit = async (formData: FormData) => {
     await createVoucherType(formData);
-
     router.refresh();
     setModal(false);
   };
