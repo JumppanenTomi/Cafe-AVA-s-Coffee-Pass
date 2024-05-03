@@ -219,25 +219,25 @@ export const fetchVoucherTypes = async (query: string) => {
 };
 
 
-export const updateVoucher = async (id: number, formData: FormData) => {
-  try {
-    const supabase = createClient(true);
-    const rawFormData: TablesUpdate<'voucher_logs'> = {
-      user_id: formData.get('user_id') as string,
-      voucher_id: parseInt(formData.get('voucher_id') as string) as number,
-    };
+// export const updateVoucher = async (id: number, formData: FormData) => {
+//   try {
+//     const supabase = createClient(true);
+//     const rawFormData: TablesUpdate<'voucher_logs'> = {
+//       user_id: formData.get('user_id') as string,
+//       voucher_id: parseInt(formData.get('voucher_id') as string) as number,
+//     };
 
-    const { error } = await supabase
-      .from("voucher_logs")
-      .update(rawFormData)
-      .eq('voucher_log_id', id);
+//     const { error } = await supabase
+//       .from("voucher_logs")
+//       .update(rawFormData)
+//       .eq('voucher_log_id', id);
 
-    if (error) throw error;
-  } catch (error) {
-    console.error('Error updating voucher:', error);
-    return null;
-  }
-}
+//     if (error) throw error;
+//   } catch (error) {
+//     console.error('Error updating voucher:', error);
+//     return null;
+//   }
+// }
 
 /**
  * Updates a row in public_voucher_logs table
@@ -343,7 +343,7 @@ const getPublicVoucherUses = async (voucherId: number) => {
       throw new Error(error.message);
     }
     console.log('used', data[0].used_per_user);
-    return data[0].uses_per_voucher;
+    return data[0].used_per_user;
   } catch (error: any) {
     console.error(`Failed to fetch public vouchers uses: ${error.message}`);
 
@@ -400,7 +400,7 @@ export const usePublicVoucher = async (voucherId: number, userId: string) => {
   }
 };
 
-export const usePrivateVoucher = async (voucherId: number) => {
+export const usePrivateVoucher = async (voucherId: string) => {
   const supabase = createClient();
   try {
     const { data, error } = await supabase

@@ -70,62 +70,62 @@ export const deleteVoucherTypes = async (ids: number[]) => {
   }
 };
 
-/**
- * Creates a new voucher type in the database.
- * @param {FormData} formData - The form data for the new voucher type.
- * @returns {Promise} The created voucher type.
- */
-export const createVoucherType = async (formData: FormData) => {
-  try {
-    const supabase = createClient(true);
-    const rawFormData: TablesInsert<"vouchers">={
-      name: formData.get('name') as string,
-      description: formData.get('description') as string || null,
-      start_date: formData.get('start_date') as string,
-      end_date: formData.get('end_date') as string,
-      uses_per_user: parseInt(formData.get('uses_per_user') as string) || null,
-      stamps_required: parseInt(formData.get('stamps_required') as string),
-    };
+// /**
+//  * Creates a new voucher type in the database.
+//  * @param {FormData} formData - The form data for the new voucher type.
+//  * @returns {Promise} The created voucher type.
+//  */
+// export const createVoucherType = async (formData: FormData) => {
+//   try {
+//     const supabase = createClient(true);
+//     const rawFormData: TablesInsert<"vouchers">={
+//       name: formData.get('name') as string,
+//       description: formData.get('description') as string || null,
+//       start_date: formData.get('start_date') as string,
+//       end_date: formData.get('end_date') as string,
+//       uses_per_user: parseInt(formData.get('uses_per_user') as string) || null,
+//       stamps_required: parseInt(formData.get('stamps_required') as string),
+//     };
 
-    const { data, error } = await supabase
-      .from("vouchers")
-      .insert(rawFormData)
-      .select();
+//     const { data, error } = await supabase
+//       .from("vouchers")
+//       .insert(rawFormData)
+//       .select();
 
-    if (error) throw error;
-    return data;
-  } catch (error) {
-    console.error('Error creating voucher type:', error);
-    return null;
-  }
-}
+//     if (error) throw error;
+//     return data;
+//   } catch (error) {
+//     console.error('Error creating voucher type:', error);
+//     return null;
+//   }
+// }
 
-/**
- * Updates a voucher type in the database.
- * @param {number} id - The id of the voucher type to update.
- * @param {FormData} formData - The form data for the updated voucher type.
- * @returns {Promise} A promise that resolves when the update is complete.
- */
-export const updateVoucherType = async (id: number, formData: FormData) => {
-  try {
-    const supabase = createClient(true);
-    const rawFormData: TablesUpdate<"vouchers">={
-      name: formData.get('name') as string,
-      description: formData.get('description') as string || null,
-      start_date: formData.get('start_date') as string,
-      end_date: formData.get('end_date') as string,
-      uses_per_user: parseInt(formData.get('uses_per_user') as string) || null,
-      stamps_required: parseInt(formData.get('stamps_required') as string),
-    };
+// /**
+//  * Updates a voucher type in the database.
+//  * @param {number} id - The id of the voucher type to update.
+//  * @param {FormData} formData - The form data for the updated voucher type.
+//  * @returns {Promise} A promise that resolves when the update is complete.
+//  */
+// export const updateVoucherType = async (id: number, formData: FormData) => {
+//   try {
+//     const supabase = createClient(true);
+//     const rawFormData: TablesUpdate<"vouchers">={
+//       name: formData.get('name') as string,
+//       description: formData.get('description') as string || null,
+//       start_date: formData.get('start_date') as string,
+//       end_date: formData.get('end_date') as string,
+//       uses_per_user: parseInt(formData.get('uses_per_user') as string) || null,
+//       stamps_required: parseInt(formData.get('stamps_required') as string),
+//     };
 
-    const { error } = await supabase
-      .from("vouchers")
-      .update(rawFormData)
-      .eq('voucher_id', id);
+//     const { error } = await supabase
+//       .from("vouchers")
+//       .update(rawFormData)
+//       .eq('voucher_id', id);
 
-    if (error) throw error;
-  } catch (error) {
-    console.error('Error updating voucher type:', error);
-    throw error;
-  }
-}
+//     if (error) throw error;
+//   } catch (error) {
+//     console.error('Error updating voucher type:', error);
+//     throw error;
+//   }
+// }

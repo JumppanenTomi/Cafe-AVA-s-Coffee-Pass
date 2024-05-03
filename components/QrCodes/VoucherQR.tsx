@@ -17,7 +17,7 @@ const VoucherQR = ({
   active: boolean,
   voucherId: number;
   used: number;
-  userId: string
+  userId: string;
   redeemMessage: string;
 }) => {
   const [currentUsed, setCurrentUsed] = useState(used);

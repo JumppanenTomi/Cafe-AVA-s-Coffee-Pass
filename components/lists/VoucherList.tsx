@@ -37,12 +37,13 @@ const VoucherListItem = ({ voucher }:
 
 
     return (
-        <>
+        <div key={voucher.id}>
             {showQrCode && <VoucherQR name={voucher.voucher_type.name}
                 setShowQrCode={setShowQrCode}
                 active={active}
                 voucherId={voucher.id}
                 used={used}
+                userId={userId}
                 redeemMessage={voucher.voucher_type.redeem_message}
             />}
             <div onClick={() => showQr()} className={`w-full ${(active) && "opacity-50"}`}>
@@ -57,7 +58,7 @@ const VoucherListItem = ({ voucher }:
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 
@@ -172,9 +173,9 @@ const VoucherList = ({ initialVouchers }: {
     }, [userId]);
 
     return (
-        <div>
+        <>
             {vouchers && vouchers.length > 0 ? vouchers.map((voucher: any) => (
-                <div>
+                <div key={voucher.id}>
                     <VoucherListItem key={voucher.id} voucher={voucher} />
                     <Popup
                         visible={isPopupVisible}
@@ -207,7 +208,7 @@ const VoucherList = ({ initialVouchers }: {
             )) : (
                 <h1>No active vouchers.</h1>
             )}
-        </div >
+        </>
     );
 }
 
