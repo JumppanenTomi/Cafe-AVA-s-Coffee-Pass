@@ -6,7 +6,7 @@ import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
 import ToggleInput from "@/components/Inputs/ToggleInput";
 import { Stamp, User } from "./interface";
-import { fetchUsers } from "@/utils/ServerActions/user";
+import { fetchUsersV2 } from "@/utils/ServerActions/user";
 import { updateStamp } from "@/utils/ServerActions/stamp";
 
 export default function UpdateStamp({
@@ -18,21 +18,17 @@ export default function UpdateStamp({
 }) {
   const [modal, setModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
+  const [userInput, setUserInput] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     const getUsers = async () => {
-      const response = await fetchUsers(1);
-      setUsers(
-        response.map((user) => ({
-          id: user.id || "",
-          email: user.email || "",
-        }))
-      );
+      const response = await fetchUsersV2(userInput, "-id", 1);
+      setUsers(response || []);
     };
 
     getUsers();
-  }, []);
+  }, [userInput]);
 
   const handleUpdate = async (formData: FormData) => {
     await updateStamp(stamp?.stamp_log_id, formData);
@@ -104,6 +100,7 @@ export default function UpdateStamp({
                 inputLabel="User"
                 inputPlaceholder="Select a user"
                 defaultValue={stamp?.user_id}
+                onInputChange={(value) => setUserInput(value)}
                 options={users.map((user) => ({
                   id: user.id,
                   label: user.email,

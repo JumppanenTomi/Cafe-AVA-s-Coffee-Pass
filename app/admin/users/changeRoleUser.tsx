@@ -1,53 +1,23 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Form } from "@/components/Inputs/Form";
 import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
-import NumberInput from "@/components/Inputs/NumberInput";
-import DateInput from "@/components/Inputs/DateInput";
-import ToggleInput from "@/components/Inputs/ToggleInput";
-import { Voucher, User, VoucherType } from "./interface";
-import { fetchUsersV2 } from "@/utils/ServerActions/user";
-import {
-  fetchVoucherTypes,
-  updateVoucher,
-} from "@/utils/ServerActions/voucher";
+import { changeRole } from "@/utils/ServerActions/user";
 
 export default function UpdateVoucher({
-  voucher,
+  user,
   handleMenu,
 }: {
-  voucher: Voucher;
+  user: any;
   handleMenu: () => void;
 }) {
   const [modal, setModal] = useState(false);
-  const [users, setUsers] = useState<User[]>([]);
-  const [userInput, setUserInput] = useState("");
-  const [voucherTypes, setVoucherTypes] = useState<VoucherType[]>([]);
-  const [voucherTypeInput, setVoucherTypeInput] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    const getUsers = async () => {
-      const response = await fetchUsersV2(userInput, "-id", 1);
-      setUsers(response || []);
-    };
-
-    getUsers();
-  }, [userInput]);
-
-  useEffect(() => {
-    const getVoucherTypes = async () => {
-      const response = await fetchVoucherTypes(voucherTypeInput);
-      setVoucherTypes(response || []);
-    };
-
-    getVoucherTypes();
-  }, [voucherTypeInput]);
-
   const handleUpdate = async (formData: FormData) => {
-    await updateVoucher(voucher?.id, formData);
+    await changeRole(user?.id, formData);
 
     router.refresh();
     setModal(false);
@@ -64,7 +34,7 @@ export default function UpdateVoucher({
           onClick={handleChange}
           className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
         >
-          Edit Voucher
+          Change Role
         </a>
       </li>
 
@@ -86,7 +56,7 @@ export default function UpdateVoucher({
           <div className="relative p-4 bg-white rounded-lg shadow sm:p-5">
             <div className="flex items-center justify-between pb-4 mb-4 border-b rounded-t sm:mb-5">
               <h3 className="text-lg font-semibold text-gray-900">
-                Edit Voucher
+                Change Role
               </h3>
               <button
                 type="button"
@@ -112,58 +82,15 @@ export default function UpdateVoucher({
 
             <Form isError={false} error="">
               <AutoCompleteInput
-                inputName="user_id"
-                inputLabel="User"
-                inputPlaceholder="Select a user"
-                defaultValue={voucher?.user_id}
-                onInputChange={(value) => setUserInput(value)}
-                options={users.map((user) => ({
-                  id: user.id,
-                  label: user.email,
-                }))}
-              />
-
-              <AutoCompleteInput
-                inputName="voucher_type"
-                inputLabel="Voucher Type"
-                inputPlaceholder="Select a voucher type"
-                defaultValue={voucher?.voucher_type.id}
-                onInputChange={(value) => setVoucherTypeInput(value)}
-                options={voucherTypes.map((type) => ({
-                  id: type.id,
-                  label: type.name || "",
-                }))}
-              />
-
-              <div className="grid gap-4 sm:grid-cols-2">
-                <DateInput
-                  inputName="start"
-                  inputLabel="Start date"
-                  inputPlaceholder="Enter start date"
-                  isRequired={false}
-                  defaultValue={voucher?.start}
-                />
-
-                <DateInput
-                  inputName="end"
-                  inputLabel="End date"
-                  inputPlaceholder="Enter end date"
-                  isRequired={false}
-                  defaultValue={voucher?.end}
-                />
-              </div>
-
-              <NumberInput
-                inputName="used"
-                inputLabel="Used"
-                inputPlaceholder="Enter used"
-                defaultValue={voucher?.used}
-              />
-
-              <ToggleInput
-                inputName="active"
-                inputLabel="Is active"
-                defaultValue={voucher?.active}
+                inputName="role"
+                inputLabel="Role"
+                inputPlaceholder="Select a role"
+                defaultValue={user?.user_id}
+                options={[
+                  { id: "Owner", label: "Access to admin site" },
+                  { id: "Barista", label: "Access to admin site" },
+                  { id: "Client", label: "Access only to client site" },
+                ]}
               />
 
               <FormSubmitButton

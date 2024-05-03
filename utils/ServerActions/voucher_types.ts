@@ -16,7 +16,7 @@ export const fetchVoucherTypes = async (query: string, sort: string, currentPage
     let sortField = isAscending ? sort : sort.slice(1);
 
     const { data, error } = await supabase
-      .from("vouchers")
+      .from("voucher_type")
       .select()
       .ilike('name', `%${query}%`)
       .range((currentPage - 1) * 25, currentPage * 25 - 1)
@@ -39,7 +39,7 @@ export const fetchVoucherTypesCount = async (query: string) => {
   try {
     const supabase = createClient(true);
     const { count, error } = await supabase
-      .from("vouchers")
+      .from("voucher_type")
       .select("*", { count: "exact", head: true });
 
     if (error) throw error;
@@ -59,9 +59,9 @@ export const deleteVoucherTypes = async (ids: number[]) => {
   try {
     const supabase = createClient(true);
     const { error } = await supabase
-      .from("vouchers")
+      .from("voucher_type")
       .delete()
-      .in("voucher_id", ids);
+      .in("id", ids);
 
     if (error) throw error;
   } catch (error) {
@@ -78,17 +78,15 @@ export const deleteVoucherTypes = async (ids: number[]) => {
 export const createVoucherType = async (formData: FormData) => {
   try {
     const supabase = createClient(true);
-    const rawFormData: TablesInsert<"vouchers">={
+    const rawFormData = {
       name: formData.get('name') as string,
       description: formData.get('description') as string || null,
-      start_date: formData.get('start_date') as string,
-      end_date: formData.get('end_date') as string,
-      uses_per_user: parseInt(formData.get('uses_per_user') as string) || null,
-      stamps_required: parseInt(formData.get('stamps_required') as string),
+      redeem_message: formData.get('redeem_message') as string,
+      uses_per_voucher: parseInt(formData.get('uses_per_voucher') as string),
     };
 
     const { data, error } = await supabase
-      .from("vouchers")
+      .from("voucher_type")
       .insert(rawFormData)
       .select();
 
@@ -109,19 +107,17 @@ export const createVoucherType = async (formData: FormData) => {
 export const updateVoucherType = async (id: number, formData: FormData) => {
   try {
     const supabase = createClient(true);
-    const rawFormData: TablesUpdate<"vouchers">={
+    const rawFormData = {
       name: formData.get('name') as string,
       description: formData.get('description') as string || null,
-      start_date: formData.get('start_date') as string,
-      end_date: formData.get('end_date') as string,
-      uses_per_user: parseInt(formData.get('uses_per_user') as string) || null,
-      stamps_required: parseInt(formData.get('stamps_required') as string),
+      redeem_message: formData.get('redeem_message') as string,
+      uses_per_voucher: parseInt(formData.get('uses_per_voucher') as string),
     };
 
     const { error } = await supabase
-      .from("vouchers")
+      .from("voucher_type")
       .update(rawFormData)
-      .eq('voucher_id', id);
+      .eq('id', id);
 
     if (error) throw error;
   } catch (error) {

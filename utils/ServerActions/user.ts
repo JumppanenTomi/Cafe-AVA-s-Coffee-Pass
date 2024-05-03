@@ -36,7 +36,7 @@ const sqlQuery = async (query: string) => {
   }
 };
 
-export const fetchUsers2 = async (
+export const fetchUsersV2 = async (
   query: string,
   sort: string,
   currentPage: number
@@ -45,15 +45,39 @@ export const fetchUsers2 = async (
   let sortField = isAscending ? sort : sort.slice(1);
   if (sortField === "role") sortField = "roles.role";
 
-  return await sqlQuery(
-    `
-    SELECT users.*, roles.role FROM "auth"."users" users
-    LEFT JOIN "public"."user_roles" roles ON users.id = roles.user_id
-    WHERE users.email ILIKE '%${query}%' 
-    ORDER BY ${sortField} ${isAscending ? "ASC" : "DESC"} LIMIT 25 OFFSET ${currentPage * 25 - 25}
-    `
-  );
+  try {
+    return await sqlQuery(
+      `
+      SELECT users.*, roles.role FROM "auth"."users" users
+      LEFT JOIN "public"."user_roles" roles ON users.id = roles.user_id
+      WHERE users.email ILIKE '%${query}%' 
+      ORDER BY ${sortField} ${isAscending ? "ASC" : "DESC"} LIMIT 25 OFFSET ${currentPage * 25 - 25}
+      `
+    );
+  } catch (error: any) {
+    console.error(`Error fetching users: ${error.message}`);
+    return [];
+  }
+  
 };
+
+export const changeRole = async (id: string, formData: FormData) => {
+  try {
+    const supabase = createClient(true);
+    const role = (formData.get('role') as string).toLowerCase();
+
+    const res = await sqlQuery(
+      `
+      UPDATE user_roles
+      SET role = '${role}'
+      WHERE user_id::text = '${id}';
+      `
+    );
+  } catch (error) {
+    console.error('Error changing role:', error);
+    throw error;
+  }
+}
 
 export const fetchUsersCount = async (query: string) => {
   const res = await sqlQuery(

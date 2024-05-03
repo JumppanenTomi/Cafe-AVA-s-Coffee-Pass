@@ -30,14 +30,12 @@ export interface HeadCell {
 export default function StampsClient({
   stamps,
   count,
-  users,
   query,
   sort,
   currentPage,
 }: {
   stamps: Stamp[];
   count: number;
-  users: any[];
   query: string;
   sort: string;
   currentPage: number;
@@ -51,16 +49,13 @@ export default function StampsClient({
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div className="p-4 flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white">
           <div></div>
-          <Search placeholder="Search for stamps" />
         </div>
         <Suspense
           key={query + sort + currentPage}
           fallback={<div>Loading...</div>}
         >
           <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-            <TableHead
-              headCells={headCells}
-            />
+            <TableHead headCells={headCells} />
             <tbody>
               {stamps.map((stamp, index) => (
                 <tr key={index} className="bg-white border-b hover:bg-gray-50">

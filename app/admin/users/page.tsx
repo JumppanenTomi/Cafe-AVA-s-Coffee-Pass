@@ -1,4 +1,4 @@
-import { fetchUsers2, fetchUsersCount } from "@/utils/ServerActions/user";
+import { fetchUsersV2, fetchUsersCount } from "@/utils/ServerActions/user";
 import UsersClient from "./client";
 
 export default async function UsersPage({
@@ -14,7 +14,7 @@ export default async function UsersPage({
   const currentPage = Number(page) || 1;
 
   const [users, count] = await Promise.all([
-    fetchUsers2(query, sort, currentPage),
+    fetchUsersV2(query, sort, currentPage),
     fetchUsersCount(query),
   ]);
 
