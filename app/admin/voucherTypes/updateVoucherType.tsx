@@ -7,7 +7,7 @@ import { VoucherType } from "./interface";
 import TextInput from "@/components/Inputs/TextInput";
 import NumberInput from "@/components/Inputs/NumberInput";
 import DateInput from "@/components/Inputs/DateInput";
-import { updateVoucherType } from "@/utils/ServerActions/voucher_types";
+// import { updateVoucherType } from "@/utils/ServerActions/voucher_types";
 
 export default function UpdateVoucherType({
   voucherType,
@@ -20,7 +20,7 @@ export default function UpdateVoucherType({
   const router = useRouter();
 
   const handleUpdate = async (formData: FormData) => {
-    await updateVoucherType(voucherType?.voucher_id, formData);
+    // await updateVoucherType(voucherType?.voucher_id, formData);
 
     router.refresh();
     setModal(false);
@@ -42,9 +42,8 @@ export default function UpdateVoucherType({
       </li>
 
       <div
-        className={`fixed inset-0 z-10 ${
-          modal ? "" : "hidden"
-        } bg-gray-900/50 dark:bg-gray-900/60`}
+        className={`fixed inset-0 z-10 ${modal ? "" : "hidden"
+          } bg-gray-900/50 dark:bg-gray-900/60`}
         id="sidebarBackdrop"
         onClick={handleChange}
       ></div>

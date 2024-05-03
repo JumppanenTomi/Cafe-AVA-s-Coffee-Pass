@@ -6,7 +6,7 @@ import TextInput from "@/components/Inputs/TextInput";
 import NumberInput from "@/components/Inputs/NumberInput";
 import DateInput from "@/components/Inputs/DateInput";
 import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
-import { createVoucherType } from "@/utils/ServerActions/voucher_types";
+// import { createVoucherType } from "@/utils/ServerActions/voucher_types";
 import AdminAddButton from "@/components/Inputs/buttons/AdminAddButton";
 import AdminAddModalButton from "@/components/Inputs/buttons/AdminAddModalButton";
 
@@ -15,7 +15,7 @@ export default function AddVoucherType() {
   const router = useRouter();
 
   const handleSubmit = async (formData: FormData) => {
-    await createVoucherType(formData);
+    // await createVoucherType(formData);
 
     router.refresh();
     setModal(false);
@@ -39,7 +39,7 @@ export default function AddVoucherType() {
       >
         <div className="relative w-full h-full max-w-2xl p-4 md:h-auto">
           <div className="relative p-4 bg-white rounded-lg shadow sm:p-5">
-            <AdminAddModalButton 
+            <AdminAddModalButton
               title="Add voucher type"
               handleChange={() => handleChange()}
             />
