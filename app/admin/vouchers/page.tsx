@@ -11,7 +11,7 @@ export default async function VouchersPage({
     page?: string;
   };
 }) {
-  const { query = '', sort = '-voucher_log_id', page } = searchParams;
+  const { query = '', sort = '-id', page } = searchParams;
   const currentPage = Number(page) || 1;
 
   //TODO: Add better error handling

@@ -1,9 +1,13 @@
 export interface Voucher {
-  voucher_log_id: number;
-  timestamp: string;
+  id: number;
+  created_at: string;
   user_id: string;
-  voucher_id: string;
-  vouchers: {
+  used: number;
+  active: boolean;
+  start: string;
+  end: string;
+  voucher_type: {
+    id: number;
     name: string;
     description: string;
   };
@@ -15,9 +19,12 @@ export interface UpdatedVouchers {
 }
 
 export interface VoucherType {
-  voucher_id: number;
-  name: string;
-  description: string;
+  created_at: string;
+  description: string | null;
+  id: number;
+  name: string | null;
+  redeem_message: string | null;
+  uses_per_voucher: number | null;
 }
 
 export interface User {

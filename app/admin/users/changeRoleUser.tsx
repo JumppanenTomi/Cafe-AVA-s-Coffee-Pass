@@ -3,23 +3,21 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Form } from "@/components/Inputs/Form";
 import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
-import { VoucherType } from "./interface";
-import TextInput from "@/components/Inputs/TextInput";
-import NumberInput from "@/components/Inputs/NumberInput";
-import { updateVoucherType } from "@/utils/ServerActions/voucher_types";
+import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
+import { changeRole } from "@/utils/ServerActions/user";
 
-export default function UpdateVoucherType({
-  voucherType,
+export default function UpdateVoucher({
+  user,
   handleMenu,
 }: {
-  voucherType: VoucherType;
+  user: any;
   handleMenu: () => void;
 }) {
   const [modal, setModal] = useState(false);
   const router = useRouter();
 
   const handleUpdate = async (formData: FormData) => {
-    await updateVoucherType(voucherType?.id, formData);
+    await changeRole(user?.id, formData);
 
     router.refresh();
     setModal(false);
@@ -36,13 +34,14 @@ export default function UpdateVoucherType({
           onClick={handleChange}
           className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
         >
-          Edit
+          Change Role
         </a>
       </li>
 
       <div
-        className={`fixed inset-0 z-10 ${modal ? "" : "hidden"
-          } bg-gray-900/50 dark:bg-gray-900/60`}
+        className={`fixed inset-0 z-10 ${
+          modal ? "" : "hidden"
+        } bg-gray-900/50 dark:bg-gray-900/60`}
         id="sidebarBackdrop"
         onClick={handleChange}
       ></div>
@@ -57,7 +56,7 @@ export default function UpdateVoucherType({
           <div className="relative p-4 bg-white rounded-lg shadow sm:p-5">
             <div className="flex items-center justify-between pb-4 mb-4 border-b rounded-t sm:mb-5">
               <h3 className="text-lg font-semibold text-gray-900">
-                Edit Voucher Type
+                Change Role
               </h3>
               <button
                 type="button"
@@ -82,34 +81,16 @@ export default function UpdateVoucherType({
             </div>
 
             <Form isError={false} error="">
-              <TextInput
-                inputName="name"
-                inputLabel="Name"
-                inputPlaceholder="Enter voucher type name"
-                defaultValue={voucherType?.name}
-              />
-
-              <TextInput
-                inputName="description"
-                inputLabel="Description"
-                inputPlaceholder="Enter voucher type description"
-                defaultValue={voucherType?.description || ""}
-              />
-
-              <TextInput
-                inputName="redeem_message"
-                inputLabel="Redeem message"
-                inputPlaceholder="Enter redeem message"
-                isRequired={false}
-                defaultValue={voucherType?.redeem_message || ""}
-              />
-
-              <NumberInput
-                inputName="uses_per_voucher"
-                inputLabel="Uses per voucher"
-                inputPlaceholder="Enter uses per voucher"
-                isRequired={false}
-                defaultValue={voucherType?.uses_per_voucher || 0}
+              <AutoCompleteInput
+                inputName="role"
+                inputLabel="Role"
+                inputPlaceholder="Select a role"
+                defaultValue={user?.user_id}
+                options={[
+                  { id: "Owner", label: "Access to admin site" },
+                  { id: "Barista", label: "Access to admin site" },
+                  { id: "Client", label: "Access only to client site" },
+                ]}
               />
 
               <FormSubmitButton

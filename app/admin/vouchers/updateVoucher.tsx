@@ -4,12 +4,15 @@ import { useRouter } from "next/navigation";
 import { Form } from "@/components/Inputs/Form";
 import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
+import NumberInput from "@/components/Inputs/NumberInput";
+import DateInput from "@/components/Inputs/DateInput";
+import ToggleInput from "@/components/Inputs/ToggleInput";
 import { Voucher, User, VoucherType } from "./interface";
-import { fetchUsers } from "@/utils/ServerActions/user";
 import {
   fetchVoucherTypes,
-  // updateVoucher,
+  updateVoucher,
 } from "@/utils/ServerActions/voucher";
+import { findUser } from "@/utils/ServerActions/user";
 
 export default function UpdateVoucher({
   voucher,
@@ -20,39 +23,34 @@ export default function UpdateVoucher({
 }) {
   const [modal, setModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
+  const [userInput, setUserInput] = useState("");
   const [voucherTypes, setVoucherTypes] = useState<VoucherType[]>([]);
   const [voucherTypeInput, setVoucherTypeInput] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     const getUsers = async () => {
-      const response = await fetchUsers(1);
+      const response = await findUser("-id", userInput);
       setUsers(
-        response.map((user) => ({
-          id: user.id || "",
-          email: user.email || "",
-        }))
+        response.users?.map((user) => ({ ...user, email: user.email || "" })) ||
+          []
       );
     };
 
     getUsers();
-  }, []);
+  }, [userInput]);
 
   useEffect(() => {
     const getVoucherTypes = async () => {
       const response = await fetchVoucherTypes(voucherTypeInput);
-      setVoucherTypes(response?.map((type) => ({
-        voucher_id: Number(type.voucher_id) || 0,
-        name: type.name || "",
-        description: type.description || "",
-      })) ?? []);
+      setVoucherTypes(response || []);
     };
 
     getVoucherTypes();
   }, [voucherTypeInput]);
 
   const handleUpdate = async (formData: FormData) => {
-    // await updateVoucher(voucher?.voucher_log_id, formData);
+    await updateVoucher(voucher?.id, formData);
 
     router.refresh();
     setModal(false);
@@ -74,8 +72,9 @@ export default function UpdateVoucher({
       </li>
 
       <div
-        className={`fixed inset-0 z-10 ${modal ? "" : "hidden"
-          } bg-gray-900/50 dark:bg-gray-900/60`}
+        className={`fixed inset-0 z-10 ${
+          modal ? "" : "hidden"
+        } bg-gray-900/50 dark:bg-gray-900/60`}
         id='sidebarBackdrop'
         onClick={handleChange}
       ></div>
@@ -120,6 +119,7 @@ export default function UpdateVoucher({
                 inputLabel='User'
                 inputPlaceholder='Select a user'
                 defaultValue={voucher?.user_id}
+                onInputChange={(value) => setUserInput(value)}
                 options={users.map((user) => ({
                   id: user.id,
                   label: user.email,
@@ -127,15 +127,46 @@ export default function UpdateVoucher({
               />
 
               <AutoCompleteInput
-                inputName='voucher_id'
+                inputName='voucher_type'
                 inputLabel='Voucher Type'
                 inputPlaceholder='Select a voucher type'
-                defaultValue={voucher?.voucher_id}
+                defaultValue={voucher?.voucher_type.id}
                 onInputChange={(value) => setVoucherTypeInput(value)}
                 options={voucherTypes.map((type) => ({
-                  id: type.voucher_id,
-                  label: type.name,
+                  id: type.id,
+                  label: type.name || "",
                 }))}
+              />
+
+              <div className='grid gap-4 sm:grid-cols-2'>
+                <DateInput
+                  inputName='start'
+                  inputLabel='Start date'
+                  inputPlaceholder='Enter start date'
+                  isRequired={false}
+                  defaultValue={voucher?.start}
+                />
+
+                <DateInput
+                  inputName='end'
+                  inputLabel='End date'
+                  inputPlaceholder='Enter end date'
+                  isRequired={false}
+                  defaultValue={voucher?.end}
+                />
+              </div>
+
+              <NumberInput
+                inputName='used'
+                inputLabel='Used'
+                inputPlaceholder='Enter used'
+                defaultValue={voucher?.used}
+              />
+
+              <ToggleInput
+                inputName='active'
+                inputLabel='Is active'
+                defaultValue={voucher?.active}
               />
 
               <FormSubmitButton

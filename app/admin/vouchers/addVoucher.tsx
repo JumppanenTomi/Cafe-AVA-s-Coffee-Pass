@@ -1,24 +1,27 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
 import { Form } from "@/components/Inputs/Form";
 import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import { User, VoucherType } from "./interface";
-import { fetchUsers } from "@/utils/ServerActions/user";
 import {
   createVouchers,
   fetchVoucherTypes,
 } from "@/utils/ServerActions/voucher";
 import { fetchUserActiveStamps, useMultipleStamps } from "@/utils/ServerActions/stamp";
+import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
+import { findUser } from "@/utils/ServerActions/user";
 import AdminAddModalButton from "@/components/Inputs/buttons/AdminAddModalButton";
 import AdminAddButton from "@/components/Inputs/buttons/AdminAddButton";
-import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 import ToggleInput from "@/components/Inputs/ToggleInput";
+import DateInput from "@/components/Inputs/DateInput";
+import NumberInput from "@/components/Inputs/NumberInput";
+import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
 
 export default function AddVoucher(props?: { user_id?: string }) {
   const [modal, setModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
+  const [userInput, setUserInput] = useState("");
   const [voucherTypes, setVoucherTypes] = useState<VoucherType[]>([]);
   const [voucherTypeInput, setVoucherTypeInput] = useState("");
   const [stampsRequired, setStampsRequired] = useState<undefined | number>(0);
@@ -26,12 +29,10 @@ export default function AddVoucher(props?: { user_id?: string }) {
 
   useEffect(() => {
     const getUsers = async () => {
-      const response = await fetchUsers(1);
+      const response = await findUser("-id", userInput);
       setUsers(
-        response.map((user) => ({
-          id: user.id || "",
-          email: user.email || "",
-        }))
+        response.users?.map((user) => ({ ...user, email: user.email || "" })) ||
+          []
       );
     };
 
@@ -44,36 +45,32 @@ export default function AddVoucher(props?: { user_id?: string }) {
 
     getUsers();
     getStampsRequired();
-  }, []);
+  }, [userInput]);
 
   useEffect(() => {
     const getVoucherTypes = async () => {
       const response = await fetchVoucherTypes(voucherTypeInput);
-      setVoucherTypes(
-        response?.map((type) => ({
-          voucher_id: Number(type.voucher_id) || 0,
-          name: type.name || "",
-          description: type.description || "",
-        })) ?? []
-      );
+      setVoucherTypes(response || []);
     };
 
     getVoucherTypes();
   }, [voucherTypeInput]);
 
   const handleSubmit = async (formData: FormData) => {
-    await createVouchers(formData);
     const response = await fetchUserActiveStamps(formData.get("user_id") as string)
     const freeVoucher = formData.get("free_voucher")
 
     if (!freeVoucher) {
       if (stampsRequired && response && response >= stampsRequired) {
+        await createVouchers(formData);
         useMultipleStamps(undefined, formData.get("user_id") as string, stampsRequired)
         console.log("stamps consumed")
       } else {
         console.log("User has less stamps than required amount")
+        alert(`User has less than ${stampsRequired} stamps, if you wanted to give a free voucher toggle "Give voucher without using stamps" on.`)
       }
     } else {
+      await createVouchers(formData);
       alert("Free voucher has been added to the user")
     }
 
@@ -110,6 +107,7 @@ export default function AddVoucher(props?: { user_id?: string }) {
                 inputLabel='User'
                 inputPlaceholder='Select a user'
                 defaultValue={props?.user_id || undefined}
+                onInputChange={(value) => setUserInput(value)}
                 options={users.map((user) => ({
                   id: user.id,
                   label: user.email,
@@ -117,20 +115,44 @@ export default function AddVoucher(props?: { user_id?: string }) {
               />
 
               <AutoCompleteInput
-                inputName='voucher_id'
+                inputName='voucher_type'
                 inputLabel='Voucher Type'
                 inputPlaceholder='Select a voucher type'
                 onInputChange={(value) => setVoucherTypeInput(value)}
                 options={voucherTypes.map((type) => ({
-                  id: type.voucher_id,
-                  label: type.name,
+                  id: type.id,
+                  label: type.name || "",
                 }))}
               />
+
+              <div className='grid gap-4 sm:grid-cols-2'>
+                <DateInput
+                  inputName='start'
+                  inputLabel='Start date'
+                  inputPlaceholder='Enter start date'
+                />
+
+                <DateInput
+                  inputName='end'
+                  inputLabel='End date'
+                  inputPlaceholder='Enter end date'
+                />
+              </div>
+
+              <NumberInput
+                inputName='used'
+                inputLabel='Used'
+                inputPlaceholder='Enter used'
+              />
+
+              <ToggleInput inputName='active' inputLabel='Is active' />
+
               <ToggleInput
                 inputName="free_voucher"
                 inputLabel="Give voucher without using stamps"
                 defaultValue={false}
               />
+
               <FormSubmitButton
                 formAction={handleSubmit}
                 pendingText='Adding...'

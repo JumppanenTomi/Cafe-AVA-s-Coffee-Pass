@@ -1,7 +1,10 @@
 import { authenticateWithGoodle } from "@/utils/ServerActions/authentication";
 import CheckboxInput from "../CheckboxInput";
+import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 
-export default function SocialLogin() {
+export default async function SocialLogin() {
+  const termsOfUseUrl = await fetchSiteSetting("termsOfUseUrl");
+  const privacyPolicyUrl = await fetchSiteSetting("privacyPolicyUrl");
   return (
     <div className={"w-full md:w-4/6"}>
       <form className={"flex flex-col gap-5"}>
@@ -15,14 +18,14 @@ export default function SocialLogin() {
           <p>
             * I agree{" "}
             <a
-              href={process.env.TERMS_AND_CONDITIONS_URL}
+              href={termsOfUseUrl?.value || "#"}
               className={"underline font-bold"}
             >
               terms and conditions
             </a>{" "}
             and{" "}
             <a
-              href={process.env.PRIVACY_POLICY_URL}
+              href={privacyPolicyUrl?.value || "#"}
               className={"underline font-bold"}
             >
               privacy policy

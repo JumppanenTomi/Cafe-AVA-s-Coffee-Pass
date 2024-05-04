@@ -10,11 +10,11 @@ export default async function VoucherTypesPage({
     page?: string;
   };
 }) {
-  const { query = "", sort = "-voucher_id", page } = searchParams;
+  const { query = "", sort = "-id", page } = searchParams;
   const currentPage = Number(page) || 1;
 
   const [voucherTypes, count] = await Promise.all([
-    fetchVoucherTypes(query, sort, currentPage),
+    fetchVoucherTypes(query, sort, currentPage) as any,
     fetchVoucherTypesCount(query),
   ]);
   
