@@ -10,14 +10,18 @@ import {
   createVouchers,
   fetchVoucherTypes,
 } from "@/utils/ServerActions/voucher";
+import { fetchUserActiveStamps, useMultipleStamps } from "@/utils/ServerActions/stamp";
 import AdminAddModalButton from "@/components/Inputs/buttons/AdminAddModalButton";
 import AdminAddButton from "@/components/Inputs/buttons/AdminAddButton";
+import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
+import ToggleInput from "@/components/Inputs/ToggleInput";
 
 export default function AddVoucher(props?: { user_id?: string }) {
   const [modal, setModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const [voucherTypes, setVoucherTypes] = useState<VoucherType[]>([]);
   const [voucherTypeInput, setVoucherTypeInput] = useState("");
+  const [stampsRequired, setStampsRequired] = useState<undefined | number>(0);
   const router = useRouter();
 
   useEffect(() => {
@@ -31,7 +35,15 @@ export default function AddVoucher(props?: { user_id?: string }) {
       );
     };
 
+    const getStampsRequired = async () => {
+      const result = await fetchSiteSetting("stampsRequired");
+      if (result?.value) {
+        setStampsRequired(parseInt(result.value));
+      }
+    };
+
     getUsers();
+    getStampsRequired();
   }, []);
 
   useEffect(() => {
@@ -51,6 +63,19 @@ export default function AddVoucher(props?: { user_id?: string }) {
 
   const handleSubmit = async (formData: FormData) => {
     await createVouchers(formData);
+    const response = await fetchUserActiveStamps(formData.get("user_id") as string)
+    const freeVoucher = formData.get("free_voucher")
+
+    if (!freeVoucher) {
+      if (stampsRequired && response && response >= stampsRequired) {
+        useMultipleStamps(undefined, formData.get("user_id") as string, stampsRequired)
+        console.log("stamps consumed")
+      } else {
+        console.log("User has less stamps than required amount")
+      }
+    } else {
+      alert("Free voucher has been added to the user")
+    }
 
     router.refresh();
     setModal(false);
@@ -100,6 +125,11 @@ export default function AddVoucher(props?: { user_id?: string }) {
                   id: type.voucher_id,
                   label: type.name,
                 }))}
+              />
+              <ToggleInput
+                inputName="free_voucher"
+                inputLabel="Give voucher without using stamps"
+                defaultValue={false}
               />
               <FormSubmitButton
                 formAction={handleSubmit}
