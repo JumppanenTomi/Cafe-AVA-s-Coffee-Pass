@@ -33,34 +33,33 @@ export default function UsersClient({
   currentPage: number;
 }) {
   return (
-    <div className="flex-1 w-full flex flex-col gap-8">
-      <div className="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between">
-        <h3 className="text-3xl">Users</h3>
+    <div className='flex flex-col flex-1 w-full gap-8'>
+      <div className='flex flex-wrap items-center justify-between space-y-4 flex-column sm:flex-row sm:space-y-0'>
+        <h3 className='text-3xl'>Users</h3>
       </div>
-      <div className="relative bg-white overflow-x-auto shadow-md sm:rounded-lg">
-        <div className="p-4 flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white">
+      <div className='relative overflow-x-auto bg-white shadow-md sm:rounded-lg'>
+        <div className='flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 bg-white flex-column md:flex-row md:space-y-0'>
           <div></div>
-          <Search placeholder="Search for users" />
+          <Search placeholder='Search for users' />
         </div>
         <Suspense
           key={query + sort + currentPage}
           fallback={<div>Loading...</div>}
         >
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+          <table className='w-full text-sm text-left text-gray-500 rtl:text-right'>
             <TableHead headCells={headCells} />
             <tbody>
               {users.map((user, index) => (
-                <tr key={index} className="bg-white border-b hover:bg-gray-50">
+                <tr key={index} className='bg-white border-b hover:bg-gray-50'>
                   <th
-                    scope="row"
-                    className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                    scope='row'
+                    className='flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white'
                   >
                     <div>
-                      <div className="text-base font-semibold">
-                        {user.raw_user_meta_data.name ||
-                          user.email.split("@")[0]}
+                      <div className='text-base font-semibold'>
+                        {user.name || user.email.split("@")[0]}
                       </div>
-                      <div className="font-normal text-gray-500">
+                      <div className='font-normal text-gray-500'>
                         {user.email}
                       </div>
                     </div>
@@ -70,7 +69,7 @@ export default function UsersClient({
                     return (
                       <td
                         key={headCell.id}
-                        className="px-6 py-4"
+                        className='px-6 py-4'
                         suppressHydrationWarning
                       >
                         {handleShowLabel(user, headCell)}
