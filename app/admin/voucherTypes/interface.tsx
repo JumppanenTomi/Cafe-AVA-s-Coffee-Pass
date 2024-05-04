@@ -1,9 +1,7 @@
 export interface VoucherType {
-  voucher_id: number;
+  id: number;
   name: string;
   description: string | null;
-  start_date: string;
-  end_date: string;
-  uses_per_user: number | null;
-  stamps_required: number;
+  redeem_message: string | null;
+  uses_per_voucher: number | null;
 }

@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import Search from "@/components/Table/Search";
 import TableHead from "@/components/Table/TableHead";
 import TablePagination from "@/components/Table/TablePagination";
-
+import MenuUser from "./menuUser";
 const _ = require("lodash");
 
 const handleShowLabel = (row: any, headCell: HeadCell) => {
@@ -59,7 +59,7 @@ export default function UsersClient({
                       <div className='text-base font-semibold'>
                         {user.name || user.email.split("@")[0]}
                       </div>
-                      <div className='font-normal text-gray-500'>
+                      <div className="font-normal text-gray-500 lowercase">
                         {user.email}
                       </div>
                     </div>
@@ -76,6 +76,9 @@ export default function UsersClient({
                       </td>
                     );
                   })}
+                  <td className="px-6 py-4 text-right">
+                    <MenuUser user={user} />
+                  </td>
                 </tr>
               ))}
             </tbody>

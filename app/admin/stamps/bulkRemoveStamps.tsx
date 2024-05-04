@@ -5,7 +5,7 @@ import NumberInput from "@/components/Inputs/NumberInput";
 import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
 import { Form } from "@/components/Inputs/Form";
 import { User } from "./interface";
-import { fetchUsers } from "@/utils/ServerActions/user";
+import { fetchUsersV2 } from "@/utils/ServerActions/user";
 import {
   getRequiredStamps,
   useMultipleStamps,
@@ -18,22 +18,18 @@ export default function BulkRemoveStamps(props?: {
 }) {
   const [modal, setModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
+  const [userInput, setUserInput] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     const getUsers = async () => {
-      const response = await fetchUsers(1);
-      setUsers(
-        response.map((user) => ({
-          id: user.id || "",
-          email: user.email || "",
-        }))
-      );
+      const response = await fetchUsersV2(userInput, "-id", 1);
+      setUsers(response || []);
     };
 
     getUsers();
-    getRequiredStamps;
-  }, []);
+    getRequiredStamps
+  }, [userInput]);
 
   const handleSubmit = async (formData: FormData) => {
     await useMultipleStamps(formData).then(() => {
@@ -98,6 +94,7 @@ export default function BulkRemoveStamps(props?: {
                 inputLabel='User'
                 inputPlaceholder='Select a user'
                 defaultValue={props?.user_id ? props.user_id : undefined}
+                onInputChange={(value) => setUserInput(value)}
                 options={users.map((user) => ({
                   id: user.id,
                   label: user.email,

@@ -5,7 +5,7 @@ import TableHead from "@/components/Table/TableHead";
 import TablePagination from "@/components/Table/TablePagination";
 import AddVoucher from "./addVoucher";
 import MenuVoucher from "./menuVoucher";
-import { Voucher } from "@/types/Types";
+import { Voucher } from "./interface";
 
 export interface HeadCell {
   id: string;
@@ -93,23 +93,43 @@ export default function VouchersClient({
 
 const headCells: readonly HeadCell[] = [
   {
-    id: "voucher_log_id",
+    id: "id",
     type: "number",
     label: "Voucher Id",
   },
   {
-    id: "vouchers.name",
+    id: "voucher_type.name",
     type: "string",
     label: "name",
-  },
-  {
-    id: "timestamp",
-    type: "datetime",
-    label: "Timestamp",
   },
   {
     id: "user_id",
     type: "string",
     label: "User Id",
+  },
+  {
+    id: "created_at",
+    type: "datetime",
+    label: "Created",
+  },
+  {
+    id: "used",
+    type: "number",
+    label: "Is Used",
+  },
+  {
+    id: "active",
+    type: "boolean",
+    label: "Active",
+  },
+  {
+    id: "start",
+    type: "datetime",
+    label: "Start",
+  },
+  {
+    id: "end",
+    type: "datetime",
+    label: "End",
   },
 ];

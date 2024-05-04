@@ -3,6 +3,29 @@ import { redirect } from "next/dist/client/components/navigation";
 import { createClient } from "../supabase/server";
 import { cache } from "react";
 import { User } from "@supabase/supabase-js";
+import { Tables } from "@/types/supabase";
+
+
+export const changeRole = async (id: string, formData: FormData) => {
+  try {
+    const supabase=createClient();
+    const role = (formData.get('role') as string).toLowerCase();
+    if (!role) return
+
+    const { data, error } = await supabase
+      .from("user_roles")
+      .update({role: role as "owner" | "barista" | "client" | undefined})
+      .eq("user_id", id)
+      .select();
+
+    if (error) {
+      throw new Error(`Failed to update user_roles ${error.message}`)
+    }
+  } catch (error) {
+    console.error('Error changing role:', error);
+    throw error;
+  }
+}
 
 /**
  * Retrieves the user ID from the Supabase authentication service.

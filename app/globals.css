@@ -22,7 +22,8 @@
 	text-transform: uppercase;
 }
 
-input, textarea{
+input,
+textarea {
 	text-transform: none;
 }
 
@@ -111,12 +112,13 @@ label,
 p {
 	@apply text-sm
 }
+
 .voucher {
-	@apply bg-orange fixed p-5 rounded-md top-20
+	@apply rounded-md
 }
 
 .close-button {
-	@apply w-fit top-2 right-2 absolute
+	@apply w-fit right-0 absolute
 }
 
 .voucher-background {
@@ -125,18 +127,6 @@ p {
 
 .voucher-part {
 	@apply bg-white relative p-5 rounded-b-lg shadow-2xl border-t-2 text-center
-}
-
-.circle1, .circle2 {
-	@apply absolute w-5 h-5 rounded-full bg-orange;
-}
-
-.circle1 {
-	@apply left-3 top-60
-}
-
-.circle2 {
-	@apply right-3 top-60
 }
 
 .circleActive {

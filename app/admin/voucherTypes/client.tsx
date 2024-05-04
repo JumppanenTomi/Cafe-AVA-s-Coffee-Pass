@@ -50,7 +50,7 @@ export default function VoucherTypesClient({
       <div className="relative bg-white overflow-x-auto shadow-md sm:rounded-lg">
         <div className="p-4 flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white">
           <div></div>
-          <Search placeholder="Search for voucherTypes" />
+          <Search placeholder="Search for voucher types" />
         </div>
         <Suspense
           key={query + sort + currentPage}
@@ -86,9 +86,9 @@ export default function VoucherTypesClient({
 
 const headCells: readonly HeadCell[] = [
   {
-    id: "voucher_id",
+    id: "id",
     type: "number",
-    label: "Voucher Id",
+    label: "Voucher Type Id",
   },
   {
     id: "name",
@@ -101,23 +101,13 @@ const headCells: readonly HeadCell[] = [
     label: "Description",
   },
   {
-    id: "start_date",
-    type: "datetime",
-    label: "Start Date",
+    id: "redeem_message",
+    type: "string",
+    label: "Redeem message",
   },
   {
-    id: "end_date",
-    type: "datetime",
-    label: "End Date",
-  },
-  {
-    id: "uses_per_user",
+    id: "uses_per_voucher",
     type: "number",
-    label: "Uses per user",
-  },
-  {
-    id: "stamps_required",
-    type: "number",
-    label: "Stamps required",
-  },
+    label: "Uses per voucher",
+  }
 ];
