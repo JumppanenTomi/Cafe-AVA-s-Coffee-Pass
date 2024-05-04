@@ -1,5 +1,6 @@
-import { fetchUsersV2, fetchUsersCount } from "@/utils/ServerActions/user";
+import { fetchUsersInPages, findUser } from "@/utils/ServerActions/user";
 import UsersClient from "./client";
+import getRole from "@/utils/getRole";
 
 export default async function UsersPage({
   searchParams = {},
@@ -11,17 +12,20 @@ export default async function UsersPage({
   };
 }) {
   const { query = "", sort = "-created_at", page } = searchParams;
-  const currentPage = Number(page) || 1;
+  const currentPage = parseInt(page || "1");
 
-  const [users, count] = await Promise.all([
-    fetchUsersV2(query, sort, currentPage),
-    fetchUsersCount(query),
-  ]);
+  const { users, count } = await fetchUsersInPages(currentPage, 25, sort);
+  const { users: filteredUsers, count: filteredCount } = await findUser(
+    sort,
+    query
+  );
+
+  console.log(await getRole());
 
   return (
     <UsersClient
-      users={users}
-      count={count}
+      users={query !== "" ? filteredUsers : users}
+      count={query !== "" ? filteredCount : count}
       query={query}
       sort={sort}
       currentPage={currentPage}

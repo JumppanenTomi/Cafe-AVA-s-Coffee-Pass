@@ -13,6 +13,8 @@ export default async function Register({
   searchParams: { isError: string; message: string };
 }) {
   const registerText = await fetchSiteSetting("registerText");
+  const termsOfUseUrl = await fetchSiteSetting("termsOfUseUrl");
+  const privacyPolicyUrl = await fetchSiteSetting("privacyPolicyUrl");
 
   return (
     <div className='flex flex-col justify-between flex-1 w-full'>
@@ -31,14 +33,14 @@ export default async function Register({
             <p>
               * I agree{" "}
               <a
-                href={process.env.TERMS_AND_CONDITIONS_URL}
+                href={termsOfUseUrl?.value || "#"}
                 className={"underline font-bold"}
               >
                 terms and conditions
               </a>{" "}
               and{" "}
               <a
-                href={process.env.PRIVACY_POLICY_URL}
+                href={privacyPolicyUrl?.value || "#"}
                 className={"underline font-bold"}
               >
                 privacy policy

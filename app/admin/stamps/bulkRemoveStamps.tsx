@@ -5,12 +5,12 @@ import NumberInput from "@/components/Inputs/NumberInput";
 import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
 import { Form } from "@/components/Inputs/Form";
 import { User } from "./interface";
-import { fetchUsersV2 } from "@/utils/ServerActions/user";
 import {
   getRequiredStamps,
   useMultipleStamps,
 } from "@/utils/ServerActions/stamp";
 import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
+import { findUser } from "@/utils/ServerActions/user";
 
 export default function BulkRemoveStamps(props?: {
   user_id?: string;
@@ -23,12 +23,15 @@ export default function BulkRemoveStamps(props?: {
 
   useEffect(() => {
     const getUsers = async () => {
-      const response = await fetchUsersV2(userInput, "-id", 1);
-      setUsers(response || []);
+      const response = await findUser("-id", userInput);
+      setUsers(
+        response.users?.map((user) => ({ ...user, email: user.email || "" })) ||
+          []
+      );
     };
 
     getUsers();
-    getRequiredStamps
+    getRequiredStamps;
   }, [userInput]);
 
   const handleSubmit = async (formData: FormData) => {
