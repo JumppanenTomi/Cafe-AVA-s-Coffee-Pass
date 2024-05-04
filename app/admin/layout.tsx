@@ -18,7 +18,7 @@ export default async function AdminLayout({
   }
   
   if (
-    role !== "admin" &&
+    role !== "owner" &&
     role !== "barista" &&
     process.env.NEXT_PUBLIC_VERCEL_URL !== "http://localhost:3000"
   ) {
