@@ -4,6 +4,11 @@ import { fetchUsers } from "@/utils/ServerActions/user";
 import { fetchAllVouchers } from "@/utils/ServerActions/voucher";
 import RedeemVoucher from "../../vouchers/redeemVoucher";
 
+/**
+ * Page where owner/barista gets redirected to when scanning a voucher's QR code
+ * @param param - URL parameters that come after admin/redeemVoucher. The param.slug contains voucher id and user id
+ * @returns redeem voucher page on the admin side
+ */
 export default function Page({ params }: { params: { slug: string[] } }) {
   const [users, setUsers] = useState<any>();
   const [vouchers, setVouchers] = useState<any>();
