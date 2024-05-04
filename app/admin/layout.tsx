@@ -16,12 +16,15 @@ export default async function AdminLayout({
   if (!user) {
     return redirect("/auth/login");
   }
+  
   if (
     role !== "admin" &&
     role !== "barista" &&
     process.env.NEXT_PUBLIC_VERCEL_URL !== "http://localhost:3000"
-  )
+  ) {
+    console.log(role);
     return redirect("/client");
-
+  }
+  
   return <div className='flex flex-col flex-1 w-full'>{children}</div>;
 }
