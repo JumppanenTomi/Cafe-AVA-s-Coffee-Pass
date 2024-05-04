@@ -6,7 +6,7 @@ import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
 import { Form } from "@/components/Inputs/Form";
 import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import { User } from "./interface";
-import { fetchUsersV2 } from "@/utils/ServerActions/user";
+import { findUser } from "@/utils/ServerActions/user";
 import { createStamps } from "@/utils/ServerActions/stamp";
 import AdminAddModalButton from "@/components/Inputs/buttons/AdminAddModalButton";
 import AdminAddButton from "@/components/Inputs/buttons/AdminAddButton";
@@ -19,8 +19,11 @@ export default function AddStamp(props?: { user_id?: string }) {
 
   useEffect(() => {
     const getUsers = async () => {
-      const response = await fetchUsersV2(userInput, "-id", 1);
-      setUsers(response || []);
+      const response = await findUser("-id", userInput);
+      setUsers(
+        response.users?.map((user) => ({ ...user, email: user.email || "" })) ||
+          []
+      );
     };
 
     getUsers();

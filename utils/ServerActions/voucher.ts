@@ -1,9 +1,8 @@
-"use server";
-import { Tables, TablesUpdate } from "./../../types/supabase";
+"use server";;
+import { TablesUpdate } from "./../../types/supabase";
 import { getFormattedDate } from "../getFormattedDate";
 import { createClient } from "../supabase/server";
 import { getUserId } from "./user";
-import { error } from "console";
 
 /**
  * Fetches active vouchers from the server.
@@ -368,7 +367,7 @@ export const fetchAllVouchers = async () => {
 
     await Promise.all(publicVouchers.map(async (pv) => {
       try {
-        const used = await getPublicVoucherUses(pv.id) || 0
+        const used=(await getPublicVoucherUses(pv.id))||0
         console.log(used);
 
         pv.used = used ? used : 0;
@@ -410,7 +409,7 @@ export const usePrivateVoucher = async (voucherId: number) => {
   try {
     const { data, error } = await supabase
       //Custom database function that updates column used by 1 in all_vouchers table for all_voucher.id
-      .rpc("increment_private_voucher", { p_voucher_id: voucherId }) //custom database function
+      .rpc("increment_private_voucher", { p_voucher_id: voucherId.toString() }) //I added type conversion to string because ts wasnt happy about remove if unnecessary or gives error - Tomi
     if (error) {
       console.error('Error updating public voucher log:', error);
     } else {

@@ -3,9 +3,15 @@ import { redirect } from "next/dist/client/components/navigation";
 import { createClient } from "../supabase/server";
 import { cache } from "react";
 import { User } from "@supabase/supabase-js";
-import { Tables } from "@/types/supabase";
 
 
+/**
+ * Changes the role of a user.
+ * @param id - The ID of the user.
+ * @param formData - The form data containing the new role.
+ * @returns A Promise that resolves when the role is successfully changed.
+ * @throws If there is an error updating the user's role.
+ */
 export const changeRole = async (id: string, formData: FormData) => {
   try {
     const supabase=createClient();
