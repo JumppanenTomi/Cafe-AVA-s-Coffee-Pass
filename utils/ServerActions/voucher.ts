@@ -81,13 +81,13 @@ export const fetchVouchers = async (
   const supabase = createClient(true);
   const isAscending = sort[0] !== "-";
   let sortField = isAscending ? sort : sort.slice(1);
-  if (sortField === "vouchers.name") sortField = "vouchers(name)";
+  if (sortField === "voucher_type.name") sortField = "voucher_type(name)";
 
   try {
     const { data, error } = await supabase
-      .from("voucher_logs")
-      .select(`*, vouchers!inner(name)`)
-      .ilike("vouchers.name", `%${query}%`)
+      .from("all_vouchers")
+      .select(`*, voucher_type!inner(id,name)`)
+      .ilike("voucher_type.name", `%${query}%`)
       .range((currentPage - 1) * 25, currentPage * 25 - 1)
       .order(sortField, { ascending: isAscending });
 
@@ -113,7 +113,7 @@ export const fetchVouchersCount = async (query: string) => {
 
   try {
     const { count, error } = await supabase
-      .from("voucher_logs")
+      .from("all_vouchers")
       .select("*", { count: "exact", head: true });
 
     if (error) {
@@ -139,9 +139,9 @@ export const deleteVouchers = async (ids: number[]) => {
 
   try {
     const { error } = await supabase
-      .from("voucher_logs")
+      .from("all_vouchers")
       .delete()
-      .in("voucher_log_id", ids);
+      .in("id", ids);
 
     if (error) {
       throw new Error(error.message);
@@ -161,22 +161,24 @@ export const createVouchers = async (formData: FormData) => {
   const supabase = createClient(true);
 
   const userId = formData.get("user_id");
-  const voucherId = formData.get("voucher_id");
+  const voucherTypeId = formData.get("voucher_type");
 
   try {
     //TODO: This might need tweaking, RLS is currently restricting this fuction so it might not work as expected
-    if (!userId || !voucherId) {
+    if (!userId || !voucherTypeId) {
       throw new Error("Missing user_id or voucher_id");
     }
 
-    const rawFormData = {
-      //voucher_log_id: 0,
-      //timestamp: null,
+    const rawFormData: any = {
       user_id: userId.toString(),
-      voucher_id: parseInt(voucherId.toString()),
+      voucher_type: parseInt(voucherTypeId.toString()),
+      active: formData.get("active") === "on",
+      used: formData.get("used"),
+      start: formData.get("start") || null,
+      end: formData.get("end") || null,
     };
     const { data, error } = await supabase
-      .from("voucher_logs")
+      .from("all_vouchers")
       .insert([rawFormData])
       .select();
 
@@ -202,7 +204,7 @@ export const fetchVoucherTypes = async (query: string) => {
 
   try {
     const { data, error } = await supabase
-      .from("vouchers")
+      .from("voucher_type")
       .select()
       .ilike("name", `%${query}%`)
       .range(0, 10);
@@ -218,26 +220,29 @@ export const fetchVoucherTypes = async (query: string) => {
   }
 };
 
+export const updateVoucher = async (id: number, formData: FormData) => {
+  try {
+    const supabase = createClient(true);
+    const rawFormData = {
+      user_id: formData.get('user_id') as string,
+      voucher_type: parseInt(formData.get('voucher_type') as string) as number,
+      active: formData.get("active") === "on",
+      used: parseInt(formData.get("used") as string) || null,
+      start: formData.get("start") as string,
+      end: formData.get("end") as string,
+    };
 
-// export const updateVoucher = async (id: number, formData: FormData) => {
-//   try {
-//     const supabase = createClient(true);
-//     const rawFormData: TablesUpdate<'voucher_logs'> = {
-//       user_id: formData.get('user_id') as string,
-//       voucher_id: parseInt(formData.get('voucher_id') as string) as number,
-//     };
+    const { error } = await supabase
+      .from("all_vouchers")
+      .update(rawFormData)
+      .eq('id', id);
 
-//     const { error } = await supabase
-//       .from("voucher_logs")
-//       .update(rawFormData)
-//       .eq('voucher_log_id', id);
-
-//     if (error) throw error;
-//   } catch (error) {
-//     console.error('Error updating voucher:', error);
-//     return null;
-//   }
-// }
+    if (error) throw error;
+  } catch (error) {
+    console.error('Error updating voucher:', error);
+    return null;
+  }
+}
 
 /**
  * Updates a row in public_voucher_logs table

@@ -18,7 +18,7 @@ export default function DeleteVoucher({
 
   const handleDelete = async () => {
     setIsMutating(true);
-    await deleteVouchers([voucher?.voucher_log_id]);
+    await deleteVouchers([voucher?.id]);
 
     setIsMutating(false);
     router.refresh();

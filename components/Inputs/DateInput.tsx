@@ -24,7 +24,7 @@ export default function DateInput({
       )}
       <input
         className="input"
-        type="date"
+        type="datetime-local"
         name={inputName}
         placeholder={inputPlaceholder}
         required={isRequired}

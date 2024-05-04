@@ -4,9 +4,8 @@ import { useRouter } from "next/navigation";
 import { Form } from "@/components/Inputs/Form";
 import TextInput from "@/components/Inputs/TextInput";
 import NumberInput from "@/components/Inputs/NumberInput";
-import DateInput from "@/components/Inputs/DateInput";
 import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
-// import { createVoucherType } from "@/utils/ServerActions/voucher_types";
+import { createVoucherType } from "@/utils/ServerActions/voucher_types";
 import AdminAddButton from "@/components/Inputs/buttons/AdminAddButton";
 import AdminAddModalButton from "@/components/Inputs/buttons/AdminAddModalButton";
 
@@ -15,8 +14,7 @@ export default function AddVoucherType() {
   const router = useRouter();
 
   const handleSubmit = async (formData: FormData) => {
-    // await createVoucherType(formData);
-
+    await createVoucherType(formData);
     router.refresh();
     setModal(false);
   };
@@ -55,39 +53,21 @@ export default function AddVoucherType() {
                 inputName="description"
                 inputLabel="Description"
                 inputPlaceholder="Enter voucher type description"
+              />
+
+              <TextInput
+                inputName="redeem_message"
+                inputLabel="Redeem message"
+                inputPlaceholder="Enter redeem message"
                 isRequired={false}
               />
 
-              <div className="grid gap-4 sm:grid-cols-2">
-                <DateInput
-                  inputName="start_date"
-                  inputLabel="Start date"
-                  inputPlaceholder="Enter start date"
-                  isRequired={false}
-                />
-
-                <DateInput
-                  inputName="end_date"
-                  inputLabel="End date"
-                  inputPlaceholder="Enter end date"
-                  isRequired={false}
-                />
-              </div>
-
-              <div className="grid gap-4 mb-4 sm:grid-cols-2">
-                <NumberInput
-                  inputName="uses_per_user"
-                  inputLabel="Uses per user"
-                  inputPlaceholder="Enter uses per user"
-                  isRequired={false}
-                />
-
-                <NumberInput
-                  inputName="stamps_required"
-                  inputLabel="Stamps required"
-                  inputPlaceholder="Enter stamps required"
-                />
-              </div>
+              <NumberInput
+                inputName="uses_per_voucher"
+                inputLabel="Uses per voucher"
+                inputPlaceholder="Enter uses per voucher"
+                isRequired={false}
+              />
 
               <FormSubmitButton
                 formAction={handleSubmit}

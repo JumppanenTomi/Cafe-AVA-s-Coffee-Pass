@@ -1,4 +1,3 @@
-import { fetchUsers } from "@/utils/ServerActions/user";
 import StampsClient from "./client";
 import { fetchStamps, fetchStampsCount } from "@/utils/ServerActions/stamp";
 
@@ -11,7 +10,7 @@ export default async function StampsPage({
     page?: string;
   };
 }) {
-  const { query = '', sort = '-stamp_log_id', page } = searchParams;
+  const { query = "", sort = "-stamp_log_id", page } = searchParams;
   const currentPage = Number(page) || 1;
 
   const [stamps, count] = await Promise.all([
@@ -19,7 +18,13 @@ export default async function StampsPage({
     fetchStampsCount(query),
   ]);
 
-  const users = await fetchUsers(1);
-
-  return <StampsClient stamps={stamps} count={count} users={users} query={query} sort={sort} currentPage={currentPage} />;
+  return (
+    <StampsClient
+      stamps={stamps}
+      count={count}
+      query={query}
+      sort={sort}
+      currentPage={currentPage}
+    />
+  );
 }
