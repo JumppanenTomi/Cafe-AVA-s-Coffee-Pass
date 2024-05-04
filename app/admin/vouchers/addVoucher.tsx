@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
 import { Form } from "@/components/Inputs/Form";
 import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import { User, VoucherType } from "./interface";
@@ -9,12 +8,15 @@ import {
   createVouchers,
   fetchVoucherTypes,
 } from "@/utils/ServerActions/voucher";
+import { fetchUserActiveStamps, useMultipleStamps } from "@/utils/ServerActions/stamp";
+import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
+import { findUser } from "@/utils/ServerActions/user";
 import AdminAddModalButton from "@/components/Inputs/buttons/AdminAddModalButton";
 import AdminAddButton from "@/components/Inputs/buttons/AdminAddButton";
+import ToggleInput from "@/components/Inputs/ToggleInput";
 import DateInput from "@/components/Inputs/DateInput";
 import NumberInput from "@/components/Inputs/NumberInput";
-import ToggleInput from "@/components/Inputs/ToggleInput";
-import { findUser } from "@/utils/ServerActions/user";
+import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
 
 export default function AddVoucher(props?: { user_id?: string }) {
   const [modal, setModal] = useState(false);
@@ -22,6 +24,7 @@ export default function AddVoucher(props?: { user_id?: string }) {
   const [userInput, setUserInput] = useState("");
   const [voucherTypes, setVoucherTypes] = useState<VoucherType[]>([]);
   const [voucherTypeInput, setVoucherTypeInput] = useState("");
+  const [stampsRequired, setStampsRequired] = useState<undefined | number>(0);
   const router = useRouter();
 
   useEffect(() => {
@@ -33,7 +36,15 @@ export default function AddVoucher(props?: { user_id?: string }) {
       );
     };
 
+    const getStampsRequired = async () => {
+      const result = await fetchSiteSetting("stampsRequired");
+      if (result?.value) {
+        setStampsRequired(parseInt(result.value));
+      }
+    };
+
     getUsers();
+    getStampsRequired();
   }, [userInput]);
 
   useEffect(() => {
@@ -46,7 +57,22 @@ export default function AddVoucher(props?: { user_id?: string }) {
   }, [voucherTypeInput]);
 
   const handleSubmit = async (formData: FormData) => {
-    await createVouchers(formData);
+    const response = await fetchUserActiveStamps(formData.get("user_id") as string)
+    const freeVoucher = formData.get("free_voucher")
+
+    if (!freeVoucher) {
+      if (stampsRequired && response && response >= stampsRequired) {
+        await createVouchers(formData);
+        useMultipleStamps(undefined, formData.get("user_id") as string, stampsRequired)
+        console.log("stamps consumed")
+      } else {
+        console.log("User has less stamps than required amount")
+        alert(`User has less than ${stampsRequired} stamps, if you wanted to give a free voucher toggle "Give voucher without using stamps" on.`)
+      }
+    } else {
+      await createVouchers(formData);
+      alert("Free voucher has been added to the user")
+    }
 
     router.refresh();
     setModal(false);
@@ -120,6 +146,12 @@ export default function AddVoucher(props?: { user_id?: string }) {
               />
 
               <ToggleInput inputName='active' inputLabel='Is active' />
+
+              <ToggleInput
+                inputName="free_voucher"
+                inputLabel="Give voucher without using stamps"
+                defaultValue={false}
+              />
 
               <FormSubmitButton
                 formAction={handleSubmit}

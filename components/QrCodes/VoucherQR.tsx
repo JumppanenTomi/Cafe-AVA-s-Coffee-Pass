@@ -44,9 +44,7 @@ const VoucherQR = ({
             </div>
             <QrCodeGen
               text={
-                process.env.NEXT_PUBLIC_VERCEL_URL +
-                "/admin/redeemVoucher/" +
-                voucherId + "/" + userId
+                `${process.env.NEXT_PUBLIC_VERCEL_URL}/admin/redeemVoucher/${voucherId}/${userId}`
               }
               width={300}
             />

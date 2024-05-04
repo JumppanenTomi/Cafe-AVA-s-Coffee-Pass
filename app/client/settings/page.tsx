@@ -6,11 +6,6 @@ import BackButton from "@/components/Inputs/buttons/BackButton";
 import FadeIn from "@/components/Animations/Render/FadeIn";
 
 export default async function SettingsPage() {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
   return (
     <div className='flex flex-col justify-between flex-grow w-full'>
       <FadeIn duration={0.8}>

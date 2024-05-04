@@ -6,6 +6,15 @@ interface DeleteModalProps {
   type: string,
 }
 
+/**
+ * Delete modal custom component for admin side. Used on stamps, vouchers and voucher types
+ * @param modal - Boolean value for showing the modal and dimming the background
+ * @param isMutating - Boolean value that changes the confirm button text when the button is clicked
+ * @param handleChange - Function that changes the modal boolean value to show and hide the modal
+ * @param handleDelete - Function that executes when the delete confirmation button is clicked
+ * @param type - String for describing what is being deleted (stamp, voucher or voucher type)
+ * @returns DeleteModal custom component
+ */
 export default function DeleteModal({ modal, isMutating, handleChange, handleDelete, type }: DeleteModalProps ) {
   return (
     <div>

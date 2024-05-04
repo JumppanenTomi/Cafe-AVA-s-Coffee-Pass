@@ -262,11 +262,11 @@ export const createStamps = async (formData: FormData) => {
  * @returns {Promise} A promise that resolves when the update is complete.
  * @throws Will throw an error if the update operation fails.
  */
-export const useMultipleStamps = async (formData: FormData) => {
+export const useMultipleStamps = async (formData?: FormData, user_id?: string, requiredStamps?: number) => {
   try {
     const supabase = createClient(true);
-    const userId = formData.get("user_id") as string;
-    const amount = parseInt(formData.get("amount") as string) || 1;
+    const userId = formData ? formData.get("user_id") as string : user_id || ""
+    const amount = formData ? parseInt(formData.get("amount") as string) || 1: requiredStamps || 1
 
     // Fetch the oldest unused stamps for the usery
     const { data: stamps, error: fetchError } = await supabase
