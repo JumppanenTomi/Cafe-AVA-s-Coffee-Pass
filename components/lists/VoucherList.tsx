@@ -47,7 +47,7 @@ const VoucherListItem = ({ voucher }:
             />}
             <div onClick={() => showQr()} className={`w-full ${(active) && "opacity-50"}`}>
                 <div className={'white-container-no-p w-full flex-wrap mb- mb-4'}>
-                    <div className={'bg-[url(/coffee.jpg)] bg-cover bg-top h-40 rounded-t-md'}></div>
+                    <div className={'bg-[url(/images/coffee.jpg)] bg-cover bg-top h-40 rounded-t-md'}></div>
                     <div className={'p-5 flex flex-wrap gap-5 justify-end'}>
                         <h2 className={'w-full'}>{voucher.voucher_type.name}</h2>
                         <p className={'w-full'}>{voucher.voucher_type.description}</p>
