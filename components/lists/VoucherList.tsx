@@ -74,10 +74,8 @@ const VoucherList = ({ initialVouchers }: {
             const uid = await getUserId()
             setUserId(uid)
         };
-
         userId();
     }, [])
-
 
     useEffect(() => {
         const handleChange = async () => {
@@ -140,7 +138,7 @@ const VoucherList = ({ initialVouchers }: {
         return () => {
             subscription.unsubscribe();
         };
-    }, [vouchers, setVouchers, supabase])
+    }, [vouchers, setVouchers, supabase, userId])
 
     // another way of managing subscriptions
 
