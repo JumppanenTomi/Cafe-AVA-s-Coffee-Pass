@@ -2,11 +2,12 @@
 import { motion } from "framer-motion";
 import { RollDownProps } from "../AnimationProps";
 
+
 /**
- * Renders a component with an overzoom-in animation.
+ * Renders a component with a roll-down animation.
  *
- * @param props - The animation props.
- * @returns The animated component.
+ * @param {RollDownProps} props - The props for the RollDown component.
+ * @returns {JSX.Element} The rendered RollDown component.
  */
 export default function RollDown(props: RollDownProps) {
   return (

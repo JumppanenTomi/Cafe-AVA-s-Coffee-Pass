@@ -11,7 +11,7 @@ export default async function Login({
 }: {
   searchParams: { isError: string; message: string };
 }) {
-  const logintext = await fetchSiteSetting("loginText");
+  const logintext = await fetchSiteSetting("loginText"); //fetches the login text from the database
 
   return (
     <div className='flex flex-col justify-between flex-1 w-full'>
@@ -35,6 +35,7 @@ export default async function Login({
             </FormSubmitButton>
           </div>
         </Form>
+        {/*if the environment is local, show the link to the dev mailbox*/}
         {process.env.NEXT_PUBLIC_VERCEL_URL! === "http://localhost:3000" && (
           <div className={"flex flex-col w-full"}>
             <Link href={"http://127.0.0.1:54324/"} className={"btn-primary"}>

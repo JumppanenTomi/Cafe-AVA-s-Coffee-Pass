@@ -2,11 +2,22 @@
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 
+/**
+ * A search component for filtering table data.
+ *
+ * @param {string} placeholder - The placeholder text for the search input.
+ * @returns {JSX.Element} - The search component JSX.
+ */
 export default function Search({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
+  /**
+   * Handles the search functionality with debouncing.
+   *
+   * @param {string} term - The search term.
+   */
   const handleSearch = useDebouncedCallback((term) => {
     const params = new URLSearchParams(searchParams);
     if (term) {

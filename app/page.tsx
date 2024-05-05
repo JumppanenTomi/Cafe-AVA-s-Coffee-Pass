@@ -7,6 +7,7 @@ import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 import LogoContainer from "@/components/logoContainer";
 
 export default async function Index() {
+  //get current user and if found redirect to the client page
   const supabase = createClient();
   const {
     data: { user },

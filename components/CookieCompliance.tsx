@@ -3,17 +3,28 @@
 import { useEffect, useState } from "react";
 import { deleteCookie, getCookie, getCookies, setCookie } from "cookies-next";
 
+/**
+ * Renders a cookie compliance banner that allows users to accept or decline cookies.
+ * If cookies are declined, all existing cookies are deleted and the page is reloaded.
+ */
 export default function CookieCompliance() {
   const cookieAllowed = getCookie("cookieAllowed");
 
   const [show, setShow] = useState<boolean>(false);
-  const [showCookies, setShowCookies] = useState<boolean>(false);
 
+  /**
+   * Accepts cookies and sets the "cookieAllowed" cookie with a max age of 1 year.
+   * Hides the cookie compliance message.
+   */
   const acceptCookies = () => {
     setCookie("cookieAllowed", "true", { maxAge: 365 * 60 * 60 * 24 });
     setShow(false);
   };
 
+  /**
+   * Function to decline cookies.
+   * Deletes all cookies, resets history, and reloads the page.
+   */
   const declineCookies = () => {
     // Get all cookies
     const allCookies = getCookies();

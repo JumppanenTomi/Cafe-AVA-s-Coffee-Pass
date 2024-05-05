@@ -21,6 +21,17 @@ type NavigationLinkProps = {
   isExternal?: boolean;
 };
 
+/**
+ * Represents a navigation link item for the home page.
+ *
+ * @component
+ * @param {NavigationLinkProps} props - The props for the component.
+ * @param {string} props.href - The URL for the link.
+ * @param {React.ReactNode} props.icon - The icon for the link.
+ * @param {string} props.label - The label for the link.
+ * @param {boolean} [props.isExternal=false] - Indicates if the link is external.
+ * @returns {JSX.Element} The rendered HomeLinkItem component.
+ */
 const HomeLinkItem: React.FC<NavigationLinkProps> = ({
   href,
   icon,
@@ -46,8 +57,8 @@ const HomeLinkItem: React.FC<NavigationLinkProps> = ({
 };
 
 export default async function ProtectedPage() {
-  const menuUrl = await fetchSiteSetting("menuUrl");
-  const userRole = await getRole();
+  const menuUrl = await fetchSiteSetting("menuUrl"); //fetch the food/drink menu url from the database
+  const userRole = await getRole(); //get the current user's role
 
   return (
     <>
@@ -84,6 +95,7 @@ export default async function ProtectedPage() {
             <Stamps />
           </RollDown>
         </div>
+        {/*only show the admin dashboard button if the user is an owner or barista*/}
         {(userRole === "owner" || userRole === "barista") && (
           <Link href={"/admin"} className={"btn-primary"}>
             Admin Dashboard

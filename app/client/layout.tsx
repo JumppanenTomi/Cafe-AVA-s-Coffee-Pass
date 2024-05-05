@@ -7,6 +7,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  //get the current user and if not found redirect to the login page
   const supabase = createClient();
   const {
     data: { user },

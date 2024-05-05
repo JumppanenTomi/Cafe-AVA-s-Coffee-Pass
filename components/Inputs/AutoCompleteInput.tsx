@@ -14,6 +14,19 @@ interface AutoCompleteInputProps {
   helperText?: string;
 }
 
+/**
+ * AutoCompleteInput component.
+ *
+ * @param inputName - The name of the input element.
+ * @param showLabel - Determines whether to show the input label.
+ * @param inputLabel - The label text for the input element.
+ * @param inputPlaceholder - The placeholder text for the input element.
+ * @param isRequired - Determines whether the input is required.
+ * @param defaultValue - The default value for the input element.
+ * @param onInputChange - The callback function triggered when the input value changes.
+ * @param options - The array of options for the autocomplete dropdown.
+ * @param helperText - The helper text to display below the input element.
+ */
 export default function AutoCompleteInput({
   inputName = "autocomplete",
   showLabel = true,
@@ -33,6 +46,11 @@ export default function AutoCompleteInput({
     setInputValue(defaultValue);
   }, [defaultValue]);
 
+  /**
+   * Handles the change event of the input element.
+   *
+   * @param event - The change event object.
+   */
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setInputValue(value);
@@ -41,6 +59,12 @@ export default function AutoCompleteInput({
     setOpenDropdown(true);
   };
 
+  /**
+   * Handles the click event when an option is selected.
+   *
+   * @param {string} value - The value of the selected option.
+   * @param {string} selectedOptionValue - The value of the selected option.
+   */
   const handleOptionClick = (value: string, selectedOptionValue: string) => {
     setInputValue(value);
     onInputChange(value);
@@ -48,9 +72,13 @@ export default function AutoCompleteInput({
     setOpenDropdown(false);
   };
 
+  /**
+   * Resets the AutoCompleteInput component by clearing the input value, triggering the onInputChange callback with an empty string,
+   * clearing the selected option, and opening the dropdown.
+   */
   const reset = () => {
     setInputValue("");
-    onInputChange("")
+    onInputChange("");
     setSelectedOption("");
     setOpenDropdown(true);
   };
@@ -75,7 +103,7 @@ export default function AutoCompleteInput({
           onChange={handleInputChange}
           onFocus={() => setOpenDropdown(true)}
           onBlur={() => setTimeout(() => setOpenDropdown(false), 200)}
-          autoComplete="false"
+          autoComplete='false'
         />
         {inputValue && inputValue.toString().length > 0 && (
           <XMarkIcon className='h-8 cursor-pointer' onClick={reset} />

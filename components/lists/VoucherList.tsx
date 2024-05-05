@@ -7,7 +7,6 @@ import formatDateToFinnish from "@/utils/formatDateToFinnish";
 import VoucherQR from "../QrCodes/VoucherQR";
 import { fetchAllVouchers } from "@/utils/ServerActions/voucher";
 import { getUserId } from "@/utils/ServerActions/user";
-import { supabaseTableSubscription } from "@/utils/ServerActions/subscriptions";
 
 const VoucherListItem = ({ voucher }:
     {
