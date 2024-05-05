@@ -296,7 +296,7 @@ const getPublicVouchers = async () => {
 
   try {
     const { data, error } = await supabase
-      .from("public_vouchers")
+      .from("vouchers")
       .select('*, voucher_type(*)')
 
     if (error) {
