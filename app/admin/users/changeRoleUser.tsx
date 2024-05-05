@@ -93,9 +93,9 @@ export default function UpdateVoucher({
                 inputPlaceholder="Select a role"
                 defaultValue={user?.user_id}
                 options={[
-                  { id: "Owner", label: "Access to admin site" },
-                  { id: "Barista", label: "Access to admin site" },
-                  { id: "Client", label: "Access only to client site" },
+                  { id: "Owner", label: "Owner: Access to admin site" },
+                  { id: "Barista", label: "Barista: Access to admin site" },
+                  { id: "Client", label: "Client: Access only to client site" },
                 ]}
               />
 
