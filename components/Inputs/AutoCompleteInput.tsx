@@ -50,6 +50,7 @@ export default function AutoCompleteInput({
 
   const reset = () => {
     setInputValue("");
+    onInputChange("")
     setSelectedOption("");
     setOpenDropdown(true);
   };
@@ -74,6 +75,7 @@ export default function AutoCompleteInput({
           onChange={handleInputChange}
           onFocus={() => setOpenDropdown(true)}
           onBlur={() => setTimeout(() => setOpenDropdown(false), 200)}
+          autoComplete="false"
         />
         {inputValue && inputValue.toString().length > 0 && (
           <XMarkIcon className='h-8 cursor-pointer' onClick={reset} />
