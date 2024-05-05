@@ -16,7 +16,7 @@ export default function NumberInput({
   inputLabel = "Number",
   inputPlaceholder = "1234",
   isRequired = true,
-  defaultValue = 1,
+  defaultValue = 0,
   min,
   max,
   helperText = "",

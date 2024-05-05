@@ -27,6 +27,11 @@ export default function AddVoucher(props?: { user_id?: string }) {
   const [stampsRequired, setStampsRequired] = useState<undefined | number>(0);
   const router = useRouter();
 
+  const now = new Date();
+  const offset = now.getTimezoneOffset();
+  const adjustedNow = new Date(now.getTime() - offset * 60000); // Adjust for timezone offset
+  const formattedDateTime = adjustedNow.toISOString().slice(0, 16);
+
   useEffect(() => {
     const getUsers = async () => {
       const response = await findUser("-id", userInput);
@@ -130,6 +135,7 @@ export default function AddVoucher(props?: { user_id?: string }) {
                   inputName='start'
                   inputLabel='Start date'
                   inputPlaceholder='Enter start date'
+                  defaultValue={formattedDateTime}
                 />
 
                 <DateInput
@@ -145,7 +151,7 @@ export default function AddVoucher(props?: { user_id?: string }) {
                 inputPlaceholder='Enter used'
               />
 
-              <ToggleInput inputName='active' inputLabel='Is active' />
+              <ToggleInput inputName='active' inputLabel='Is active' defaultValue={true} />
 
               <ToggleInput
                 inputName="free_voucher"
