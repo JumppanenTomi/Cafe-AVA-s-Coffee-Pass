@@ -1,18 +1,17 @@
 import Image from "next/image";
 import logo from "@/public/images/logo.png";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
 import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
+import { UserIcon } from "@heroicons/react/24/solid";
 
 export default async function Nav() {
   const logoUrl = await fetchSiteSetting("logoUrl");
 
   return (
-    <nav className='flex items-center justify-between w-full h-16 bg-background'>
-      <Link href={"/client/faq"}>
-        <QuestionMarkCircleIcon className={"h-9 w-9"} />
+    <nav className='flex items-center justify-between w-full sm:py-5 bg-background'>
+      <Link href={"/client/faq"} className='p-3'>
+        <QuestionMarkCircleIcon className={"h-7"} />
       </Link>
       <Link href={"/client"}>
         {logoUrl && logoUrl.value ? (
@@ -35,8 +34,8 @@ export default async function Nav() {
           />
         )}
       </Link>
-      <Link href={"/client/settings"}>
-        <FontAwesomeIcon icon={faUser} size={"xl"} />
+      <Link href={"/client/settings"} className='p-3'>
+        <UserIcon className={"h-7"} />
       </Link>
     </nav>
   );

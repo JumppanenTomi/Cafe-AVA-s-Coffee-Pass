@@ -1,15 +1,11 @@
 import { fetchAllStamps, fetchAllUsedStaps } from "@/utils/ServerActions/stamp";
 
 export async function Statistics() {
-	const stampsTotal = await fetchAllStamps()
-	const usedStamps = await fetchAllUsedStaps()
+  const stampsTotal = await fetchAllStamps();
+  const usedStamps = await fetchAllUsedStaps();
 
-	return (
-    <div
-      className={
-        "white-container w-full flex flex-wrap justify-evenly text-center gap-5"
-      }
-    >
+  return (
+    <div className='flex flex-row w-full gap-2 text-center justify-evenly white-container'>
       <div>
         <h4>
           <b>Used Stamps</b>

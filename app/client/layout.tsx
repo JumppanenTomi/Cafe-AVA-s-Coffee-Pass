@@ -17,7 +17,7 @@ export default async function RootLayout({
   }
 
   return (
-    <div className='flex flex-col flex-1 w-full max-w-screen-sm gap-5 p-5 md:p-0'>
+    <div className='flex flex-col flex-1 w-full max-w-screen-sm gap-2 p-3 sm:gap-5 sm:p-0'>
       <Nav />
       {children}
     </div>

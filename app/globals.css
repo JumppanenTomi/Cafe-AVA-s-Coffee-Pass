@@ -3,132 +3,144 @@
 @tailwind utilities;
 
 @layer base {
-	:root {
-		--background: var(--orange);
-		--orange: #FFD5BA;
-		--foreground: #000;
-	}
+  :root {
+      --background: var(--orange);
+    --orange: #ffd5ba;
+      --foreground: #000;
+    }
 
-	@media (prefers-color-scheme: dark) {
-		:root {
-			--background: var(--orange);
-			--orange: #FFD5BA;
-			--foreground: #000;
-		}
-	}
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: var(--orange);
+      --orange: #ffd5ba;
+        --foreground: #000;
+      }
+      }
 }
 
 * {
-	text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 input,
 textarea {
-	text-transform: none;
+  text-transform: none;
 }
 
 .animate-in {
-	animation: animateIn 0.3s ease 0.15s both;
+  animation: animateIn 0.3s ease 0.15s both;
 }
 
 @keyframes animateIn {
-	from {
-		opacity: 0;
-		transform: translateY(10px);
-	}
+  from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
 
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
 }
 
 .btn-primary {
-	@apply px-4 py-2 mb-2 text-center bg-black border-2 border-black rounded-md text-orange hover:opacity-70;
+  @apply px-4 py-2 mb-2 text-sm text-center bg-black border-2 border-black rounded-md sm:text-base text-orange hover:opacity-70;
 }
 
 .btn-secondary {
-	@apply px-4 py-2 mb-2 font-bold text-center text-black border-2 border-black rounded-md hover:opacity-70;
+  @apply px-4 py-2 mb-2 text-sm font-bold text-center text-black border-2 border-black rounded-md md:text-base hover:opacity-70;
 }
 
 .input-label {
-	@apply block mb-2 font-medium text-black
+  @apply block mb-2 font-medium text-black;
 }
 
 .input-label>label {
-	@apply text-red-500
+  @apply text-red-500;
 }
 
 .no-resize {
-	resize: none;
+  resize: none;
 }
 
 .input {
-	@apply rounded-md px-4 py-2 bg-inherit border-black border shadow-md bg-white text-black focus:border-2 block w-full
+  @apply block w-full px-4 py-2 text-black bg-white border border-black rounded-md shadow-md bg-inherit focus:border-2;
 }
 
 .input-helper-text {
-	@apply mt-3 text-gray-800
+  @apply mt-3 text-gray-800;
 }
 
 .form {
-	@apply grid gap-4 w-full mx-auto
+  @apply grid w-full gap-4 mx-auto;
 }
 
 .form-error {
-	@apply mt-4 p-4 bg-red-500 text-white rounded-md
+  @apply p-4 mt-4 text-white bg-red-500 rounded-md;
 }
 
 .form-success {
-	@apply mt-4 p-4 bg-green-500 text-white rounded-md
+  @apply p-4 mt-4 text-white bg-green-500 rounded-md;
 }
 
 .white-container {
+  @apply p-4 bg-white rounded-md shadow-2xl md:p-5;
+  }
 
-	@apply bg-white p-5 rounded-md shadow-2xl
+.white-container-minimal-p {
+  @apply p-1 bg-white rounded-md shadow-2xl;
 }
 
 .white-container-no-p {
-	@apply bg-white rounded-md shadow-2xl
+  @apply bg-white rounded-md shadow-2xl;
 }
 
-h1, h2 {
-	@apply font-bold
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-bold;
 }
 
 h1 {
-	@apply text-3xl
+  @apply text-2xl;
 }
 
 h2 {
-	@apply text-2xl
+  @apply text-xl;
 }
 
 h3 {
-	@apply text-xl
+  @apply text-lg;
+  }
+  
+  h4 {
+    @apply text-sm;
 }
 
 label,
 p {
-	@apply text-sm
+  @apply text-sm;
 }
 
 .voucher {
-	@apply rounded-md
+  @apply rounded-md;
 }
 
 .close-button {
-	@apply w-fit right-0 absolute
+  @apply absolute right-0 w-fit;
 }
 
 .voucher-background {
-	@apply fixed top-0 left-0 w-full h-full flex justify-center bg-black bg-opacity-75 z-50
+  @apply fixed top-0 left-0 z-50 flex justify-center w-full h-full bg-black bg-opacity-75;
 }
 
 .voucher-part {
-	@apply bg-white relative p-5 rounded-b-lg shadow-2xl border-t-2 text-center
+  @apply relative p-5 text-center bg-white border-t-2 rounded-b-lg shadow-2xl;
 }
 
 .circleActive {
-	@apply absolute w-3 h-3 bg-green-500 rounded-full right-7;
+  @apply absolute w-3 h-3 bg-green-500 rounded-full right-7;
 }

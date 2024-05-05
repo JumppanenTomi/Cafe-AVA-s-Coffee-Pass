@@ -14,8 +14,10 @@ export default async function Page() {
         settings != null &&
         settings.map((setting) => (
           <div className='flex flex-col justify-between gap-3 white-container'>
-            <h2>{setting.readableName}</h2>
-            <p>{setting.desc}</p>
+            <div>
+              <h2>{setting.readableName}</h2>
+              <p>{setting.desc}</p>
+            </div>
             <Form error={""} isError={false}>
               <input type='hidden' name='key' value={setting.key} />
               <TextboxInput

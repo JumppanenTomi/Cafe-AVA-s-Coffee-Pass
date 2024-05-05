@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import logo from "@/public/images/logo.png";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function AdminTemplate({
   children,
@@ -11,6 +12,7 @@ export default function AdminTemplate({
 }) {
   const [show, setShow] = useState(false);
   const toggleShow = () => setShow(!show);
+  const pathname = usePathname();
 
   return (
     <div className='w-full px-4 mx-auto max-w-8xl'>
@@ -40,68 +42,34 @@ export default function AdminTemplate({
           !show && "-translate-x-full"
         }`}
       >
-        <div className='flex flex-col h-full px-3 py-4 overflow-y-auto bg-orange'>
-          <Link href='/admin' className='flex items-center ps-2.5 mb-5'>
+        <div className='flex flex-col h-full py-4 overflow-y-auto bg-orange'>
+          <Link href='/admin' className='flex items-center ps-2.5 mb-5 px-4'>
             <Image src={logo} alt={"Cafe AVA- Logo"} width={50} />
           </Link>
-          <ul className='flex-grow space-y-2 font-medium'>
-            <li>
-              <Link
-                href='/admin'
-                className='flex items-center py-2 text-black dark:text-white hover:border-t-2 hover:border-b-2 hover:border-black dark:hover:border-white group'
-              >
-                <span className='flex-1 uppercase ms-3 whitespace-nowrap'>
-                  Dashboard
-                </span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href='/admin/users'
-                className='flex items-center py-2 text-black dark:text-white hover:border-t-2 hover:border-b-2 hover:border-black dark:hover:border-white group'
-              >
-                <span className='flex-1 uppercase ms-3 whitespace-nowrap'>
-                  Users
-                </span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href='/admin/stamps'
-                className='flex items-center py-2 text-black dark:text-white hover:border-t-2 hover:border-b-2 hover:border-black dark:hover:border-white group'
-              >
-                <span className='flex-1 uppercase ms-3 whitespace-nowrap'>
-                  Stamps
-                </span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href='/admin/vouchers'
-                className='flex items-center py-2 text-black dark:text-white hover:border-t-2 hover:border-b-2 hover:border-black dark:hover:border-white group'
-              >
-                <span className='flex-1 uppercase ms-3 whitespace-nowrap'>
-                  Vouchers
-                </span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href='/admin/voucherTypes'
-                className='flex items-center py-2 text-black dark:text-white hover:border-t-2 hover:border-b-2 hover:border-black dark:hover:border-white group'
-              >
-                <span className='flex-1 uppercase ms-3 whitespace-nowrap'>
-                  Voucher Types
-                </span>
-              </Link>
-            </li>
+          <ul className='flex-grow font-medium'>
+            {[
+              { href: "/admin", label: "Dashboard" },
+              { href: "/admin/users", label: "Users" },
+              { href: "/admin/stamps", label: "Stamps" },
+              { href: "/admin/vouchers", label: "Vouchers" },
+              { href: "/admin/voucherTypes", label: "Voucher Types" },
+              { href: "/admin/settings", label: "Site Settings" },
+              { href: "/client", label: "Peek Client Side" },
+            ].map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className={`flex items-center px-4 py-2 text-black hover:bg-black/15 ${
+                    pathname === item.href ? "bg-black/15" : ""
+                  }`}
+                >
+                  <span className='flex-1 uppercase whitespace-nowrap'>
+                    {item.label}
+                  </span>
+                </Link>
+              </li>
+            ))}
           </ul>
-          <Link href={"/admin/settings"} className='btn-primary'>
-            Site Settings
-          </Link>
-          <Link href={"/client"} className={"btn-primary"}>
-            Peek client app
-          </Link>
         </div>
       </aside>
 
