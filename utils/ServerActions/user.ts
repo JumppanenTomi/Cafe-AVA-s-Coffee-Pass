@@ -1,9 +1,8 @@
-"use server";;
+"use server";
 import { redirect } from "next/dist/client/components/navigation";
 import { createClient } from "../supabase/server";
 import { cache } from "react";
 import { User } from "@supabase/supabase-js";
-
 
 /**
  * Changes the role of a user.
@@ -15,23 +14,23 @@ import { User } from "@supabase/supabase-js";
 export const changeRole = async (id: string, formData: FormData) => {
   try {
     const supabase=createClient();
-    const role = (formData.get('role') as string).toLowerCase();
-    if (!role) return
+    const role=(formData.get("role") as string).toLowerCase();
+    if (!role) return;
 
     const { data, error } = await supabase
       .from("user_roles")
-      .update({role: role as "owner" | "barista" | "client" | undefined})
+      .update({ role: role as "owner"|"barista"|"client"|undefined })
       .eq("user_id", id)
       .select();
 
     if (error) {
-      throw new Error(`Failed to update user_roles ${error.message}`)
+      throw new Error(`Failed to update user_roles ${error.message}`);
     }
   } catch (error) {
-    console.error('Error changing role:', error);
+    console.error("Error changing role:", error);
     throw error;
   }
-}
+};
 
 /**
  * Retrieves the user ID from the Supabase authentication service.
@@ -49,6 +48,27 @@ export const getUserId=async (): Promise<string|null> => {
     return data.user?.id;
   } catch (error: any) {
     console.error(`Failed to get user: ${error.message}`);
+    return null;
+  }
+};
+
+/**
+ * Fetches a user from the server.
+ * @param id - The ID of the user to fetch.
+ * @returns A Promise that resolves to the user data, or null if an error occurs.
+ */
+export const fetchUser=async (id: string) => {
+  try {
+    const supabase=createClient(true);
+    const { data, error }=await supabase.auth.admin.getUserById(id);
+
+    if (error) {
+      throw new Error(`Failed to fetch user: ${error.message}`);
+    }
+
+    return data.user;
+  } catch (error: any) {
+    console.error(`Failed to fetch user: ${error.message}`);
     return null;
   }
 };

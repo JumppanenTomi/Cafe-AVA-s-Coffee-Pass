@@ -1,6 +1,6 @@
 "use client";
-import { Suspense, useEffect, useMemo, useState } from "react";
-import { fetchUsers } from "@/utils/ServerActions/user";
+import { useEffect, useState } from "react";
+import { fetchUser } from "@/utils/ServerActions/user";
 import { fetchUserIdFromTempCode } from "@/utils/ServerActions/tempCode";
 import { fetchUserActiveStamps } from "@/utils/ServerActions/stamp";
 import { supabaseTableSubscription } from "@/utils/ServerActions/subscriptions";
@@ -8,54 +8,76 @@ import AddVoucher from "../../vouchers/addVoucher";
 import AddStamp from "../../stamps/addStamp";
 import BulkRemoveStamps from "../../stamps/bulkRemoveStamps";
 import { User } from "@supabase/supabase-js";
+import formatDateToFinnish from "@/utils/formatDateToFinnish";
 
 export default function Page({ params }: { params: { slug: string[] } }) {
-  const [users, setUsers] = useState<User[]>();
-  const [id, setId] = useState<string | null>();
-  const [stamps, setStamps] = useState<number | null>(0);
+  const [userId, setUserId] = useState<string | null>();
+  const [user, setUser] = useState<User | null>();
+  const [stamps, setStamps] = useState<number | null>();
 
   useEffect(() => {
-    fetchUsers(1).then((data) => setUsers(data));
-    fetchUserIdFromTempCode(params.slug[0]).then((data) => setId(data));
+    fetchUserIdFromTempCode(params.slug[0]).then((data) => setUserId(data));
   }, [params.slug[0]]);
 
   useEffect(() => {
-    if (id) {
-      fetchUserActiveStamps(id).then((data) => setStamps(data));
-    }
-  }, [id]);
-
-  const user = useMemo(() => {
-    if (users && id) {
-      return users.find((user: any) => user.id === id);
-    } else {
-      return { email: "Loading..." } as User;
-    }
-  }, [users]);
+    if (!userId) return;
+    fetchUser(userId).then((data) => setUser(data));
+    fetchUserActiveStamps(userId).then((data) => setStamps(data));
+  }, [userId]);
 
   useEffect(() => {
-    if (typeof id !== "string") return;
+    if (!userId) return;
     const handleChange = async () => {
-      const stampCount = await fetchUserActiveStamps(id);
+      const stampCount = await fetchUserActiveStamps(userId);
       setStamps(stampCount || 0);
     };
 
-    supabaseTableSubscription("stamp_logs", `user_id=eq.${id}`, handleChange);
-  }, [id]);
+    supabaseTableSubscription(
+      "stamp_logs",
+      `user_id=eq.${userId}`,
+      handleChange
+    );
+  }, [userId]);
 
-  return id !== null && stamps !== null ? (
-    <Suspense fallback={<p>Loading...</p>}>
-      <div className='flex flex-col items-center justify-center flex-1 w-full gap-5 p-5'>
-        <div className={"flex gap-5 flex-col items-center md:flex-row"}>
-          <AddStamp user_id={id} />
-          <AddVoucher user_id={id} />
-          <BulkRemoveStamps user_id={id} currentAmount={stamps} />
-        </div>
-        <h2>{user?.email}</h2>
-        <h2>User currently has {stamps} stamps</h2>
+  return (
+    <div>
+      <div className={"flex gap-5 flex-row"}>
+        <AddStamp user_id={userId || undefined} />
+        <AddVoucher user_id={userId || undefined} />
+        <BulkRemoveStamps
+          user_id={userId || undefined}
+          currentAmount={stamps || undefined}
+        />
       </div>
-    </Suspense>
-  ) : (
-    <p>Couldn't find user or amount of stamps</p>
+      {user ? (
+        <ul>
+          {user && (
+            <ul>
+              <li style={{ textTransform: "none" }}>Email: {user.email}</li>
+              <li style={{ textTransform: "none" }}>ID: {user.id}</li>
+              <li style={{ textTransform: "none" }}>
+                Signed in With: {user.app_metadata.provider}
+              </li>
+              <li style={{ textTransform: "none" }}>
+                created_at: {formatDateToFinnish(user.created_at)}
+              </li>
+            </ul>
+          )}
+        </ul>
+      ) : user === undefined ? (
+        <h2>Loading User Details</h2>
+      ) : (
+        <h2>Couldn't find user</h2>
+      )}
+      {stamps ? (
+        <ul>
+          <li>{stamps} stamps</li>
+        </ul>
+      ) : stamps === undefined ? (
+        <h2>Loading Stamps...</h2>
+      ) : (
+        <p>Couldn't find amount of stamps for the user</p>
+      )}
+    </div>
   );
 }
