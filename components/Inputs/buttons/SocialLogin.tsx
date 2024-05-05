@@ -16,7 +16,7 @@ export default async function SocialLogin() {
           formAction={authenticateWithGoodle}
           className='w-full btn-primary'
         >
-          Sing in with Google
+          Sign in with Google
         </button>
         <CheckboxInput isRequired={true}>
           <p>
