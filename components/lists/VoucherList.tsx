@@ -8,7 +8,6 @@ import VoucherQR from "../QrCodes/VoucherQR";
 import { fetchAllVouchers } from "@/utils/ServerActions/voucher";
 import { getUserId } from "@/utils/ServerActions/user";
 import { supabaseTableSubscription } from "@/utils/ServerActions/subscriptions";
-import Popup from "@/components/UIOverlays/popup";
 
 const VoucherListItem = ({ voucher }:
     {
@@ -67,7 +66,6 @@ const VoucherList = ({ initialVouchers }: {
     userId: string
 }) => {
     const [vouchers, setVouchers] = useState(initialVouchers)
-    const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
     const [userId, setUserId] = useState<any>()
     const supabase = createClient()
 
@@ -80,7 +78,7 @@ const VoucherList = ({ initialVouchers }: {
         userId();
     }, [])
 
-    /*
+
     useEffect(() => {
         const handleChange = async () => {
             try {
@@ -98,6 +96,7 @@ const VoucherList = ({ initialVouchers }: {
                     event: '*',
                     schema: 'public',
                     table: 'all_vouchers',
+                    filter: `user_id=eq.${userId}`
                 },
                 (payload) => {
                     handleChange()
@@ -129,6 +128,7 @@ const VoucherList = ({ initialVouchers }: {
                     event: '*',
                     schema: 'public',
                     table: 'public_voucher_logs',
+                    filter: `user_id=eq.${userId}`
                 },
                 (payload) => {
                     handleChange()
@@ -141,36 +141,30 @@ const VoucherList = ({ initialVouchers }: {
             subscription.unsubscribe();
         };
     }, [vouchers, setVouchers, supabase])
-    */
 
-    useEffect(() => {
-        const handleChange = async () => {
-            try {
-                const updatedVouchers = await fetchAllVouchers();
-                setVouchers(updatedVouchers);
-            } catch (error) {
-                console.error('Error updating vouchers:', error); // Log if there's an error updating vouchers
-            }
-        };
+    // another way of managing subscriptions
 
-        const showPopUp = () => {
-            setIsPopupVisible(true);
-            handleChange();
-        };
+    // useEffect(() => {
+    //     const handleChange = async () => {
+    //         try {
+    //             const updatedVouchers = await fetchAllVouchers();
+    //             setVouchers(updatedVouchers);
+    //         } catch (error) {
+    //             console.error('Error updating vouchers:', error); // Log if there's an error updating vouchers
+    //         }
+    //     };
 
-        const publicVoucherLogsSubscriptions = async () => {
-            await supabaseTableSubscription(
-                "public_voucher_logs",
-                `user_id=eq.${userId}`,
-                handleChange,
-                showPopUp,
-                undefined,
-                showPopUp
-            );
-        }
+    //     const publicVoucherLogsSubscriptions = async () => {
+    //         await supabaseTableSubscription(
+    //             "public_voucher_logs",
+    //             `user_id=eq.${userId}`,
+    //             handleChange,
+    //             undefined,
+    //         );
+    //     }
 
-        publicVoucherLogsSubscriptions()
-    }, [userId]);
+    //     publicVoucherLogsSubscriptions()
+    // }, [userId]);
 
     return (
         <>
