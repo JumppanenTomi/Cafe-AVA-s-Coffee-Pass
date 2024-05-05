@@ -12,7 +12,7 @@ interface QrCodeGenProps {
 const QrCodeGen = ({
   text,
   errorCorrectionLevel = "high",
-  width = 500,
+  width = 0,
 }: QrCodeGenProps) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [genError, setGenError] = useState<string | undefined>();

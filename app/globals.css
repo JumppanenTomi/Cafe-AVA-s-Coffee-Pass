@@ -4,18 +4,18 @@
 
 @layer base {
   :root {
-      --background: var(--orange);
+    --background: var(--orange);
     --orange: #ffd5ba;
+    --foreground: #000;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: var(--orange);
+      --orange: #ffd5ba;
       --foreground: #000;
     }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --background: var(--orange);
-      --orange: #ffd5ba;
-        --foreground: #000;
-      }
-      }
+  }
 }
 
 * {
@@ -33,14 +33,14 @@ textarea {
 
 @keyframes animateIn {
   from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
+    opacity: 0;
+    transform: translateY(10px);
+  }
 
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .btn-primary {
@@ -85,7 +85,7 @@ textarea {
 
 .white-container {
   @apply p-4 bg-white rounded-md shadow-2xl md:p-5;
-  }
+}
 
 .white-container-minimal-p {
   @apply p-1 bg-white rounded-md shadow-2xl;
@@ -114,10 +114,10 @@ h2 {
 
 h3 {
   @apply text-lg;
-  }
-  
-  h4 {
-    @apply text-sm;
+}
+
+h4 {
+  @apply text-sm;
 }
 
 label,
@@ -126,7 +126,7 @@ p {
 }
 
 .voucher {
-  @apply rounded-md;
+  @apply rounded-md
 }
 
 .close-button {
@@ -138,7 +138,7 @@ p {
 }
 
 .voucher-part {
-  @apply relative p-5 text-center bg-white border-t-2 rounded-b-lg shadow-2xl;
+  @apply p-5 bg-white text-center border-t-2 rounded-b-lg shadow-2xl;
 }
 
 .circleActive {
