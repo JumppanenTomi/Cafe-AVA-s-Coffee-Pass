@@ -1,6 +1,6 @@
 "use client";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface AutoCompleteInputProps {
   inputName?: string;
@@ -26,8 +26,12 @@ export default function AutoCompleteInput({
   helperText = "",
 }: AutoCompleteInputProps) {
   const [openDropdown, setOpenDropdown] = useState(false);
-  const [inputValue, setInputValue] = useState(defaultValue || "");
+  const [inputValue, setInputValue] = useState<any>();
   const [selectedOption, setSelectedOption] = useState<string | undefined>();
+
+  useEffect(() => {
+    setInputValue(defaultValue);
+  }, [defaultValue]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
