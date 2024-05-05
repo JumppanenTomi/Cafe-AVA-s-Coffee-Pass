@@ -39,7 +39,7 @@ export default function AutoCompleteInput({
           onInputChange(event.target.value)
         }
       />
-      <datalist id={inputName}>
+      <datalist id={inputName} style={{display: "block"}}>
         {options.map((opt, index) => (
           <option key={index} value={opt.id}>
             {opt.label}
