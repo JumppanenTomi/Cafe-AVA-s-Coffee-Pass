@@ -44,6 +44,11 @@ export const signIn = async (formData: FormData) => {
   );
 };
 
+/**
+ * Authenticates the user with Google OAuth.
+ * @returns {Promise<void>} A promise that resolves when the authentication is successful.
+ * @throws {Error} If there is an error during the authentication process.
+ */
 export const authenticateWithGoodle = async () => {
   const supabase=createClient();
   let url
