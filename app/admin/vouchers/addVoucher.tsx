@@ -18,6 +18,12 @@ import DateInput from "@/components/Inputs/DateInput";
 import NumberInput from "@/components/Inputs/NumberInput";
 import AutoCompleteInput from "@/components/Inputs/AutoCompleteInput";
 
+/**
+ * Provides functionality to add a new voucher.
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.user_id - The ID of the user to whom the voucher is to be added.
+ * @returns {JSX.Element} A component that allows an admin to add a new voucher to a user.
+ */
 export default function AddVoucher(props?: { user_id?: string }) {
   const [modal, setModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
@@ -27,6 +33,7 @@ export default function AddVoucher(props?: { user_id?: string }) {
   const [stampsRequired, setStampsRequired] = useState<undefined | number>(0);
   const router = useRouter();
 
+  // Get current date and time, adjust for timezone offset
   const now = new Date();
   const offset = now.getTimezoneOffset();
   const adjustedNow = new Date(now.getTime() - offset * 60000); // Adjust for timezone offset

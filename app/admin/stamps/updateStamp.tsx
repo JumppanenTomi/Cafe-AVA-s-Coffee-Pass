@@ -9,6 +9,12 @@ import { Stamp, User } from "./interface";
 import { updateStamp } from "@/utils/ServerActions/stamp";
 import { findUser } from "@/utils/ServerActions/user";
 
+/**
+ * Provides functionality to update a stamp.
+ * @param {Stamp} stamp - The stamp to update.
+ * @param {Function} handleMenu - Function to handle menu actions.
+ * @returns {JSX.Element} A component that allows a user to update a stamp.
+ */
 export default function UpdateStamp({
   stamp,
   handleMenu,

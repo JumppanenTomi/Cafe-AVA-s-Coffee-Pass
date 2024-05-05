@@ -1,6 +1,14 @@
 import StampsClient from "./client";
 import { fetchStamps, fetchStampsCount } from "@/utils/ServerActions/stamp";
 
+/**
+ * Fetches and displays stamps based on provided search parameters.
+ * @param {Object} searchParams - The search parameters for fetching stamps.
+ * @param {string} searchParams.query - The search query string.
+ * @param {string} searchParams.sort - The sort order.
+ * @param {string} searchParams.page - The current page number.
+ * @returns {JSX.Element} A StampsClient component with fetched data.
+ */
 export default async function StampsPage({
   searchParams = {},
 }: {

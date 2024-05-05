@@ -5,6 +5,11 @@ import logo from "@/public/images/logo.png";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
+/**
+ * Provides a template for the admin pages.
+ * @param {React.ReactNode} children - The child components to be rendered within the admin template.
+ * @returns {JSX.Element} A component that provides a sidebar navigation for admin pages and renders the child components.
+ */
 export default function AdminTemplate({
   children,
 }: {

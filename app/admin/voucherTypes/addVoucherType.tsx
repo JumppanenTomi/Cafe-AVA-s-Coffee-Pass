@@ -9,6 +9,10 @@ import { createVoucherType } from "@/utils/ServerActions/voucher_types";
 import AdminAddButton from "@/components/Inputs/buttons/AdminAddButton";
 import AdminAddModalButton from "@/components/Inputs/buttons/AdminAddModalButton";
 
+/**
+ * Provides functionality to add a new voucher type.
+ * @returns {JSX.Element} A component that allows an admin to add a new voucher type.
+ */
 export default function AddVoucherType() {
   const [modal, setModal] = useState(false);
   const router = useRouter();

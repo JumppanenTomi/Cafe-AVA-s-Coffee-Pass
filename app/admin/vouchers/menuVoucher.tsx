@@ -3,9 +3,15 @@ import UpdateVoucher from "./updateVoucher";
 import DeleteVoucher from "./deleteVoucher";
 import { Voucher } from "./interface";
 
+/**
+ * Renders a menu for a specific voucher with options to update and delete the voucher.
+ * @param {Object} voucher - The voucher object.
+ * @returns {JSX.Element} A MenuVoucher component for the given voucher.
+ */
 export default function MenuVoucher({ voucher }: { voucher: Voucher }) {
   const [menu, setMenu] = useState(false);
 
+  // Function to handle modal visibility change
   const handleChange = () => setMenu(!menu);
 
   return (

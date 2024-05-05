@@ -14,6 +14,12 @@ import {
 } from "@/utils/ServerActions/voucher";
 import { findUser } from "@/utils/ServerActions/user";
 
+/**
+ * Provides functionality to update a voucher.
+ * @param {Voucher} voucher - The voucher to update.
+ * @param {Function} handleMenu - Function to handle menu actions.
+ * @returns {JSX.Element} A component that allows an admin to update a voucher.
+ */
 export default function UpdateVoucher({
   voucher,
   handleMenu,

@@ -10,6 +10,12 @@ import BulkRemoveStamps from "../../stamps/bulkRemoveStamps";
 import { User } from "@supabase/supabase-js";
 import formatDateToFinnish from "@/utils/formatDateToFinnish";
 
+/**
+ * Fetches and displays user and stamp data based on a provided slug.
+ * @param {Object} params - The parameters passed to the component.
+ * @param {string[]} params.slug - The slug used to fetch user and stamp data.
+ * @returns {JSX.Element} A component that displays user and stamp data.
+ */
 export default function Page({ params }: { params: { slug: string[] } }) {
   const [userId, setUserId] = useState<string | null>();
   const [user, setUser] = useState<User | null>();

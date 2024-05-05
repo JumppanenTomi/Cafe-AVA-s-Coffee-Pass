@@ -6,6 +6,10 @@ import {
   updateSiteSetting,
 } from "@/utils/ServerActions/siteSetting";
 
+/**
+ * Fetches all site settings and provides functionality to update them.
+ * @returns {JSX.Element} A component that displays all site settings and allows them to be updated.
+ */
 export default async function Page() {
   const settings = await fetchAllSiteSettings();
   return (
