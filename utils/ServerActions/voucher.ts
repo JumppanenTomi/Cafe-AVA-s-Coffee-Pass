@@ -258,7 +258,7 @@ export const updatePublicVoucherLogs = async (uses: number, user_id: string, vou
     };
 
     const { error } = await supabase
-      .from('voucher_logs')
+      .from('public_voucher_logs')
       .update(rawFormData)
       .eq('user_id', user_id)
       .eq('public_voucher_id', voucher_id);
@@ -296,7 +296,7 @@ const getPublicVouchers = async () => {
 
   try {
     const { data, error } = await supabase
-      .from("vouchers")
+      .from("public_vouchers")
       .select('*, voucher_type(*)')
 
     if (error) {
@@ -319,7 +319,7 @@ export const getAllPublicVoucherLogs = async () => {
 
   try {
     const { data, error } = await supabase
-      .from('voucher_logs')
+      .from('public_voucher_logs')
       .select('*')
 
     if (error) {
@@ -338,7 +338,7 @@ const getPublicVoucherUses = async (voucherId: number) => {
   const supabase = createClient();
   try {
     const { data, error } = await supabase
-      .from('voucher_logs')
+      .from('public_voucher_logs')
       .select('used_per_user')
       .eq('user_id', `${userId}`)
       .eq('public_voucher_id', `${voucherId}`)
