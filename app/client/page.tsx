@@ -7,13 +7,13 @@ import {
   IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import StampCard from "@/components/stamps/StampCard";
 import OverZoomIn from "@/components/Animations/Render/OverZoomIn";
 import RollDown from "@/components/Animations/Render/RollDown";
 import { Statistics } from "@/components/Statistics";
 import FadeIn from "@/components/Animations/Render/FadeIn";
 import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 import getRole from "@/utils/getRole";
+import Stamps from "@/components/stamps/Stamps";
 type NavigationLinkProps = {
   href: string;
   icon: IconDefinition;
@@ -34,7 +34,7 @@ const HomeLinkItem: React.FC<NavigationLinkProps> = ({
       {...linkProps}
       className='flex flex-col items-center justify-center gap-2'
     >
-      <FontAwesomeIcon icon={icon} size='3x' />
+      <FontAwesomeIcon icon={icon} className='h-7 sm:h-12' />
       <label>
         {label}{" "}
         {isExternal && (
@@ -51,12 +51,12 @@ export default async function ProtectedPage() {
 
   return (
     <>
-      <div className='flex flex-col items-center justify-center flex-grow w-full gap-5'>
+      <div className='flex flex-col items-center justify-center flex-grow w-full gap-2 sm:gap-5'>
         <FadeIn duration={0.8} className='w-full'>
           <Statistics />
         </FadeIn>
         <FadeIn
-          className='flex flex-row flex-wrap w-full gap-5 justify-evenly white-container'
+          className='flex flex-row flex-wrap w-full gap-2 justify-evenly white-container'
           duration={0.8}
         >
           <HomeLinkItem
@@ -72,16 +72,16 @@ export default async function ProtectedPage() {
           />
         </FadeIn>
         <div className={"flex flex-col items-center justify-center"}>
-          <OverZoomIn className='z-40 white-container' duration={0.8}>
+          <OverZoomIn className='z-40 white-container-minimal-p' duration={0.8}>
             <StampCode />
           </OverZoomIn>
           <RollDown
             animateTop={[-150, 0]}
-            className='flex justify-center w-11/12 top-full'
+            className='flex justify-center w-full px-2 sm:px-4 top-full'
             delay={1}
             duration={0.4}
           >
-            <StampCard />
+            <Stamps />
           </RollDown>
         </div>
         {(userRole === "owner" || userRole === "barista") && (

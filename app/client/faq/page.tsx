@@ -8,8 +8,11 @@ export default function Page() {
   return (
     <div className='flex flex-col flex-grow gap-5'>
       <FadeIn duration={1} className='flex flex-col flex-grow w-full gap-5'>
-        <div className={"flex flex-col items-start gap-10 flex-grow"}>
-          <h1>Frequently Asked Questions</h1>
+        <div className={"flex flex-col items-start gap-5 flex-grow"}>
+          <div>
+            <h1>FAQ</h1>
+            <label className='text-xs'>Frequently Asked Questions</label>
+          </div>
           <section
             className={"white-container flex flex-col gap-5 overflow-x-hidden"}
           >

@@ -90,7 +90,7 @@ const Stamps = () => {
             <CoffeeCup
               key={`activeStamp-${index}`}
               filled={true}
-              className='w-8 h-8'
+              className='w-6 h-6 sm:w-8 sm:h-8'
             />
           ))}
           {Array.from({ length: stampsRequired - 1 - activeStampCount }).map(
@@ -98,19 +98,20 @@ const Stamps = () => {
               <CoffeeCup
                 key={`inactiveStamp-${index}`}
                 filled={false}
-                className='w-8 h-8'
+                className='w-6 h-6 sm:w-8 sm:h-8'
               />
             )
           )}
-          <GiftIcon className={"w-8 h-8"} />
+          <GiftIcon className='w-6 h-6 sm:w-8 sm:h-8' />
         </div>
       ) : (
         <div
           className={
             "white-container text-center rounded-t-none row grid w-full"
           }
+          style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0 }}
         >
-          <h3 className={"text-xl"}>Congratulations!</h3>
+          <h3>Congratulations!</h3>
           <p>
             {stampsCollectedMessage ||
               `You have collected ${activeStampCount} stamps!`}
@@ -146,7 +147,10 @@ const Stamps = () => {
       </Popup>
     </>
   ) : (
-    <div className={"white-container"}>
+    <div
+      className={"white-container"}
+      style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0, maxWidth: 350 }}
+    >
       <p>Error while loading your stamps, contact staff if error continues</p>
     </div>
   );
