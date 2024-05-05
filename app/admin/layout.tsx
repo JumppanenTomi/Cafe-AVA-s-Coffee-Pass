@@ -2,6 +2,11 @@ import getRole from "@/utils/getRole";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
+/**
+ * Provides an admin layout for the application.
+ * @param {React.ReactNode} children - The child components to be rendered within the admin layout.
+ * @returns {JSX.Element} A component that provides an admin layout if the user is authenticated and has the correct role, otherwise redirects to the appropriate page.
+ */
 export default async function AdminLayout({
   children,
 }: {

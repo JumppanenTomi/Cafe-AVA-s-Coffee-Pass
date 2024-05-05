@@ -3,6 +3,11 @@ import UpdateStamp from "./updateStamp";
 import DeleteStamp from "./deleteStamp";
 import { Stamp } from "./interface";
 
+/**
+ * Renders a menu for a specific stamp with options to update or delete.
+ * @param {Object} stamp - The stamp object.
+ * @returns {JSX.Element} A MenuStamp component for the given stamp.
+ */
 export default function MenuStamp({ stamp }: { stamp: Stamp }) {
   const [menu, setMenu] = useState(false);
 

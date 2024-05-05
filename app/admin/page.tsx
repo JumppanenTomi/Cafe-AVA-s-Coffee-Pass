@@ -4,6 +4,12 @@ import {
   getStampTimestamps,
 } from "@/utils/ServerActions/stats";
 
+/**
+ * Fetches and displays stamp and login count data in line charts.
+ * @returns {JSX.Element} A component that displays two line charts: 
+ * one for the number of stamps given each month, 
+ * and one for the number of temporary codes (user sessions) generated.
+ */
 export default async function Admin() {
   const timeStamps = await getStampTimestamps();
   const temps = await getLoginsCount();

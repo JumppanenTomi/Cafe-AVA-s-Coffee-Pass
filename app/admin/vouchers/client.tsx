@@ -27,17 +27,25 @@ const handleShowLabel = (row: any, headCell: HeadCell) => {
   }
 };
 
+/**
+ * Renders a list of vouchers with their respective details.
+ * @param {Object} params - The parameters for the VouchersClient.
+ * @param {Voucher[]} params.vouchers - The array of vouchers to be displayed.
+ * @param {number} params.count - The total count of vouchers.
+ * @param {string} params.query - The search query string.
+ * @param {string} params.sort - The sort order.
+ * @param {number} params.currentPage - The current page number.
+ * @returns {JSX.Element} A VouchersClient component with the list of vouchers.
+ */
 export default function VouchersClient({
   vouchers,
   count,
-  users,
   query,
   sort,
   currentPage,
 }: {
   vouchers: Voucher[];
   count: number;
-  users: any[];
   query: string;
   sort: string;
   currentPage: number;
@@ -91,6 +99,7 @@ export default function VouchersClient({
   );
 }
 
+ // Defines the headers for the vouchers table.
 const headCells: readonly HeadCell[] = [
   {
     id: "id",

@@ -5,6 +5,10 @@ import { Stamp } from "./interface";
 import { deleteStamps } from "@/utils/ServerActions/stamp";
 import DeleteModal from "@/components/UIOverlays/DeleteModal";
 
+/**
+ * Provides functionality to delete a stamp.
+ * @returns {JSX.Element} A component that allows a user to delete a stamp.
+ */
 export default function DeleteStamp({
   stamp,
   handleMenu,

@@ -5,6 +5,12 @@ import { VoucherType } from "./interface";
 import { deleteVoucherTypes } from "@/utils/ServerActions/voucher_types";
 import DeleteModal from "@/components/UIOverlays/DeleteModal";
 
+/**
+ * Provides functionality to delete a voucher type.
+ * @param {VoucherType} voucherType - The voucher type to delete.
+ * @param {Function} handleMenu - Function to handle menu actions.
+ * @returns {JSX.Element} A component that allows an admin to delete a voucher type.
+ */
 export default function DeleteVoucherType({
   voucherType,
   handleMenu,

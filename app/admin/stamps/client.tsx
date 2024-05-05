@@ -27,6 +27,16 @@ export interface HeadCell {
   type: string;
 }
 
+/**
+ * Renders a list of stamps with their respective details.
+ * @param {Object} params - The parameters for the StampsClient.
+ * @param {Stamp[]} params.stamps - The array of stamps to be displayed.
+ * @param {number} params.count - The total count of stamps.
+ * @param {string} params.query - The search query string.
+ * @param {string} params.sort - The sort order.
+ * @param {number} params.currentPage - The current page number.
+ * @returns {JSX.Element} A StampsClient component with the list of stamps.
+ */
 export default function StampsClient({
   stamps,
   count,

@@ -11,6 +11,12 @@ import { createStamps } from "@/utils/ServerActions/stamp";
 import AdminAddModalButton from "@/components/Inputs/buttons/AdminAddModalButton";
 import AdminAddButton from "@/components/Inputs/buttons/AdminAddButton";
 
+/**
+ * Provides functionality to add a stamp for a user.
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.user_id - The id of the user to add a stamp for.
+ * @returns {JSX.Element} A component that allows an admin to add stamps for users.
+ */
 export default function AddStamp(props?: { user_id?: string }) {
   const [modal, setModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);

@@ -8,6 +8,12 @@ import TextInput from "@/components/Inputs/TextInput";
 import NumberInput from "@/components/Inputs/NumberInput";
 import { updateVoucherType } from "@/utils/ServerActions/voucher_types";
 
+/**
+ * Provides functionality to update a voucher type.
+ * @param {VoucherType} voucherType - The voucher type to update.
+ * @param {Function} handleMenu - Function to handle menu actions.
+ * @returns {JSX.Element} A component that allows an admin to update a voucher type.
+ */
 export default function UpdateVoucherType({
   voucherType,
   handleMenu,
