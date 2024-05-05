@@ -1,3 +1,6 @@
+"use client";
+import React, { useState } from "react";
+
 interface AutoCompleteInputProps {
   inputName?: string;
   showLabel?: boolean;
@@ -21,8 +24,24 @@ export default function AutoCompleteInput({
   options,
   helperText = "",
 }: AutoCompleteInputProps) {
+  const [openDropdown, setOpenDropdown] = useState(false);
+  const [inputValue, setInputValue] = useState(defaultValue || "");
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    console.log(value);
+    setInputValue(value);
+    onInputChange(value);
+  };
+
+  const handleOptionClick = (value: string) => {
+    setInputValue(value);
+    onInputChange(value);
+    setOpenDropdown(false);
+  };
+
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       {showLabel && (
         <label className='input-label' htmlFor={inputName}>
           {inputLabel} {isRequired && <label>*</label>}
@@ -30,22 +49,21 @@ export default function AutoCompleteInput({
       )}
       <input
         className='input'
-        list={inputName}
         name={inputName}
         placeholder={inputPlaceholder}
         required={isRequired}
-        defaultValue={defaultValue}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          onInputChange(event.target.value)
-        }
+        value={inputValue}
+        onChange={handleInputChange}
+        onFocus={() => setOpenDropdown(true)}
+        onBlur={() => setOpenDropdown(false)}
       />
-      <datalist id={inputName} style={{display: "block"}}>
+      <div className='dropdown'>
         {options.map((opt, index) => (
-          <option key={index} value={opt.id}>
+          <div key={index} onClick={() => handleOptionClick(opt.id.toString())}>
             {opt.label}
-          </option>
+          </div>
         ))}
-      </datalist>
+      </div>
       {helperText && <p className='input-helper-text'>{helperText}</p>}
     </div>
   );
