@@ -14,6 +14,7 @@ import FadeIn from "@/components/Animations/Render/FadeIn";
 import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 import getRole from "@/utils/getRole";
 import Stamps from "@/components/stamps/Stamps";
+import StampsInfo from "@/components/stamps/StampsInfo";
 type NavigationLinkProps = {
   href: string;
   icon: IconDefinition;
@@ -82,9 +83,15 @@ export default async function ProtectedPage() {
             isExternal={true}
           />
         </FadeIn>
-        <div className={"flex flex-col items-center justify-center"}>
-          <OverZoomIn className='z-40 white-container-minimal-p' duration={0.8}>
-            <StampCode />
+        <div className={"flex flex-col justify-center"}>
+          <OverZoomIn
+            className='z-40 flex flex-col items-end gap-2'
+            duration={0.8}
+          >
+            <StampsInfo />
+            <div className='white-container-minimal-p'>
+              <StampCode />
+            </div>
           </OverZoomIn>
           <RollDown
             animateTop={[-150, 0]}
