@@ -289,7 +289,8 @@ const getPrivateVouchers = async () => {
     const { data, error } = await supabase
       .from("all_vouchers")
       .select('*,voucher_type(*)')
-      .eq('user_id', `${userId}`);
+      .eq('user_id', `${userId}`)
+      .gte('end', new Date().toISOString()) // Filter for expiry date greater than or equal to current date
 
     if (error) {
       throw new Error(error.message)
@@ -312,6 +313,9 @@ const getPublicVouchers = async () => {
     const { data, error } = await supabase
       .from("public_vouchers")
       .select('*, voucher_type(*)')
+      .gte('end', new Date().toISOString()) // Filter for expiry date greater than or equal to current date
+
+
 
     if (error) {
       throw new Error(error.message)
