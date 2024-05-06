@@ -40,8 +40,8 @@ const VoucherQR = ({
   // Close the QR code after 3 seconds when the voucher is used
   useEffect(() => {
     if (used !== currentUsed || active) {
-      setFlip(true);
-      setCurrentUsed(used);
+      setFlip(true); // flip the card
+      setCurrentUsed(used); // update used
       setTimeout(() => {
         setShowQrCode(false)
       }, 3000);
@@ -52,7 +52,7 @@ const VoucherQR = ({
     <div className='voucher-background'>
       <div className="mt-8">
         <ReactCardFlip isFlipped={flip} flipDirection="horizontal">
-
+          {/* front side */}
           <div className="voucher" >
             <div className='close-button' onClick={() => setShowQrCode(false)}>
               <XCircleIcon className='h-9 w-9' />
@@ -68,9 +68,8 @@ const VoucherQR = ({
               <div className='circleActive animate-ping' />
               <div className='circleActive' />
             </div>
-
           </div>
-
+          {/* back side */}
           <div className="voucher">
             <div className='close-button' onClick={() => setShowQrCode(false)}>
               <XCircleIcon className='h-9 w-9' />
@@ -85,7 +84,6 @@ const VoucherQR = ({
               <div className='circleActive animate-ping' />
               <div className='circleActive' />
             </div>
-
           </div>
         </ReactCardFlip >
       </div>
