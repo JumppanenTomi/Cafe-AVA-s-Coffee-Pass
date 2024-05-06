@@ -2,8 +2,9 @@
 import { motion } from "framer-motion";
 import { AnimationProps } from "../AnimationProps";
 
+
 /**
- * Renders a component with an overzoom-in animation.
+ * Renders a child-component with an overzoom-in animation.
  *
  * @param props - The animation props.
  * @returns The animated component.

@@ -9,6 +9,18 @@ import { useEffect, useState } from "react";
 import { fetchUsers } from "@/utils/ServerActions/user";
 import { fetchAllVouchers, usePublicVoucher, usePrivateVoucher } from "@/utils/ServerActions/voucher";
 
+/**
+ * Provides functionality to redeem a voucher.
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.redeemed_user_id - The ID of the user redeeming the voucher.
+ * @param {string | number} props.voucher_id - The ID of the voucher to be redeemed.
+ * @param {number} props.uses - The number of uses of the voucher.
+ * @param {number | null} props.max_uses - The maximum number of uses of the voucher.
+ * @param {string | null} props.voucher_user_id - The ID of the user who owns the voucher.
+ * @param {string | null} props.user_email - The email of the user redeeming the voucher.
+ * @param {number | null} props.times_used - The number of times the voucher has been used.
+ * @returns {JSX.Element} A component that allows a user to redeem a voucher.
+ */
 export default function RedeemVoucher(props:
   {
     redeemed_user_id: string,

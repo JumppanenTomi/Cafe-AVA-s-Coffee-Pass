@@ -12,6 +12,13 @@ import {
 import { FormSubmitButton } from "@/components/Inputs/buttons/FormSubmitButton";
 import { findUser } from "@/utils/ServerActions/user";
 
+/**
+ * Provides functionality to bulk remove stamps from a user.
+ * @param {Object} props - The properties passed to the component.
+ * @param {string} props.user_id - The id of the user to remove stamps from.
+ * @param {number} props.currentAmount - The current amount of stamps the user has.
+ * @returns {JSX.Element} A component that allows an admin to bulk remove stamps from users.
+ */
 export default function BulkRemoveStamps(props?: {
   user_id?: string;
   currentAmount?: number;

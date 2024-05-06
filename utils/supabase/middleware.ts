@@ -2,6 +2,13 @@ import { Database } from "@/types/supabase";
 import { type CookieOptions, createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
+/**
+ * Updates the session by creating a Supabase client and refreshing the session if expired.
+ * This function is used as middleware in Next.js.
+ *
+ * @param request - The Next.js request object.
+ * @returns The Next.js response object.
+ */
 export const updateSession = async (request: NextRequest) => {
   // This `try/catch` block is only here for the interactive tutorial.
   // Feel free to remove once you have Supabase connected.
@@ -13,6 +20,14 @@ export const updateSession = async (request: NextRequest) => {
       },
     });
 
+    /**
+     * The Supabase client instance.
+     *
+     * @remarks
+     * This client is used to interact with the Supabase database.
+     *
+     * @typeParam Database - The type of the Supabase database.
+     */
     const supabase = createServerClient<Database>(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,

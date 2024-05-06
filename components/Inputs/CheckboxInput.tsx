@@ -6,6 +6,15 @@ interface CheckboxInputProps {
   isRequired?: boolean;
 }
 
+/**
+ * Renders a checkbox input component.
+ *
+ * @param {Object} props - The component props.
+ * @param {React.ReactNode} props.children - The content to be rendered inside the component.
+ * @param {string} [props.inputName="checkbox"] - The name attribute for the checkbox input.
+ * @param {boolean} [props.isRequired=false] - Specifies whether the checkbox input is required.
+ * @returns {JSX.Element} The rendered checkbox input component.
+ */
 export default function CheckboxInput({
   children,
   inputName = "checkbox",

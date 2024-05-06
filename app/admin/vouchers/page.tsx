@@ -1,7 +1,14 @@
 import { fetchVouchers, fetchVouchersCount } from "@/utils/ServerActions/voucher";
 import VouchersClient from "./client";
-import { fetchUsers } from "@/utils/ServerActions/user";
 
+/**
+ * Fetches and displays a list of vouchers based on the provided search parameters.
+ * @param {Object} searchParams - The search parameters.
+ * @param {string} searchParams.query - The search query string.
+ * @param {string} searchParams.sort - The sort order.
+ * @param {string} searchParams.page - The current page number.
+ * @returns {JSX.Element} A VouchersClient component with the list of vouchers.
+ */
 export default async function VouchersPage({
   searchParams = {},
 }: {
@@ -11,6 +18,7 @@ export default async function VouchersPage({
     page?: string;
   };
 }) {
+  // Extract search parameters
   const { query = '', sort = '-id', page } = searchParams;
   const currentPage = Number(page) || 1;
 
@@ -20,7 +28,6 @@ export default async function VouchersPage({
     fetchVouchersCount(query),
   ]);
 
-  const users = await fetchUsers(1);
 
-  return <VouchersClient vouchers={vouchers} count={count} users={users} query={query} sort={sort} currentPage={currentPage} />;
+  return <VouchersClient vouchers={vouchers} count={count} query={query} sort={sort} currentPage={currentPage} />;
 }

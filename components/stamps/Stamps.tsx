@@ -8,12 +8,21 @@ import CoffeeCup from "../SVG/CoffeeCup";
 import { GiftIcon } from "@heroicons/react/24/outline";
 import { supabaseTableSubscription } from "@/utils/ServerActions/subscriptions";
 
+
+/**
+ * Renders a component that displays stamps based on the user's active stamp count.
+ * If the user has collected enough stamps, a congratulations message is shown.
+ * If there is an error loading the stamps, an error message is displayed.
+ */
 const Stamps = () => {
   const supabase = createClient();
   const [stampsRequired, setStampsRequired] = useState<undefined | number>(0);
   const [stampsCollectedMessage, setStampsCollectedMessage] = useState<
     undefined | string
   >("");
+  const [activeStampCount, setActiveStampCount] = useState(0);
+  const [userId, setUserId] = useState("");
+  const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchStamps = async () => {
@@ -28,15 +37,6 @@ const Stamps = () => {
         setStampsCollectedMessage(result.value);
       }
     };
-    fetchStamps();
-    fetchCollectedMessage();
-  }, []);
-
-  const [activeStampCount, setActiveStampCount] = useState(0);
-  const [userId, setUserId] = useState("");
-  const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
-
-  useEffect(() => {
     const getUser = async () => {
       const {
         data: { user },
@@ -44,6 +44,8 @@ const Stamps = () => {
       setUserId(user?.id || "");
     };
     getUser();
+    fetchStamps();
+    fetchCollectedMessage();
   }, []);
 
   useEffect(() => {

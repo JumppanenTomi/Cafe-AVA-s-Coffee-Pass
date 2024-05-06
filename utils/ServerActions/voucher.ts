@@ -219,6 +219,12 @@ export const fetchVoucherTypes = async (query: string) => {
   }
 };
 
+/**
+ * Updates a voucher with the specified ID using the provided form data.
+ * @param id - The ID of the voucher to update.
+ * @param formData - The form data containing the updated voucher information.
+ * @returns A Promise that resolves to `null` if the update is successful, or throws an error if there is an issue.
+ */
 export const updateVoucher = async (id: number, formData: FormData) => {
   try {
     const supabase = createClient(true);
@@ -272,6 +278,10 @@ export const updatePublicVoucherLogs = async (uses: number, user_id: string, vou
 
 // this is for second version of database
 
+/**
+ * Retrieves private vouchers for the current user.
+ * @returns {Promise<Array<Object>>} The array of private vouchers.
+ */
 const getPrivateVouchers = async () => {
   const supabase = createClient()
   const userId = await getUserId();
@@ -291,6 +301,10 @@ const getPrivateVouchers = async () => {
   }
 }
 
+/**
+ * Retrieves public vouchers from the database.
+ * @returns {Promise<Array<Object>>} A promise that resolves to an array of public vouchers.
+ */
 const getPublicVouchers = async () => {
   const supabase = createClient()
 
@@ -332,6 +346,11 @@ export const getAllPublicVoucherLogs = async () => {
   }
 }
 
+/**
+ * Retrieves the number of times a public voucher has been used by a specific user.
+ * @param voucherId - The ID of the public voucher.
+ * @returns The number of times the public voucher has been used by the user.
+ */
 const getPublicVoucherUses = async (voucherId: number) => {
   const userId = await getUserId();
 
@@ -357,6 +376,12 @@ const getPublicVoucherUses = async (voucherId: number) => {
   }
 }
 
+/**
+ * Fetches all vouchers from the server.
+ * 
+ * @returns {Promise<Array<Object>>} A promise that resolves to an array of vouchers.
+ * @throws {Error} If there is an error fetching the vouchers.
+ */
 export const fetchAllVouchers = async () => {
   try {
     const [privateVouchers, publicVouchers] = await Promise.all([
@@ -390,6 +415,11 @@ export const fetchAllVouchers = async () => {
   }
 };
 
+/**
+ * Updates the usage count of a public voucher in the database.
+ * @param voucherId - The ID of the voucher to update.
+ * @param userId - The ID of the user who is using the voucher.
+ */
 export const usePublicVoucher = async (voucherId: number, userId: string) => {
   const supabase = createClient();
 
@@ -407,6 +437,11 @@ export const usePublicVoucher = async (voucherId: number, userId: string) => {
   }
 };
 
+/**
+ * Increments the usage count of a private voucher in the database.
+ * 
+ * @param voucherId - The ID of the voucher to increment the usage count for.
+ */
 export const usePrivateVoucher = async (voucherId: number) => {
   const supabase = createClient();
   try {

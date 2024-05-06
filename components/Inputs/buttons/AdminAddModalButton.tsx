@@ -3,6 +3,14 @@ interface AdminAddModalButtonProps {
   handleChange: () => void
 }
 
+/**
+ * Renders a button component for an admin modal with a title and a change event handler.
+ *
+ * @param {Object} props - The component props.
+ * @param {string} props.title - The title of the button.
+ * @param {Function} props.handleChange - The event handler for the button click.
+ * @returns {JSX.Element} The rendered button component.
+ */
 export default function AdminAddModalButton({ title, handleChange }: AdminAddModalButtonProps) {
   return (
     <div className="flex items-center justify-between pb-4 mb-4 border-b rounded-t sm:mb-5">

@@ -27,7 +27,6 @@ export const addNewTempCode = async (code: string) => {
 
     return codeData;
   } catch (error: any) {
-    //Todo: Add logging
     console.error(`Failed to insert new temp code: ${error.message}`);
     return error;
   }
@@ -57,7 +56,6 @@ export const fetchUserIdFromTempCode = async (code: string) => {
     if (tempCodes?.length > 0) return tempCodes[0].user_id;
     else throw new Error("Unknown error");
   } catch (error: any) {
-    //Todo: Add logging
     console.error(`Failed to fetch user ID from temp code: ${error.message}`);
     return null;
   }
@@ -80,7 +78,6 @@ export const markTempCodeAsUsed = async (code: string) => {
       throw new Error(error.toString());
     }
   } catch (error: any) {
-    //Todo: Add logging
     console.error(`Failed to mark temp code as used: ${error.message}`);
     return error;
   }

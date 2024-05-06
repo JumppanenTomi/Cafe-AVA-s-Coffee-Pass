@@ -3,6 +3,11 @@ import UpdateVoucherType from "./updateVoucherType";
 import DeleteVoucherType from "./deleteVoucherType";
 import { VoucherType } from "./interface";
 
+/**
+ * Renders a menu for a specific voucher type with options to update or delete.
+ * @param {Object} voucherType - The voucher type object.
+ * @returns {JSX.Element} A MenuVoucherType component for the given voucher type.
+ */
 export default function MenuVoucherType({ voucherType }: { voucherType: VoucherType }) {
   const [menu, setMenu] = useState(false);
 
@@ -34,7 +39,7 @@ export default function MenuVoucherType({ voucherType }: { voucherType: VoucherT
       <div
         className={`
             ${menu ? "block" : "hidden"} 
-            z-10 absolute right-6 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 text-left
+            z-10 absolute right-20 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 text-left
         `}
       >
         <ul className="py-2 text-sm text-gray-700">

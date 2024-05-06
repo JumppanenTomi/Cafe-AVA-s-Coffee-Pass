@@ -2,6 +2,10 @@ import { authenticateWithGoodle } from "@/utils/ServerActions/authentication";
 import CheckboxInput from "../CheckboxInput";
 import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 
+/**
+ * Returns a form for social login. That form includes a Google login button and a checkbox for terms and conditions. More social login options can be added in the future.
+ * @returns {Promise<void>} A promise that resolves when the social login is completed.
+ */
 export default async function SocialLogin() {
   const termsOfUseUrl = await fetchSiteSetting("termsOfUseUrl");
   const privacyPolicyUrl = await fetchSiteSetting("privacyPolicyUrl");
@@ -12,7 +16,7 @@ export default async function SocialLogin() {
           formAction={authenticateWithGoodle}
           className='w-full btn-primary'
         >
-          Sing in with Google
+          Sign in with Google
         </button>
         <CheckboxInput isRequired={true}>
           <p>

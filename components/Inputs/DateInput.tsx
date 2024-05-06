@@ -7,6 +7,18 @@ interface DateInputProps {
   isRequired?: boolean;
 }
 
+/**
+ * Renders a date input component.
+ *
+ * @param {DateInputProps} props - The props for the DateInput component.
+ * @param {string} props.inputName - The name of the input element.
+ * @param {boolean} props.showLabel - Determines whether to show the input label.
+ * @param {string} props.inputLabel - The label text for the input element.
+ * @param {string} props.inputPlaceholder - The placeholder text for the input element.
+ * @param {string} props.defaultValue - The default value for the input element.
+ * @param {boolean} props.isRequired - Determines whether the input is required.
+ * @returns {JSX.Element} The rendered DateInput component.
+ */
 export default function DateInput({
   inputName = "date",
   showLabel = true,

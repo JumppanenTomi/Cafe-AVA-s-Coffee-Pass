@@ -2,6 +2,11 @@ import { Database } from "@/types/supabase";
 import { type CookieOptions, createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
+/**
+ * Creates a Supabase client with the specified configuration.
+ * @param hasService - Indicates whether the client should be created with a service role.
+ * @returns The Supabase client instance.
+ */
 export const createClient = (hasService: Boolean = false) => {
   const cookieStore = cookies();
   const { NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY, NEXT_PRIVATE_SERVICE_ROLE_KEY } = process.env;

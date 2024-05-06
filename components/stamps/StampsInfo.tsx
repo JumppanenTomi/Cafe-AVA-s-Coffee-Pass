@@ -4,6 +4,10 @@ import Popup from "../UIOverlays/popup";
 import { useEffect, useState } from "react";
 import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 
+/**
+ * Renders the StampsInfo component.
+ * This component displays information about stamp rules and allows the user to view more details in a popup.
+ */
 export default function StampsInfo() {
   const [visible, setVisible] = useState(false);
   const [rules, setRules] = useState<any>();

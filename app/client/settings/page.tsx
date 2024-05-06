@@ -1,4 +1,3 @@
-import { createClient } from "@/utils/supabase/server";
 import AuthButton from "@/components/Inputs/buttons/AuthButton";
 import LinkButton from "@/components/Inputs/buttons/LinkButton";
 import GetDataButton from "@/components/Inputs/buttons/GetDataButton";

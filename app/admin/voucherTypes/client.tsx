@@ -27,6 +27,16 @@ const handleShowLabel = (row: any, headCell: HeadCell) => {
   }
 };
 
+/**
+ * Renders a list of voucher types with their respective details.
+ * @param {Object} params - The parameters for the VoucherTypesClient.
+ * @param {VoucherType[]} params.voucherTypes - The array of voucher types to be displayed.
+ * @param {number} params.count - The total count of voucher types.
+ * @param {string} params.query - The search query string.
+ * @param {string} params.sort - The sort order.
+ * @param {number} params.currentPage - The current page number.
+ * @returns {JSX.Element} A VoucherTypesClient component with the list of voucher types.
+ */
 export default function VoucherTypesClient({
   voucherTypes,
   count,

@@ -4,6 +4,15 @@ interface AdminAddButtonProps {
   title: string
 }
 
+/**
+ * Renders an admin add button component.
+ *
+ * @param {Object} props - The component props.
+ * @param {Function} props.handleChange - The function to handle the change event.
+ * @param {boolean} props.modal - A boolean indicating whether the modal is visible or not.
+ * @param {string} props.title - The title of the button.
+ * @returns {JSX.Element} The rendered admin add button component.
+ */
 export default function AdminAddButton({ handleChange, modal, title }: AdminAddButtonProps) {
   return (
     <div>

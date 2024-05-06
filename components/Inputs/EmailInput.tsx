@@ -7,6 +7,18 @@ interface EmailInputProps {
   helperText?: string;
 }
 
+/**
+ * Renders an email input field.
+ *
+ * @param {EmailInputProps} props - The props for the EmailInput component.
+ * @param {string} props.inputName - The name attribute for the input field.
+ * @param {boolean} props.showLabel - Determines whether to show the input label.
+ * @param {string} props.inputLabel - The label text for the input field.
+ * @param {string} props.inputPlaceholder - The placeholder text for the input field.
+ * @param {boolean} props.isRequired - Determines whether the input field is required.
+ * @param {string} props.helperText - The helper text to display below the input field.
+ * @returns {JSX.Element} The rendered EmailInput component.
+ */
 export default function EmailInput({
   inputName = "email",
   showLabel = true,

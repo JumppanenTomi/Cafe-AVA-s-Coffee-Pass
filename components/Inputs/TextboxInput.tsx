@@ -12,6 +12,12 @@ interface TextInputProps {
   cols?: number;
 }
 
+/**
+ * Renders a textbox input component.
+ *
+ * @param {TextInputProps} props - The input component props.
+ * @returns {JSX.Element} The rendered textbox input component.
+ */
 export default function TextboxInput({
   inputName = "text",
   showLabel = true,

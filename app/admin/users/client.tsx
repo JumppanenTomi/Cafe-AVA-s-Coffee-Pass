@@ -19,6 +19,16 @@ export interface HeadCell {
   type: string;
 }
 
+/**
+ * Renders a list of users with their respective details.
+ * @param {Object} params - The parameters for the UsersClient.
+ * @param {any[]} params.users - The array of users to be displayed.
+ * @param {number} params.count - The total count of users.
+ * @param {string} params.query - The search query string.
+ * @param {string} params.sort - The sort order.
+ * @param {number} params.currentPage - The current page number.
+ * @returns {JSX.Element} A UsersClient component with the list of users.
+ */
 export default function UsersClient({
   users,
   count,

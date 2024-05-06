@@ -5,14 +5,19 @@ import { QuestionMarkCircleIcon } from "@heroicons/react/20/solid";
 import { fetchSiteSetting } from "@/utils/ServerActions/siteSetting";
 import { UserIcon } from "@heroicons/react/24/solid";
 
+/**
+ * Renders the navigation component.
+ * @returns The JSX element representing the navigation component.
+ */
 export default async function Nav() {
-  const logoUrl = await fetchSiteSetting("logoUrl");
+  const logoUrl = await fetchSiteSetting("logoUrl");//fetch the logo url
 
   return (
     <nav className='flex items-center justify-between w-full sm:py-5 bg-background'>
       <Link href={"/client/faq"} className='p-3'>
         <QuestionMarkCircleIcon className={"h-7"} />
       </Link>
+      {/* If the logoUrl is set, display the logo from the URL. Otherwise, display the default logo. */}
       <Link href={"/client"}>
         {logoUrl && logoUrl.value ? (
           <>

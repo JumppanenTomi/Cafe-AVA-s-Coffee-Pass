@@ -6,6 +6,13 @@ const PAGE_NUMBERS_TO_SHOW = 5;
 const PAGE_SIZE = 25;
 const PAGE_PLACE_HOLDER = -1;
 
+/**
+ * Generates an array of page numbers or placeholders based on the current page and total number of pages.
+ *
+ * @param currentPage - The current page number.
+ * @param totalPages - The total number of pages.
+ * @returns An array of page numbers or placeholders.
+ */
 const generatePageNumbers = (
   currentPage: number,
   totalPages: number
@@ -37,11 +44,21 @@ const generatePageNumbers = (
   }
 };
 
+/**
+ * Pagination component for displaying navigation links to different pages.
+ *
+ * @param count - The total number of items.
+ */
 export default function Pagination({ count }: { count: number }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || START_PAGE;
 
+  /**
+   * Creates a URL with the specified page number.
+   * @param {number | string} pageNumber - The page number to include in the URL.
+   * @returns {string} The generated URL.
+   */
   const createPageURL = (pageNumber: number | string): string => {
     const params = new URLSearchParams(searchParams);
     if (Number(pageNumber) > 0 && Number(pageNumber) <= totalPages) {
@@ -50,7 +67,7 @@ export default function Pagination({ count }: { count: number }) {
     return `${pathname}?${params.toString()}`;
   };
 
-  const startEntry = (currentPage - 1) * PAGE_SIZE + 1;
+  const startEntry = (currentPage - 1) * PAGE_SIZE + 1;//
   const endEntry = Math.min(startEntry + PAGE_SIZE - 1, count);
   const totalPages = Math.ceil(count / PAGE_SIZE);
   const pageNumbers = generatePageNumbers(currentPage, totalPages);

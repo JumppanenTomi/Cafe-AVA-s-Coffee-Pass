@@ -12,9 +12,9 @@ export default async function Register({
 }: {
   searchParams: { isError: string; message: string };
 }) {
-  const registerText = await fetchSiteSetting("registerText");
-  const termsOfUseUrl = await fetchSiteSetting("termsOfUseUrl");
-  const privacyPolicyUrl = await fetchSiteSetting("privacyPolicyUrl");
+  const registerText = await fetchSiteSetting("registerText"); //fetches the register text from the database
+  const termsOfUseUrl = await fetchSiteSetting("termsOfUseUrl"); //fetches the terms of use url from the database
+  const privacyPolicyUrl = await fetchSiteSetting("privacyPolicyUrl"); //fetches the privacy policy url from the database
 
   return (
     <div className='flex flex-col justify-between flex-1 w-full'>
@@ -56,6 +56,7 @@ export default async function Register({
             </FormSubmitButton>
           </div>
         </Form>
+        {/*if the environment is local, show the link to the dev mailbox*/}
         {process.env.NEXT_PUBLIC_VERCEL_URL! === "http://localhost:3000" && (
           <div className={"flex flex-col w-full"}>
             <Link href={"http://127.0.0.1:54324/"} className={"btn-primary"}>

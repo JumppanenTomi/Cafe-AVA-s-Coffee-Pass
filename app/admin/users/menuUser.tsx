@@ -1,6 +1,11 @@
 import { useState } from "react";
 import ChangeRoleUser from "./changeRoleUser";
 
+/**
+ * Renders a menu for a specific user with an option to change their role.
+ * @param {Object} user - The user object.
+ * @returns {JSX.Element} A MenuUser component for the given user.
+ */
 export default function MenuUser({ user }: { user: any }) {
   const [menu, setMenu] = useState(false);
 
