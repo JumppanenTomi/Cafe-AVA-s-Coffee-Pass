@@ -22,12 +22,12 @@ export const signIn = async (formData: FormData) => {
   const supabase = createClient();
 
   try {
-    console.log(process.env.NEXT_PUBLIC_VERCEL_URL)
+    console.log(process.env.NEXT_PUBLIC_SITE_URL)
     const { data, error } = await supabase.auth.signInWithOtp({
       email,
       options: {
         shouldCreateUser: false,
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_VERCEL_URL!}/auth/callback`,
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL!}/auth/callback`,
       },
     });
 
