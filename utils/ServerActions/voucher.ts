@@ -365,7 +365,6 @@ const getPublicVoucherUses = async (voucherId: number) => {
     if (error) {
       throw new Error(error.message);
     }
-    console.log('used', data[0].used_per_user);
     return data[0].used_per_user;
   } catch (error: any) {
     if (error.message === `Cannot read properties of undefined (reading 'used_per_user')`) // this is part of the logic, we check whether this voucher has been used at all
@@ -396,8 +395,6 @@ export const fetchAllVouchers = async () => {
     await Promise.all(publicVouchers.map(async (pv) => {
       try {
         const used = (await getPublicVoucherUses(pv.id)) || 0 // if voucher has not been used, the we show 0
-        console.log(used);
-
         pv.used = used ? used : 0;
       } catch (error: any) {
         console.error(`Error fetching public voucher uses: ${error.message}`);
@@ -406,7 +403,6 @@ export const fetchAllVouchers = async () => {
     }));
 
     const allVouchers = [...privateVouchers, ...publicVouchers]
-    console.log(allVouchers);
 
     return allVouchers;
   } catch (error: any) {

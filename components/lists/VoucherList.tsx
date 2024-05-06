@@ -29,10 +29,8 @@ const VoucherListItem = ({ voucher }:
             const uid = await getUserId()
             setUserId(uid)
         };
-
         userId();
     }, [])
-
 
     return (
         <div key={voucher.id}>
@@ -85,7 +83,7 @@ const VoucherList = ({ initialVouchers }: {
                 console.error('Error updating vouchers:', error); // Log if there's an error updating vouchers
             }
         };
-
+        // subscriptions to keep track of realtime updates on the voucher
         const subscription = supabase
             .channel('table-db-changes')
             .on('postgres_changes',
@@ -131,9 +129,7 @@ const VoucherList = ({ initialVouchers }: {
                     handleChange()
                 }
             )
-
             .subscribe();
-
         return () => {
             subscription.unsubscribe();
         };
