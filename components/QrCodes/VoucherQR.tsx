@@ -33,12 +33,6 @@ const VoucherQR = ({
     }
   }, [used]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setFlip(!flip)
-
-    }, 2000)
-  },)
 
   return (
     <div className='voucher-background'>
@@ -55,15 +49,10 @@ const VoucherQR = ({
               }
               width={400}
             />
-            <div className='voucher-part items-center '>
-              <div className="border-2">
-                <h1>{name}</h1>
-
-                <div className='circleActive animate-ping'></div>
-                <div className='circleActive'></div>
-
-              </div>
-
+            <div className='voucher-part'>
+              <h1>{name}</h1>
+              <div className='circleActive animate-ping'></div>
+              <div className='circleActive'></div>
             </div>
 
           </div>
@@ -77,7 +66,7 @@ const VoucherQR = ({
                 <h1>{redeemMessage ? redeemMessage : "Enjoy!"}</h1>
               </div>
             </div>
-            <div className=' items-center voucher-part'>
+            <div className=' voucher-part p-12'>
               <h1>redeemed</h1>
               <div className='circleActive animate-ping' />
               <div className='circleActive' />

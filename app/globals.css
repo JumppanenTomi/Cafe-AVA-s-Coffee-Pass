@@ -138,9 +138,9 @@ p {
 }
 
 .voucher-part {
-  @apply p-5 bg-white text-center border-t-2 rounded-b-lg shadow-2xl;
+  @apply p-5 bg-white text-center items-center border-t-2 rounded-b-lg shadow-2xl top-1/2 relative
 }
 
 .circleActive {
-  @apply absolute w-3 h-3 bg-green-500 rounded-full right-7;
+  @apply absolute w-3 h-3 bg-green-500 rounded-full align-middle right-2;
 }
