@@ -1,6 +1,13 @@
 import { ChangeEvent } from "react";
 const _ = require("lodash");
 
+/**
+ * Handles the display of labels for a given row and head cell.
+ * 
+ * @param row - The row object.
+ * @param headCell - The head cell object.
+ * @returns The label to be displayed.
+ */
 const handleShowLabel = (row: any, headCell: HeadCell) => {
   const value = _.get(row, headCell.id);
 
@@ -19,6 +26,16 @@ export interface HeadCell {
   type: string;
 }
 
+/**
+ * Renders the body of a table.
+ *
+ * @param data - The array of data to be rendered in the table.
+ * @param rowKey - The key used to identify each row in the data array.
+ * @param headCells - An array of objects representing the table's header cells.
+ * @param handleSelectClick - A function to handle the click event on the select checkbox.
+ * @param isSelected - A function to determine if a row is selected.
+ * @returns The rendered table body.
+ */
 export default function TableBody({
   data,
   rowKey,

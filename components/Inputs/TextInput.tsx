@@ -10,6 +10,19 @@ interface TextInputProps {
   helperText?: string;
 }
 
+/**
+ * A text input component.
+ *
+ * @param inputName - The name of the input element.
+ * @param showLabel - Determines whether to show the input label.
+ * @param inputLabel - The label text for the input element.
+ * @param inputPlaceholder - The placeholder text for the input element.
+ * @param isRequired - Determines whether the input is required.
+ * @param defaultValue - The default value for the input element.
+ * @param minLength - The minimum length allowed for the input value.
+ * @param maxLength - The maximum length allowed for the input value.
+ * @param helperText - The helper text to display below the input element.
+ */
 export default function TextInput({
   inputName = "text",
   showLabel = true,

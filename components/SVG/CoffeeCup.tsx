@@ -1,3 +1,12 @@
+/**
+ * Renders a coffee cup SVG icon.
+ *
+ * @param props - The component props.
+ * @param props.filled - Indicates whether the coffee cup should be filled or empty.
+ * @param props.className - The CSS class name for the SVG element.
+ * @param props.key - The unique key for the SVG element (optional).
+ * @returns The rendered coffee cup SVG icon.
+ */
 export default function CoffeeCup(props: {
   filled: boolean;
   className: string;

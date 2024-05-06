@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import BackButton from "@/components/Inputs/buttons/BackButton";
 import FadeIn from "@/components/Animations/Render/FadeIn";
 
-const DynamicMap = dynamic(() => import("@/components/Map"), { ssr: false });
+const DynamicMap = dynamic(() => import("@/components/Map"), { ssr: false });//import the map component dynamically to prevent server-side rendering
 
 export default function Page() {
   return (

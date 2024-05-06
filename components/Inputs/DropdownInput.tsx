@@ -11,6 +11,19 @@ interface DropdownInputProps {
   defaultOption?: string | number;
 }
 
+/**
+ * Renders a dropdown input component.
+ *
+ * @param {DropdownInputProps} props - The component props.
+ * @param {string} props.inputName - The name of the input element.
+ * @param {boolean} props.showLabel - Determines whether to show the input label.
+ * @param {boolean} props.labelOnSide - Determines whether to display the label on the side.
+ * @param {string} props.inputLabel - The label text for the input.
+ * @param {boolean} props.isRequired - Determines whether the input is required.
+ * @param {Array<{ value: string, display: string }>} props.options - The dropdown options.
+ * @param {string} props.defaultOption - The default selected option.
+ * @returns {JSX.Element} The rendered dropdown input component.
+ */
 export default function DropdownInput({
   inputName = "dropdown",
   showLabel = true,

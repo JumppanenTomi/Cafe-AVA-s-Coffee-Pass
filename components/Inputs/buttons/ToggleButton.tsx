@@ -3,6 +3,9 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 
+/**
+ * A toggle button component.
+ */
 export default function ToggleButton() {
   const [toggle, setToggle] = useState<boolean>(false);
   return (

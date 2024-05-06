@@ -7,9 +7,17 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 
 import "leaflet-defaulticon-compatibility";
 // END: Preserve spaces to avoid auto-sorting
-import {MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
+
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import Link from "next/link";
 
+/**
+ * Renders a map component.
+ *
+ * @param {number} height - The height of the map component.
+ * @param {string} width - The width of the map component.
+ * @returns {JSX.Element} The map component.
+ */
 export default function Map({height = 300, width = "maxContent"}: {height?: number, width?: any}) {
 	const lat = 60.1842447
 	const lng = 24.948159

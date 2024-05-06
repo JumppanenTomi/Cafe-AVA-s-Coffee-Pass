@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import { AnimationProps } from "../AnimationProps";
 
 /**
- * Renders a component with an overzoom-in animation.
+ * Fades in the child-component.
  *
  * @param props - The animation props.
- * @returns The animated component.
+ * @returns The rendered FadeIn component.
  */
 export default function FadeIn(props: AnimationProps) {
   return (

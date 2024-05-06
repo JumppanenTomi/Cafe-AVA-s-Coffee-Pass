@@ -10,6 +10,21 @@ interface NumberInputProps {
   helperText?: string;
 }
 
+/**
+ * Renders a number input component.
+ *
+ * @param {NumberInputProps} props - The component props.
+ * @param {string} props.inputName - The name of the input element.
+ * @param {boolean} props.showLabel - Determines whether to show the input label.
+ * @param {string} props.inputLabel - The label text for the input element.
+ * @param {string} props.inputPlaceholder - The placeholder text for the input element.
+ * @param {boolean} props.isRequired - Determines whether the input is required.
+ * @param {number} props.defaultValue - The default value for the input element.
+ * @param {number} props.min - The minimum value for the input element.
+ * @param {number} props.max - The maximum value for the input element.
+ * @param {string} props.helperText - The helper text to display below the input element.
+ * @returns {JSX.Element} The rendered number input component.
+ */
 export default function NumberInput({
   inputName = "number",
   showLabel = true,

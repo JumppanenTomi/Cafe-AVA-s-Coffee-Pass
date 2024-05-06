@@ -2,6 +2,11 @@ import { addNewTempCode } from "@/utils/ServerActions/tempCode"
 import QrCodeGen from "./QrCodeGen"
 import short from "short-uuid"
 
+/**
+ * Renders a QR code for stamp code generation.
+ * Generates a unique stamp code using a UUID generator and adds it to the temporary codes list.
+ * The QR code contains a URL that includes the stamp code.
+ */
 const StampCode = () => {
     const translator = short() // uuid generator
     const code = translator.generate()

@@ -1,5 +1,4 @@
-// Created by Tomi Jumppanen on 29.02.2024
-"use client"
+"use client";
 import { useEffect, useRef, useState } from "react";
 import qrcode, { QRCodeErrorCorrectionLevel } from "qrcode";
 
@@ -9,6 +8,16 @@ interface QrCodeGenProps {
   width?: number;
 }
 
+/**
+ * Generates a QR code based on the provided text.
+ *
+ * @component
+ * @param {QrCodeGenProps} props - The component props.
+ * @param {string} props.text - The text to be encoded in the QR code.
+ * @param {string} [props.errorCorrectionLevel="high"] - The error correction level for the QR code.
+ * @param {number} [props.width=500] - The width of the QR code in pixels.
+ * @returns {JSX.Element} The generated QR code as a canvas element.
+ */
 const QrCodeGen = ({
   text,
   errorCorrectionLevel = "high",

@@ -7,6 +7,14 @@ export interface HeadCell {
   type: string;
 }
 
+/**
+ * Renders the table head component.
+ *
+ * @component
+ * @param {Object} props - The component props.
+ * @param {readonly HeadCell[]} props.headCells - The array of head cells.
+ * @returns {JSX.Element} The JSX element representing the table head.
+ */
 export default function TableHead({
   headCells,
 }: {
@@ -16,6 +24,11 @@ export default function TableHead({
   const searchParams = useSearchParams();
   const sort = searchParams.get("sort") || "";
 
+  /**
+   * Creates a URL with the specified sort term.
+   * @param sortTerm - The sort term to be included in the URL.
+   * @returns The URL with the sort term.
+   */
   const createSortURL = (sortTerm: string): string => {
     const params = new URLSearchParams(searchParams);
     if (sort == sortTerm) {
