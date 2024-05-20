@@ -48,11 +48,13 @@ const VoucherQR = ({
     }
   }, [used]);
 
-
   return (
     <div className='voucher-background'>
       <div className="m-8 w-96">
-        <ReactCardFlip isFlipped={flip} flipDirection="horizontal">
+        <ReactCardFlip isFlipped={flip} flipDirection="horizontal" cardStyles={{
+          front: { zIndex: 'unset', transformStyle: 'initial' },
+          back: { zIndex: 'unset', transformStyle: 'initial' }
+        }}>
           {/* front side */}
           <div className="voucher" >
             <div className='close-button' onClick={() => setShowQrCode(false)}>
